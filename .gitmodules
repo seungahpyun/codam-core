@@ -1,0 +1,3 @@
+[submodule "codam-submodule"]
+	path = codam-submodule
+	url = git@vogsphere-v2.codam.nl:vogsphere/intra-uuid-bdb8c242-c0b2-47a7-b2e8-51c8f754942f-6121835-spyun
