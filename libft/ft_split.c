@@ -20,7 +20,12 @@ char	*ft_strndup(const char *s, size_t n)
 	i = 0;
 	str = NULL;
 	if (n == 0)
-		return (NULL);
+	{
+		str = (char *)malloc(1);
+		if (str)
+			str[0] = '\0';
+		return (str);
+	}
 	str = (char *)malloc(sizeof(char) * (n + 1));
 	if (str == 0)
 		return (NULL);
