@@ -68,48 +68,54 @@ int	ft_printf(const char *str, ...)
 	return (printed_chars);
 }
 
-/* #include <stdio.h>
-#include <limits.h>
-int	main(void)
-{
-	char *c;
-	ft_printf("write % write\n");
-	printf("write % write\n\n");
+// #include <stdio.h>
+// #include <limits.h>
+// #include <stdint.h>
+// int	main(void)
+// {
+// 	uint64_t *c = NULL;
+// 	int *ptr = NULL;
 
-	ft_printf("write %% write\n");
-	printf("write %% write\n\n");
+// 	ft_printf("write % write\n");
+// 	printf("write % write\n\n");
 
-	ft_printf("%x\n", 123456);
-	printf("%x\n\n", 123456);
+// 	ft_printf("write %% write\n");
+// 	printf("write %% write\n\n");
 
-	ft_printf("%x %d %c\n", 123456, 123456, 'a');
-	printf("%x %d %c\n\n", 123456, 123456, 'a');
+// 	ft_printf("%x\n", 123456);
+// 	printf("%x\n\n", 123456);
 
-	ft_printf("%d\n", INT_MIN);
-	printf("%d\n\n", INT_MIN);
+// 	ft_printf("%x %d %c\n", 123456, 123456, 'a');
+// 	printf("%x %d %c\n\n", 123456, 123456, 'a');
 
-	ft_printf("%d\n", INT_MAX);
-	printf("%d\n\n", INT_MAX);
+// 	ft_printf("%d\n", INT_MIN);
+// 	printf("%d\n\n", INT_MIN);
 
-	ft_printf("%u\n", -42);
-	printf("%u\n\n", -42);
+// 	ft_printf("%d\n", INT_MAX);
+// 	printf("%d\n\n", INT_MAX);
 
-	ft_printf("%p\n", c);
-	printf("%p\n\n", c);
+// 	ft_printf("%u\n", -42);
+// 	printf("%u\n\n", -42);
 
-	ft_printf("%d\n", 0);
-	printf("%d\n\n", 0);
+// 	ft_printf("%p\n", ptr);
+// 	printf("%p\n\n", ptr);
 
-	ft_printf("%p\n",NULL);
-	printf("%p\n\n",NULL);
+// 	ft_printf("%p\n", c);
+// 	printf("%p\n\n", c);
 
-	ft_printf("%s\n",NULL);
-	printf("%s\n\n",NULL);
+// 	ft_printf("%d\n", 0);
+// 	printf("%d\n\n", 0);
 
-	ft_printf("%s\n",NULL);
-	printf("%s\n\n",NULL);
+// 	ft_printf("%p\n",NULL);
+// 	printf("%p\n\n",NULL);
 
-	ft_printf(NULL);
-	printf(NULL);
-	//cc *.c -L./libft -lft -o ft_printf_program
-} */
+// 	ft_printf("%s\n",NULL);
+// 	printf("%s\n\n",NULL);
+
+// 	ft_printf("%s\n",NULL);
+// 	printf("%s\n\n",NULL);
+
+// 	ft_printf(NULL);
+// 	printf(NULL);
+// 	//cc *.c -L./libft -lft -o ft_printf_program
+// }
