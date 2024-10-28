@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdint.h>
 
-static void	ft_print_hex(unsigned long long num, int uppercase)
+static void	ft_print_hex(uintptr_t num, int uppercase)
 {
 	if (num >= 16)
 	{
@@ -33,7 +34,7 @@ static void	ft_print_hex(unsigned long long num, int uppercase)
 	}
 }
 
-static size_t	ft_hex_len(unsigned long long num)
+static size_t	ft_hex_len(uintptr_t num)
 {
 	size_t	length;
 
@@ -69,11 +70,11 @@ int	ft_print_hex_upper(va_list args)
 int	ft_print_pointer(va_list args)
 {
 	void				*ptr;
-	unsigned long long	address;
+	uintptr_t			address;
 	int					printed_chars;
 
 	ptr = va_arg(args, void *);
-	address = (unsigned long long)ptr;
+	address = (uintptr_t)ptr;
 	if (address == 0)
 	{
 		ft_putstr_fd("(nil)", 1);
