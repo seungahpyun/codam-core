@@ -14,12 +14,6 @@ $(NAME): $(OBJ)
 	@cp $(LIBFT)/$(LIBFT_LIB) $(NAME)
 	@ar rcs $(NAME) $(OBJ)
 
-%.o: %.c $(INCLUDES)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(LIBFT):
-	@make -C libft
-
 clean:
 	@rm -f $(OBJ)
 	@make clean -C $(LIBFT)
