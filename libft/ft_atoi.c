@@ -37,14 +37,3 @@ int	ft_atoi(const char *str)
 	}
 	return (sign * result);
 }
-
-// #include <stdio.h>
-// #include <stdlib.h>
-
-// int main(void)
-// {
-// 	char *a;
-// 	a = NULL;
-// 	printf("%d\n", atoi("-----123"));
-// 	printf("%d", ft_atoi("-----123"));
-// }

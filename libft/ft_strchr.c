@@ -27,12 +27,3 @@ char	*ft_strchr(const char *s, int c)
 		return ((char *)s + i);
 	return (NULL);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-// int main(void)
-// {
-// 	char a[] = "abcd";
-// 	printf("%s", strchr(a, 'b'));
-// 	printf("%s", ft_strchr(a, 'b'));
-// }

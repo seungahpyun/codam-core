@@ -19,16 +19,3 @@ int	ft_tolower(int c)
 	}
 	return (c);
 }
-
-// #include <stdio.h>
-
-// int main(void)
-// {
-// 	char c = 'B';
-// 	printf("%c\n", ft_tolower(c));
-// 	char d = 'b';
-// 	printf("%c\n", ft_tolower(d));
-// 	char e = '1';
-// 	printf("%c\n", ft_tolower(e));
-// 	return 0;
-// }

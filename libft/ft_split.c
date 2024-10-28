@@ -97,25 +97,3 @@ char	**ft_split(char const *s, char c)
 	list[i] = NULL;
 	return (list);
 }
-
-// #include <stdio.h>
-
-// int	main(void)
-// {
-// 	char **result;
-// 	int i;
-
-// 	result = ft_split("Hello world this is 42!", ' ');
-// 	if (!result)
-// 		return (1);
-
-// 	i = 0;
-// 	while (result[i])
-// 	{
-// 		printf("result[%d]: %s\n", i, result[i]);
-// 		free(result[i]);
-// 		i++;
-// 	}
-// 	free(result);
-// 	return (0);
-// }

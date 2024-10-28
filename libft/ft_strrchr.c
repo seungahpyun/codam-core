@@ -27,12 +27,3 @@ char	*ft_strrchr(const char *s, int c)
 	}
 	return (NULL);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-// int main(void)
-// {
-// 	char a[] = "Hello, World! Happy World!";
-// 	printf("%s", strrchr(a, 'W'));
-// 	printf("%s", ft_strrchr(a, 'W'));
-// }

@@ -20,8 +20,6 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 
 	if (!dest && !src)
 		return (dest);
-	if (n == 0)
-		return (dest);
 	d = (unsigned char *)dest;
 	s = (const unsigned char *)src;
 	i = 0;
@@ -32,20 +30,3 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-// int main() 
-// {
-//     char first_str[20] = "Tutorials";
-//     char sec_str[] = "Point";
-
-//     puts("first_str before memcpy:");
-//     puts(first_str);
-
-//     ft_memcpy(first_str, sec_str, strlen(sec_str) + 1);
-
-//     puts("\nfirst_str after memcpy:");
-//     puts(first_str);
-//     return 0;
-// }

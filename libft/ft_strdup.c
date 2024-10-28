@@ -30,22 +30,3 @@ char	*ft_strdup(const char *s)
 	}
 	return (str);
 }
-
-// #include <stdio.h>
-// #include "libft.h"
-
-// int main(void)
-// {
-// 	const char *s = "Hello, World!";
-// 	char *copy = ft_strdup(s);
-
-// 	if (copy)
-// 	{
-// 		printf("Original: %s\n", s);
-// 		printf("Copy: %s\n", copy);
-// 		free(copy);
-// 	}
-// 	else
-// 		printf("Memory allocation failed\n");
-// 	return 0;
-// }

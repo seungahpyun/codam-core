@@ -31,26 +31,3 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	result[i] = '\0';
 	return (result);
 }
-
-// #include <stdio.h>
-// char example_func(unsigned int i, char c)
-// {
-// 	if (i % 2 == 0)
-// 		return (c - 32);
-// 	else
-// 		return (c);
-// }
-
-// int main(void)
-// {
-// 	char str[] = "hello";
-// 	char *result = ft_strmapi(str, example_func);
-
-// 	if (result)
-// 	{
-// 		printf("Original: %s\n", str);
-// 		printf("Modified: %s\n", result);
-// 		free(result);
-// 	}
-// 	return 0;
-// }
