@@ -10,3 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
+#include <stdlib.h>
+
+int	ft_found_newline(t_list *list)
+{
+	
+}
