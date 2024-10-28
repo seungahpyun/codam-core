@@ -75,6 +75,7 @@ int	ft_printf(const char *str, ...)
 // {
 // 	uint64_t *c = NULL;
 // 	int *ptr = NULL;
+// 	char *c = NULL;
 
 // 	ft_printf("write % write\n");
 // 	printf("write % write\n\n");
@@ -112,8 +113,8 @@ int	ft_printf(const char *str, ...)
 // 	ft_printf("%s\n",NULL);
 // 	printf("%s\n\n",NULL);
 
-// 	ft_printf("%s\n",NULL);
-// 	printf("%s\n\n",NULL);
+// 	ft_printf("%c\n",c);
+// 	printf("%c\n\n",c);
 
 // 	ft_printf(NULL);
 // 	printf(NULL);
