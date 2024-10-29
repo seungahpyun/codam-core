@@ -22,10 +22,7 @@ $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
 
 bonus: $(OBJ) $(OBJ_BONUS)
-	ar rcs $(NAME) $(OBJ) $(OBJ_BONUS)
-
-%.o: %.c $(INCLUDES)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@ar rcs $(NAME) $(OBJ) $(OBJ_BONUS)
 
 clean: 
 	rm -f $(OBJ) $(OBJ_BONUS)
