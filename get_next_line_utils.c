@@ -15,5 +15,20 @@
 
 int	ft_found_newline(t_list *list)
 {
-	
+	int	i;
+
+	if (!list)
+		return (NULL);
+	while (list)
+	{
+		i = 0;
+		if (list->str_buffer[i] && i < BUFFER_SIZE)
+		{
+			if(list->str_buffer[i] == '\n')
+				return (1);
+			i++;
+		}
+		list = list->next;
+	}
+	return (0);
 }
