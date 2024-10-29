@@ -53,15 +53,3 @@ char	*ft_itoa(int n)
 	}
 	return (result);
 }
-
-// #include <stdio.h>
-
-// int	main(void)
-// {
-// 	int	num = -12345;
-// 	char *str = ft_itoa(num);
-
-// 	printf("Converted string: %s\n", str);
-// 	free(str);
-// 	return (0);
-// }

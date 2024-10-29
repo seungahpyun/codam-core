@@ -21,8 +21,6 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	d = (unsigned char *)dest;
 	if (!dest && !src)
 		return (NULL);
-	if (n == 0)
-		return (dest);
 	if (d > s && s + n > d)
 	{
 		i = n;
@@ -40,16 +38,3 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-
-// int main ()
-// {
-// 	char dest_str[] = "oldstring";
-// 	const char src_str[]  = "newstring";
-// 	printf("Before memmove dest = %s, src = %s\n", dest_str, src_str);
-// 	ft_memmove(dest_str, src_str, 9);
-// 	printf("After memmove dest = %s, src = %s\n", dest_str, src_str);
-// 	return(0);
-// }

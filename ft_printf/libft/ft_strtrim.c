@@ -32,15 +32,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	ft_strlcpy(result, &s1[start], end - start + 1);
 	return (result);
 }
-
-// #include <stdio.h>
-
-// int main(void)
-// {
-// 	char s1[] = "   Hello World!   ";
-// 	char set[] = " ";
-// 	char *trimmed = ft_strtrim(s1, set);
-// 	printf("Trimmed string: '%s'\n", trimmed);
-// 	free(trimmed);
-// 	return 0;
-// }

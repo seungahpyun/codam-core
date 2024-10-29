@@ -27,20 +27,3 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	}
 	return (NULL);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-
-// int main() {
-// 	char arr[] = { 'H', 'e', 'l', 'l', 'o', '\0', 'W', 'o', 'r', 'l', 'd' };
-// 	char *result;
-
-// 	result = ft_memchr(arr, 'l', sizeof(arr));
-
-// 	if (result != NULL)
-// 		printf("Found 'l' at position: %ld\n", result - arr);
-// 	else
-// 		printf("'l' not found in the first %ld bytes\n", sizeof(arr));
-
-// 	return 0;
-// }

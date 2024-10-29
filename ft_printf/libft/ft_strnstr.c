@@ -34,12 +34,3 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (NULL);
 }
-
-// #include <stdio.h>
-// int main(void)
-// {
-// 	const char *largestring = "Foo Bar Baz";
-// 	const char *smallstring = "Bar";
-
-// 	printf("%s", ft_strnstr(largestring, smallstring, 10));
-// }

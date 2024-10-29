@@ -36,19 +36,3 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	dst[i] = '\0';
 	return (dst_len + src_len);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-
-// int main(void)
-// {
-// 	char dst[20] = "Hello";
-// 	const char *src = " World!";
-// 	size_t size = sizeof(dst);
-
-// 	printf("Before: %s\n", dst);
-// 	ft_strlcat(dst, src, size);
-// 	printf("After: %s\n", dst);
-
-// 	return 0;
-// }

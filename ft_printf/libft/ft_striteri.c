@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
 	unsigned int	i;
@@ -25,19 +23,3 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 		i++;
 	}
 }
-
-// #include <stdio.h>
-// void to_uppercase(unsigned int i, char *c)
-// {
-// 	(void)i;
-// 	if (*c >= 'a' && *c <= 'z')
-// 		*c -= 32;
-// }
-
-// int main(void)
-// {
-// 	char str[] = "hello world!";
-// 	ft_striteri(str, to_uppercase);
-// 	printf("Modified string: %s\n", str);
-// 	return 0;
-// }

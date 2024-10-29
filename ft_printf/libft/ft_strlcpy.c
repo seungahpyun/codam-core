@@ -30,13 +30,3 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	}
 	return (src_len);
 }
-
-// #include <stdio.h>
-
-// int	main(void)
-// {
-// 	char dest[] = "co";
-// 	char src[] = "Happy";
-
-// 	printf("%zu\n%s\n", ft_strlcpy(dest, src, sizeof(dest)), dest);
-// }

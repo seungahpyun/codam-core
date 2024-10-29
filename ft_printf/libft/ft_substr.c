@@ -37,21 +37,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	result[i] = '\0';
 	return (result);
 }
-
-// #include <stdio.h>
-// int main(void)
-// {
-// 	char *s = "Hello, World!";
-// 	char *sub;
-
-// 	sub = ft_substr(s, 7, 5);
-// 	printf("Substring: %s\n", sub);
-
-// 	free(sub);
-
-// 	sub = ft_substr(s, 20, 5);
-// 	printf("Substring: '%s'\n", sub);
-
-// 	free(sub);
-// 	return 0;
-// }
