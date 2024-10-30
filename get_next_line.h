@@ -23,4 +23,6 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+int		ft_find_newline(t_list *list);
+t_list	*ft_find_lstlast(t_list *list);
 #endif
