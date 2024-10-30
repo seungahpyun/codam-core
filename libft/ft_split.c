@@ -13,7 +13,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-char	*ft_strndup(const char *s, size_t n)
+static char	*ft_strndup(const char *s, size_t n)
 {
 	size_t	i;
 	char	*str;
@@ -39,7 +39,7 @@ char	*ft_strndup(const char *s, size_t n)
 	return (str);
 }
 
-char	**ft_freeall(char **list)
+static char	**ft_freeall(char **list)
 {
 	size_t	i;
 
@@ -53,7 +53,7 @@ char	**ft_freeall(char **list)
 	return (NULL);
 }
 
-size_t	ft_wordcount(char const *s, char c)
+static size_t	ft_wordcount(char const *s, char c)
 {
 	size_t	size;
 	size_t	i;
