@@ -25,4 +25,12 @@ typedef struct s_list
 
 int		ft_find_newline(t_list *list);
 t_list	*ft_find_lstlast(t_list *list);
+void	ft_free_list(t_list **list);
+int		ft_copy_to_line(t_list *temp, char *line, int total_len);
+char	*ft_create_line_from_list(t_list *list, int total_len);
+void	ft_create_list(t_list **list, int fd);
+char	*ft_get_line(t_list *list);
+void	ft_append_list(t_list **list, char *buffer);
+void	ft_create_list(t_list **list, int fd);
+char	*get_next_line(int fd);
 #endif

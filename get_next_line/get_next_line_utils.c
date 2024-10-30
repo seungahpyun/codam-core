@@ -18,7 +18,7 @@ int	ft_find_newline(t_list *list)
 	int	i;
 
 	if (!list)
-		return (NULL);
+		return (0);
 	while (list)
 	{
 		i = 0;
@@ -40,4 +40,54 @@ t_list	*ft_find_lstlast(t_list *list)
 	while (list->next)
 		list = list->next;
 	return (list);
+}
+
+void	ft_free_list(t_list **list)
+{
+	t_list	*temp;
+
+	if (!list || !*list)
+		return ;
+	while (*list)
+	{
+		temp = (*list)->next;
+		free((*list)->str_buffer);
+		free(*list);
+		*list = temp;
+	}
+}
+
+int	ft_copy_to_line(t_list *temp, char *line, int total_len)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	while (temp && j < total_len)
+	{
+		i = 0;
+		while (temp->str_buffer[i] && temp->str_buffer[i] != '\n' \
+			&& j < total_len)
+			line[j++] = temp->str_buffer[i++];
+		if (temp->str_buffer[i] == '\n' && j < total_len)
+		{
+			line[j++] = '\n';
+			break ;
+		}
+		temp = temp->next;
+	}
+	return (j);
+}
+
+char	*ft_create_line_from_list(t_list *list, int total_len)
+{
+	int		final_len;
+	char	*line;
+
+	line = malloc(total_len + 1);
+	if (!line)
+		return (NULL);
+	final_len = ft_copy_to_line(list, line, total_len);
+	line[final_len] = '\0';
+	return (line);
 }

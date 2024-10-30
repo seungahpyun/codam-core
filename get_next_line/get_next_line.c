@@ -12,10 +12,27 @@
 
 #include "get_next_line.h"
 #include <stdlib.h>
+#include <unistd.h>
 
-void	ft_get_line(t_list *list)
+char	*ft_get_line(t_list *list)
 {
+	int		i;
+	int		total_len;
+	t_list	*temp;
 
+	i = 0;
+	total_len = 0;
+	temp = list;
+	while (temp)
+	{
+		while (temp->str_buffer[i] && temp->str_buffer[i] != '\n')
+			i++;
+		total_len += i;
+		if (temp->str_buffer[i] == '\n')
+			break ;
+		temp = temp->next;
+	}
+	return (ft_create_line_from_list(list, total_len));
 }
 
 void	ft_append_list(t_list **list, char *buffer)
@@ -67,4 +84,6 @@ char	*get_next_line(int fd)
 	if (!list)
 		return (NULL);
 	next_line = ft_get_line(list);
+	ft_free_list(&list);
+	return (next_line);
 }
