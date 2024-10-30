@@ -13,6 +13,49 @@
 #include "get_next_line.h"
 #include <stdlib.h>
 
+void	ft_get_line(t_list *list)
+{
+
+}
+
+void	ft_append_list(t_list **list, char *buffer)
+{
+	t_list	*new_node;
+	t_list	*last_node;
+
+	last_node = ft_find_lstlast(*list);
+	new_node = malloc(sizeof(t_list));
+	if (!new_node)
+		return ;
+	if (!last_node)
+		*list = new_node;
+	else
+		last_node->next = new_node;
+	new_node->str_buffer = buffer;
+	new_node->next = NULL;
+}
+
+void	ft_create_list(t_list **list, int fd)
+{
+	int		char_read;
+	char	*buffer;
+
+	while (!ft_find_newline(*list))
+	{
+		buffer = malloc(BUFFER_SIZE + 1);
+		if (!buffer)
+			return ;
+		char_read = read(fd, buffer, BUFFER_SIZE);
+		if (!char_read)
+		{
+			free(buffer);
+			return ;
+		}
+		buffer[char_read] = '\0';
+		ft_append_list(list, buffer);
+	}
+}
+
 char	*get_next_line(int fd)
 {
 	static t_list	*list;
@@ -20,4 +63,8 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
 		return (NULL);
+	ft_create_list(&list, fd);
+	if (!list)
+		return (NULL);
+	next_line = ft_get_line(list);
 }

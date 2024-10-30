@@ -13,7 +13,7 @@
 #include "get_next_line.h"
 #include <stdlib.h>
 
-int	ft_found_newline(t_list *list)
+int	ft_find_newline(t_list *list)
 {
 	int	i;
 
@@ -24,11 +24,20 @@ int	ft_found_newline(t_list *list)
 		i = 0;
 		if (list->str_buffer[i] && i < BUFFER_SIZE)
 		{
-			if(list->str_buffer[i] == '\n')
+			if (list->str_buffer[i] == '\n')
 				return (1);
 			i++;
 		}
 		list = list->next;
 	}
 	return (0);
+}
+
+t_list	*ft_find_lstlast(t_list *list)
+{
+	if (!list)
+		return (NULL);
+	while (list->next)
+		list = list->next;
+	return (list);
 }
