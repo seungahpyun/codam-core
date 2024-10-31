@@ -13,7 +13,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-size_t	get_num_len(int n)
+static size_t	get_num_len(int n)
 {
 	size_t	len;
 
