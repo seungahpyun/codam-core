@@ -31,10 +31,7 @@ static t_list	*get_fd_node(t_list **head, int fd)
 	node->fd = fd;
 	node->buffer = ft_strdup("");
 	if (!node->buffer)
-	{
-		free(node);
-		return (NULL);
-	}
+		return (free(node), NULL);
 	node->next = *head;
 	*head = node;
 	return (node);
@@ -75,10 +72,7 @@ static int	read_into_buffer(t_list *node)
 		return (-1);
 	bytes_read = read(node->fd, buf, BUFFER_SIZE);
 	if (bytes_read <= 0)
-	{
-		free(buf);
-		return (bytes_read);
-	}
+		return (free(buf), (bytes_read));
 	buf[bytes_read] = '\0';
 	temp = ft_strjoin(node->buffer, buf);
 	free(buf);
@@ -105,10 +99,7 @@ static char	*extract_line(char **buffer)
 		return (NULL);
 	temp = ft_strdup((*buffer) + i + ((*buffer)[i] == '\n'));
 	if (!temp)
-	{
-		free(line);
-		return (NULL);
-	}
+		return (free(line), NULL);
 	free(*buffer);
 	*buffer = temp;
 	return (line);
