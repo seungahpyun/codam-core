@@ -13,100 +13,101 @@
 #include "get_next_line.h"
 #include <stdlib.h>
 
-int	find_newline(t_list *list)
+int	ft_strlen(const char *s)
 {
 	int	i;
 
-	while (list)
-	{
-		i = 0;
-		while (list->str_buffer[i] && i < BUFFER_SIZE)
-		{
-			if (list->str_buffer[i] == '\n')
-				return (1);
-			i++;
-		}
-		list = list->next;
-	}
-	return (0);
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i])
+		i++;
+	return (i);
 }
 
-void	append_buffer_to_list(t_list **list, char *buffer)
+char	*ft_strchr(const char *s, int c)
 {
-	t_list	*new_node;
-	t_list	*last;
+	int	i;
 
-	new_node = malloc(sizeof(t_list));
-	if (!new_node)
-		return (free(buffer));
-	new_node->str_buffer = buffer;
-	new_node->next = NULL;
-	if (!*list)
-		*list = new_node;
-	else
+	i = 0;
+	if (!s)
+		return (NULL);
+	while (s[i])
 	{
-		last = *list;
-		while (last->next)
-			last = last->next;
-		last->next = new_node;
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i++;
 	}
+	if ((char)c == '\0')
+		return ((char *)&s[i]);
+	return (NULL);
 }
 
-void	free_list(t_list **list)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	t_list	*temp;
-
-	while (*list)
-	{
-		temp = (*list)->next;
-		free((*list)->str_buffer);
-		free(*list);
-		*list = temp;
-	}
-}
-
-char	*create_line_buffer(t_list *list, int *total_len)
-{
-	t_list	*temp;
+	char	*new_str;
+	int		len1;
+	int		len2;
 	int		i;
 
-	temp = list;
-	while (temp)
-	{
-		i = 0;
-		while (temp->str_buffer[i] && temp->str_buffer[i] != '\n')
-			i++;
-		*total_len += i;
-		if (temp->str_buffer[i] == '\n')
-		{
-			(*total_len)++;
-			break ;
-		}
-		temp = temp->next;
-	}
-	return (malloc(*total_len + 1));
+	if (!s1 || !s2)
+		return (NULL);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	new_str = malloc(len1 + len2 + 1);
+	if (!new_str)
+		return (NULL);
+	i = -1;
+	while (++i < len1)
+		new_str[i] = s1[i];
+	i = -1;
+	while (++i < len2)
+		new_str[len1 + i] = s2[i];
+	new_str[len1 + len2] = '\0';
+	return (new_str);
 }
 
-void	copy_line(t_list *list, char *line, int total_len)
+char	*ft_substr(char *s, int start, int len)
 {
+	char	*sub;
 	int		i;
-	int		j;
-	t_list	*temp;
+	int		s_len;
 
-	j = 0;
-	temp = list;
-	while (temp && j < total_len)
+	if (!s)
+		return (NULL);
+	s_len = ft_strlen(s);
+	if (start >= s_len)
+		return (ft_strdup(""));
+	if (len > s_len - start)
+		len = s_len - start;
+	sub = malloc(len + 1);
+	if (!sub)
+		return (NULL);
+	i = 0;
+	while (i < len && s[start + i])
 	{
-		i = 0;
-		while (temp->str_buffer[i]
-			&& temp->str_buffer[i] != '\n' && j < total_len)
-			line[j++] = temp->str_buffer[i++];
-		if (temp->str_buffer[i] == '\n' && j < total_len)
-		{
-			line[j++] = '\n';
-			break ;
-		}
-		temp = temp->next;
+		sub[i] = s[start + i];
+		i++;
 	}
-	line[j] = '\0';
+	sub[i] = '\0';
+	return (sub);
+}
+
+char	*ft_strdup(char *s)
+{
+	char	*dup;
+	int		len;
+	int		i;
+
+	if (!s)
+		return (NULL);
+	len = ft_strlen(s);
+	dup = malloc(len + 1);
+	if (!dup)
+		return (NULL);
+	i = -1;
+	while (++i < len)
+		dup[i] = s[i];
+	dup[i] = '\0';
+	return (dup);
 }

@@ -19,18 +19,16 @@
 
 typedef struct s_list
 {
-	char			*str_buffer;
+	int				fd;
+	char			*buffer; 
 	struct s_list	*next;
 }	t_list;
 
 char	*get_next_line(int fd);
-int		read_and_store(t_list **list, int fd);
-char	*extract_line(t_list *list);
-t_list	*store_remaining(t_list *list);
-void	free_list(t_list **list);
-int		find_newline(t_list *list);
-void	append_buffer_to_list(t_list **list, char *buffer);
-char	*create_line_buffer(t_list *list, int *total_len);
-void	copy_line(t_list *list, char *line, int total_len);
+int		ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_substr(char *s, int start, int len);
+char	*ft_strdup(char *s);
 
 #endif
