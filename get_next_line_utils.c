@@ -13,7 +13,7 @@
 #include "get_next_line.h"
 #include <stdlib.h>
 
-int	ft_find_newline(t_list *list)
+int	find_newline(t_list *list)
 {
 	int	i;
 
@@ -31,16 +31,28 @@ int	ft_find_newline(t_list *list)
 	return (0);
 }
 
-t_list	*ft_find_lstlast(t_list *list)
+void	append_buffer_to_list(t_list **list, char *buffer)
 {
-	if (!list)
-		return (NULL);
-	while (list->next)
-		list = list->next;
-	return (list);
+	t_list	*new_node;
+	t_list	*last;
+
+	new_node = malloc(sizeof(t_list));
+	if (!new_node)
+		return (free(buffer));
+	new_node->str_buffer = buffer;
+	new_node->next = NULL;
+	if (!*list)
+		*list = new_node;
+	else
+	{
+		last = *list;
+		while (last->next)
+			last = last->next;
+		last->next = new_node;
+	}
 }
 
-void	ft_free_list(t_list **list)
+void	free_list(t_list **list)
 {
 	t_list	*temp;
 
@@ -53,12 +65,36 @@ void	ft_free_list(t_list **list)
 	}
 }
 
-int	ft_copy_to_line(t_list *temp, char *line, int total_len)
+char	*create_line_buffer(t_list *list, int *total_len)
 {
-	int	i;
-	int	j;
+	t_list	*temp;
+	int		i;
+
+	temp = list;
+	while (temp)
+	{
+		i = 0;
+		while (temp->str_buffer[i] && temp->str_buffer[i] != '\n')
+			i++;
+		*total_len += i;
+		if (temp->str_buffer[i] == '\n')
+		{
+			(*total_len)++;
+			break ;
+		}
+		temp = temp->next;
+	}
+	return (malloc(*total_len + 1));
+}
+
+void	copy_line(t_list *list, char *line, int total_len)
+{
+	int		i;
+	int		j;
+	t_list	*temp;
 
 	j = 0;
+	temp = list;
 	while (temp && j < total_len)
 	{
 		i = 0;
@@ -72,18 +108,5 @@ int	ft_copy_to_line(t_list *temp, char *line, int total_len)
 		}
 		temp = temp->next;
 	}
-	return (j);
-}
-
-char	*ft_create_line_from_list(t_list *list, int total_len)
-{
-	char	*line;
-	int		final_len;
-
-	line = malloc(total_len + 1);
-	if (!line)
-		return (NULL);
-	final_len = ft_copy_to_line(list, line, total_len);
-	line[final_len] = '\0';
-	return (line);
+	line[j] = '\0';
 }

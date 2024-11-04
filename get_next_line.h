@@ -23,13 +23,14 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-int		ft_find_newline(t_list *list);
-t_list	*ft_find_lstlast(t_list *list);
-void	ft_free_list(t_list **list);
-int		ft_copy_to_line(t_list *temp, char *line, int total_len);
-char	*ft_create_line_from_list(t_list *list, int total_len);
-int		ft_create_list(t_list **list, int fd);
-char	*ft_get_line(t_list *list);
-void	ft_append_list(t_list **list, char *buffer);
 char	*get_next_line(int fd);
+int		read_and_store(t_list **list, int fd);
+char	*extract_line(t_list *list);
+t_list	*store_remaining(t_list *list);
+void	free_list(t_list **list);
+int		find_newline(t_list *list);
+void	append_buffer_to_list(t_list **list, char *buffer);
+char	*create_line_buffer(t_list *list, int *total_len);
+void	copy_line(t_list *list, char *line, int total_len);
+
 #endif
