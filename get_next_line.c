@@ -130,16 +130,10 @@ char	*get_next_line(int fd)
 	while (res > 0 && !ft_strchr(node->buffer, '\n'))
 		res = read_into_buffer(node);
 	if (res == -1)
-	{
-		remove_fd_node(&head, fd);
-		return (NULL);
-	}
+		return (remove_fd_node(&head, fd), NULL);
 	line = extract_line(&node->buffer);
 	if (!line)
-	{
-		remove_fd_node(&head, fd);
-		return (NULL);
-	}
+		return (remove_fd_node(&head, fd), NULL);
 	if (!node->buffer || !*node->buffer)
 		remove_fd_node(&head, fd);
 	return (line);
