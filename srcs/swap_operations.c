@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 10:54:29 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/21 14:34:22 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/21 17:22:37 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_ss(t_stack **a, t_stack **b, int j)
 {
 	t_stack	*temp;
 
-	if(!*a || !(*a)->next || !*b || !(*b)->next)
+	if (!*a || !(*a)->next || !*b || !(*b)->next)
 		return ;
 	temp = *a;
 	*a = (*a)->next;
@@ -55,5 +55,5 @@ void	ft_ss(t_stack **a, t_stack **b, int j)
 	temp->next = (*b)->next;
 	(*b)->next = temp;
 	if (j == 0)
-		ft_putchar_fd("ss\n",1);
+		ft_putchar_fd("ss\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 08:53:50 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/21 09:44:43 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/21 17:22:11 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_stack	*ft_process_single_input(char **argv)
 
 t_stack	*ft_parse_input(int argc, char **argv)
 {
-	t_stack *a;
+	t_stack	*a;
 	int		i;
 	int		j;
 
@@ -49,9 +49,9 @@ t_stack	*ft_parse_input(int argc, char **argv)
 	{
 		while (i < argc)
 		{
-		j = ft_atoi(argv[i]);
-		ft_lstadd_back(&a, ft_lstnew(j));
-		i++;
+			j = ft_atoi(argv[i]);
+			ft_lstadd_back(&a, ft_lstnew(j));
+			i++;
 		}
 	}
 	return (a);
