@@ -1,29 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   push_swap.c                                        :+:    :+:            */
+/*   validation_handler.c                               :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/11/20 15:22:25 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/21 10:09:43 by spyun         ########   odam.nl         */
+/*   Created: 2024/11/21 09:47:12 by spyun         #+#    #+#                 */
+/*   Updated: 2024/11/21 10:12:31 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+#include <stdbool.h>
 
-int	main(int argc, char **argv)
+bool	ft_has_duplicates(t_stack *a)
 {
-	t_stack		*a;
+	t_stack	*temp;
 
-	a = ft_parse_input(argc, argv);
-	if(!a || ft_has_duplicates(a))
+	while (a)
 	{
-		ft_free(a);
-		ft_error();
+		temp = a->next;
+		while (temp)
+		{
+			if (a->nbr == temp->nbr)
+				return (true);
+			temp = temp->next;
+		}
+		a = a->next;
 	}
-	if (!ft_checksorted(a))
-		ft_sort(&a);
-	ft_free(&a);
-	return (0);
+	return (false);
+}
+
+bool	ft_is_sorted(t_stack *a)
+{
+	int	i;
+
+	i = a->nbr;
+	while (a)
+	{
+		if (i > a->nbr)
+			return (true);
+		i = a->nbr;
+		a = a->next;
+	}
+	return (false);
 }

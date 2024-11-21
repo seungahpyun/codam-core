@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   push_swap.c                                        :+:    :+:            */
+/*   error_handler.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/11/20 15:22:25 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/21 10:09:43 by spyun         ########   odam.nl         */
+/*   Created: 2024/11/21 09:37:03 by spyun         #+#    #+#                 */
+/*   Updated: 2024/11/21 10:07:02 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int	main(int argc, char **argv)
+void	ft_error(void)
 {
-	t_stack		*a;
+	ft_putstr_fd("Error\n", 2);
+	exit(1);
+}
 
-	a = ft_parse_input(argc, argv);
-	if(!a || ft_has_duplicates(a))
+void	ft_free(t_stack **lst)
+{
+	t_stack	*temp;
+
+	if (!lst)
+		return ;
+	while (*lst)
 	{
-		ft_free(a);
-		ft_error();
+		temp = (*lst)->next;
+		(*lst)->nbr = 0;
+		free(*lst);
+		*lst = temp;
 	}
-	if (!ft_checksorted(a))
-		ft_sort(&a);
-	ft_free(&a);
-	return (0);
 }
