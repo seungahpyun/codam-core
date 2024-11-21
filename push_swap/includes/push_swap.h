@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/20 16:33:42 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/21 10:13:00 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/21 14:35:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,7 @@ t_stack	*ft_parse_input(int argc, char **argv);
 bool	ft_has_duplicates(t_stack *a);
 bool	ft_is_sorted(t_stack *a);
 
+void	ft_sa(t_stack **a, int j);
+void	ft_sb(t_stack **b, int j);
+void	ft_ss(t_stack **a, t_stack **b, int j);
 #endif
