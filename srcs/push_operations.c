@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 10:54:31 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/21 17:24:25 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/22 22:51:12 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ void	ft_pb(t_stack **a, t_stack **b, int j)
 	*a = (*a)->next;
 	(*b)->next = temp;
 	if (j == 0)
-		ft_putchar_fd("pb\n", 1);
+		ft_putstr_fd("pb\n", 1);
 }

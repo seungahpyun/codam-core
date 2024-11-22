@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 10:54:27 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/21 17:28:52 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/22 22:51:00 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_ra(t_stack **a, int j)
 	*a = temp->next;
 	temp->next = NULL;
 	if (j == 0)
-		ft_putchar_fd("ra\n", 1);
+		ft_putstr_fd("ra\n", 1);
 }
 
 void	ft_rb(t_stack **b, int j)
@@ -39,7 +39,7 @@ void	ft_rb(t_stack **b, int j)
 	*b = temp->next;
 	temp->next = NULL;
 	if (j == 0)
-		ft_putchar_fd("rb\n", 1);
+		ft_putstr_fd("rb\n", 1);
 }
 
 void	ft_rr(t_stack **a, t_stack **b, int j)
@@ -59,5 +59,5 @@ void	ft_rr(t_stack **a, t_stack **b, int j)
 	*b = temp->next;
 	temp->next = NULL;
 	if (j == 0)
-		ft_putchar_fd("rr\n", 1);
+		ft_putstr_fd("rr\n", 1);
 }
