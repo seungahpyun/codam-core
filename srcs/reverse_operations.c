@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 10:54:24 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/22 22:51:56 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/25 10:57:07 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_rra(t_stack **a, int j)
 {
-	t_stack *last;
-	t_stack *second_last;
+	t_stack	*last;
+	t_stack	*second_last;
 
 	if (!*a || !(*a)->next)
 		return ;
@@ -35,8 +35,8 @@ void	ft_rra(t_stack **a, int j)
 
 void	ft_rrb(t_stack **b, int j)
 {
-	t_stack *last;
-	t_stack *second_last;
+	t_stack	*last;
+	t_stack	*second_last;
 
 	if (!*b || !(*b)->next)
 		return ;
@@ -56,8 +56,8 @@ void	ft_rrb(t_stack **b, int j)
 
 static void	ft_rrr_sub(t_stack **b, int j)
 {
-	t_stack *last_b;
-	t_stack *second_last_b;
+	t_stack	*last_b;
+	t_stack	*second_last_b;
 
 	last_b = *b;
 	second_last_b = NULL;
@@ -75,8 +75,8 @@ static void	ft_rrr_sub(t_stack **b, int j)
 
 void	ft_rrr(t_stack **a, t_stack **b, int j)
 {
-	t_stack *last_a;
-	t_stack *second_last_a;
+	t_stack	*last_a;
+	t_stack	*second_last_a;
 
 	if (!*a || !(*a)->next || !*b || !(*b)->next)
 		return ;

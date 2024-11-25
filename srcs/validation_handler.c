@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 09:47:12 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/21 10:12:31 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/25 15:30:19 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ bool	ft_is_sorted(t_stack *a)
 	while (a)
 	{
 		if (i > a->nbr)
-			return (true);
+			return (false);
 		i = a->nbr;
 		a = a->next;
 	}
-	return (false);
+	return (true);
 }

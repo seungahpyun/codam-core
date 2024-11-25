@@ -6,11 +6,12 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 08:53:50 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/21 17:22:11 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/25 15:31:07 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+#include <stdlib.h>
 
 t_stack	*ft_process_single_input(char **argv)
 {
@@ -22,10 +23,12 @@ t_stack	*ft_process_single_input(char **argv)
 	a = NULL;
 	i = 0;
 	temp = ft_split(argv[1], 32);
+	if (!temp)
+		ft_error();
 	while (temp[i])
 	{
 		j = ft_atoi(temp[i]);
-		ft_lstadd_back(&a, ft_lstnew(j));
+		ft_stack_add_back(&a, ft_stack_new(j));
 		free(temp[i]);
 		i++;
 	}
@@ -50,7 +53,7 @@ t_stack	*ft_parse_input(int argc, char **argv)
 		while (i < argc)
 		{
 			j = ft_atoi(argv[i]);
-			ft_lstadd_back(&a, ft_lstnew(j));
+			ft_stack_add_back(&a, ft_stack_new(j));
 			i++;
 		}
 	}
