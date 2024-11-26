@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 10:54:24 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/25 10:57:07 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/26 09:03:58 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_rra(t_stack **a, int j)
 	last->next = *a;
 	*a = last;
 	if (j == 0)
-		ft_putstr_fd("rra\n", 1);
+		ft_putstr_fd("rra\n", 3);
 }
 
 void	ft_rrb(t_stack **b, int j)

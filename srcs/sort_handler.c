@@ -6,13 +6,13 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 10:33:10 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/25 15:36:10 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/26 09:32:54 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-t_stack	*ft_sort_a(t_stack **a, t_stack **b)
+t_stack	**ft_sort_a(t_stack **a, t_stack **b)
 {
 	t_stack	*temp;
 	int		i;
@@ -35,7 +35,7 @@ t_stack	*ft_sort_a(t_stack **a, t_stack **b)
 				temp = temp->next;
 		}
 	}
-	return (*a);
+	return (a);
 }
 
 t_stack	*ft_sort_b(t_stack **stack_a)
@@ -79,31 +79,28 @@ void	ft_sort_b_till_3(t_stack **stack_a, t_stack **stack_b)
 	}
 }
 
-void ft_sort(t_stack **a)
+void	ft_sort(t_stack **stack_a)
 {
-	t_stack *b;
-	int i, size;
+	t_stack	*stack_b;
+	int		i;
 
-	b = NULL;
-	if (ft_stack_size(*a) == 2)
-	{
-		if ((*a)->nbr > (*a)->next->nbr)
-			ft_sa(a, 0);
-		return ;
-	}
-	b = ft_sort_b(a);
-	*a = ft_sort_a(a, &b);
-	i = ft_find_index(*a, ft_min(*a));
-	size = ft_stack_size(*a);
-	
-	if (i <= size / 2)
-	{
-		while ((*a)->nbr != ft_min(*a))
-		ft_ra(a, 0);
-	}
+	stack_b = NULL;
+	if (ft_stack_size(*stack_a) == 2)
+		ft_sa(stack_a, 0);
 	else
 	{
-		while ((*a)->nbr != ft_min(*a))
-			ft_rra(a, 0);
+		stack_b = ft_sort_b(stack_a);
+		stack_a = ft_sort_a(stack_a, &stack_b);
+		i = ft_find_index(*stack_a, ft_min(*stack_a));
+		if (i < ft_stack_size(*stack_a) - i)
+		{
+			while ((*stack_a)->nbr != ft_min(*stack_a))
+				ft_ra(stack_a, 0);
+		}
+		else
+		{
+			while ((*stack_a)->nbr != ft_min(*stack_a))
+				ft_rra(stack_a, 0);
+		}
 	}
 }

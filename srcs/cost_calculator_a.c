@@ -6,15 +6,15 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:04:15 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/25 16:59:15 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/26 09:33:21 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int ft_calc_rarb_a(t_stack *a, t_stack *b, int c)
+int	ft_calc_rarb_a(t_stack *a, t_stack *b, int c)
 {
-	int i;
+	int	i;
 
 	i = ft_find_place_a(a, c);
 	if (i < ft_find_index(b, c))
@@ -55,5 +55,3 @@ int	ft_calc_rrarrb_a(t_stack *a, t_stack *b, int c)
 		i = ft_stack_size(b) - ft_find_index(b, c);
 	return (i);
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:04:17 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/25 15:49:51 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/26 09:31:20 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,3 @@ int	ft_calc_rrarrb_b(t_stack *a, t_stack *b, int c)
 		i = ft_stack_size(a) - ft_find_index(a, c);
 	return (i);
 }
-
-

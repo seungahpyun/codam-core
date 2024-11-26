@@ -6,11 +6,9 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 15:53:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/25 15:54:06 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/26 09:33:56 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "../../includes/push_swap.h"
 
