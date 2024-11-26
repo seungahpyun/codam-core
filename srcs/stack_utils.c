@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 14:43:15 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/26 09:33:43 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/26 14:15:37 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_stack	*ft_stack_new(long nbr)
 	if (!new)
 		ft_error();
 	new->nbr = nbr;
-	new->index = 0;
 	new->next = NULL;
 	return (new);
 }
@@ -42,8 +41,8 @@ int	ft_stack_size(t_stack *stack)
 	size = 0;
 	while (stack)
 	{
-		size++;
 		stack = stack->next;
+		size++;
 	}
 	return (size);
 }

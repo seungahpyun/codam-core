@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/20 16:33:42 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/26 08:49:29 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/26 10:53:11 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,6 @@ int		ft_find_place_b(t_stack *stack_b, int nbr_push);
 int		ft_min(t_stack *a);
 int		ft_max(t_stack *a);
 
-t_stack	**ft_sort_a(t_stack **a, t_stack **b);
-t_stack	*ft_sort_b(t_stack **stack_a);
-void	ft_sort_b_till_3(t_stack **a, t_stack **b);
 void	ft_sort_three(t_stack **a);
 void	ft_sort(t_stack **stack_a);
 
