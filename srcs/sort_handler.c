@@ -6,11 +6,56 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 10:33:10 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/26 15:06:38 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/26 15:48:10 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+
+static void	ft_sort_a(t_stack **stack_a, t_stack **stack_b)
+{
+	t_stack	*tmp;
+	int		i;
+
+	while (*stack_b)
+	{
+		tmp = *stack_b;
+		i = ft_rotate_type_ba(*stack_a, *stack_b);
+		while (i >= 0 && tmp)
+		{
+			if (i == ft_calc_rarb_a(*stack_a, *stack_b, tmp->nbr))
+				i = ft_apply_rarb(stack_a, stack_b, tmp->nbr, 'b');
+			else if (i == ft_calc_rarrb_a(*stack_a, *stack_b, tmp->nbr))
+				i = ft_apply_rarrb(stack_a, stack_b, tmp->nbr, 'b');
+			else if (i == ft_calc_rrarrb_a(*stack_a, *stack_b, tmp->nbr))
+				i = ft_apply_rrarrb(stack_a, stack_b, tmp->nbr, 'b');
+			else if (i == ft_calc_rrarb_a(*stack_a, *stack_b, tmp->nbr))
+				i = ft_apply_rrarb(stack_a, stack_b, tmp->nbr, 'b');
+			else
+				tmp = tmp->next;
+		}
+	}
+}
+
+static t_stack	*ft_sort_b(t_stack **stack_a)
+{
+	t_stack	*stack_b;
+
+	if (!stack_a || !*stack_a)
+		return (NULL);
+	stack_b = NULL;
+	if (ft_stack_size(*stack_a) > 3 && !ft_is_sorted(*stack_a))
+	{
+		ft_pb(stack_a, &stack_b, 0);
+		if (ft_stack_size(*stack_a) > 3)
+			ft_pb(stack_a, &stack_b, 0);
+		if (ft_stack_size(*stack_a) > 3)
+			ft_sort_b_until_3(stack_a, &stack_b);
+		if (!ft_is_sorted(*stack_a))
+			ft_sort_three(stack_a);
+	}
+	return (stack_b);
+}
 
 static void	ft_sort_b_until_3(t_stack **stack_a, t_stack **stack_b)
 {
@@ -39,84 +84,17 @@ static void	ft_sort_b_until_3(t_stack **stack_a, t_stack **stack_b)
 	}
 }
 
-static t_stack	*ft_sort_b(t_stack **stack_a)
-{
-	t_stack	*stack_b;
-
-	if (!stack_a || !*stack_a)
-		return (NULL);
-	stack_b = NULL;
-	if (ft_stack_size(*stack_a) > 3 && !ft_is_sorted(*stack_a))
-	{
-		ft_pb(stack_a, &stack_b, 0);
-		if (ft_stack_size(*stack_a) > 3)
-			ft_pb(stack_a, &stack_b, 0);
-		if (ft_stack_size(*stack_a) > 3)
-			ft_sort_b_until_3(stack_a, &stack_b);
-		if (!ft_is_sorted(*stack_a))
-			ft_sort_three(stack_a);
-	}
-	return (stack_b);
-}
-
-static void	ft_sort_a(t_stack **stack_a, t_stack **stack_b)
-{
-	t_stack	*tmp;
-	int		i;
-
-	while (*stack_b)
-	{
-		tmp = *stack_b;
-		i = ft_rotate_type_ba(*stack_a, *stack_b);
-		while (i >= 0 && tmp)
-		{
-			if (i == ft_calc_rarb_a(*stack_a, *stack_b, tmp->nbr))
-				i = ft_apply_rarb(stack_a, stack_b, tmp->nbr, 'b');
-			else if (i == ft_calc_rarrb_a(*stack_a, *stack_b, tmp->nbr))
-				i = ft_apply_rarrb(stack_a, stack_b, tmp->nbr, 'b');
-			else if (i == ft_calc_rrarrb_a(*stack_a, *stack_b, tmp->nbr))
-				i = ft_apply_rrarrb(stack_a, stack_b, tmp->nbr, 'b');
-			else if (i == ft_calc_rrarb_a(*stack_a, *stack_b, tmp->nbr))
-				i = ft_apply_rrarb(stack_a, stack_b, tmp->nbr, 'b');
-			else
-				tmp = tmp->next;
-		}
-	}
-}
-
 void	ft_sort(t_stack **stack_a)
 {
 	t_stack	*stack_b;
-	int		i;
 
-	i = ft_stack_size(*stack_a);
-	if (!stack_a || !*stack_a)
+	if (!stack_a || !*stack_a
+	|| ft_stack_size(*stack_a) <= 1 || ft_is_sorted(*stack_a))
 		return ;
-	if (i <= 1 || ft_is_sorted(*stack_a))
-		return ;
-	if (ft_stack_size(*stack_a) == 2)
-	{
-		if ((*stack_a)->nbr > (*stack_a)->next->nbr)
-			ft_sa(stack_a, 0);
-		return ;
-	}
-	if (i == 3)
-	{
-		ft_sort_three(stack_a);
-		return ;
-	}
+	if (ft_stack_size(*stack_a) <= 3)
+		return (ft_sort_small_stack(stack_a));
 	stack_b = ft_sort_b(stack_a);
 	if (stack_b)
 		ft_sort_a(stack_a, &stack_b);
-	i = ft_find_index(*stack_a, ft_min(*stack_a));
-	if (i < ft_stack_size(*stack_a) - i)
-	{
-		while ((*stack_a)->nbr != ft_min(*stack_a))
-			ft_ra(stack_a, 0);
-	}
-	else
-	{
-		while ((*stack_a)->nbr != ft_min(*stack_a))
-			ft_rra(stack_a, 0);
-	}
+	ft_align_stack(stack_a);
 }

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 10:54:24 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/26 15:14:33 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/27 08:52:44 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,28 @@
 
 void	ft_rra(t_stack **a, int j)
 {
-	t_stack	*prev;
-	t_stack	*last;
+	t_stack	*tmp;
+	int		i;
 
 	if (!*a || !(*a)->next)
 		return ;
-	prev = NULL;
-	last = *a;
-	while (last->next)
+	i = 0;
+	tmp = *a;
+	while ((*a)->next)
 	{
-		prev = last;
-		last = last->next;
+		*a = (*a)->next;
+		i++;
 	}
-	prev->next = NULL;
-	last->next = *a;
-	*a = last;
+	(*a)->next = tmp;
+	while (i > 1)
+	{
+		tmp = tmp->next;
+		i--;
+	}
+	tmp->next = NULL;
 	if (j == 0)
 		ft_putstr_fd("rra\n", 1);
 }
-
 
 void	ft_rrb(t_stack **b, int j)
 {

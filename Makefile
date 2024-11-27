@@ -29,6 +29,7 @@ SRC = cost_calculator_a.c \
 	rotation_type_checker.c \
 	small_sort_handler.c \
 	sort_handler.c \
+	sort_helpers.c \
 	stack_utils.c \
 	swap_operations.c \
 	validation_handler.c \

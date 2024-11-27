@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:27:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/26 13:59:35 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/26 15:48:42 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_find_place_a(t_stack *stack_a, int nbr_push)
 	{
 		tmp = stack_a->next;
 		if (!tmp)
-			return (i);	
+			return (i);
 		while (stack_a->nbr > nbr_push || tmp->nbr < nbr_push)
 		{
 			stack_a = stack_a->next;
