@@ -6,7 +6,7 @@
 /*   By: spyun <marvin@42.fr>                         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/08 10:34:01 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/29 09:31:04 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 11:03:45 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,20 @@ static size_t	skip_whitespace(const char *str)
 	return (i);
 }
 
-static int check_overflow(long result, int sign, char c)
+static int	check_overflow(long result, int sign, char c)
 {
-	long max;
-	long min;
-	long next;
+	long	max;
+	long	min;
+	long	next;
 
 	max = 2147483647;
 	min = -2147483648;
 	next = (result * 10) + (c - '0');
 	if (sign > 0 && next > max)
-		return -1;
+		return (-1);
 	if (sign < 0 && -next < min)
-		return 0;
-	return 1;
+		return (0);
+	return (1);
 }
 
 static void	ft_error(void)
@@ -48,7 +48,7 @@ static void	ft_error(void)
 	exit(EXIT_FAILURE);
 }
 
-int ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	size_t	i;
 	long	result;
@@ -59,7 +59,10 @@ int ft_atoi(const char *str)
 	result = 0;
 	sign = 1;
 	if (str[i] == '-' || str[i] == '+')
-		sign = (str[i++] == '-') ? -1 : 1;
+	{
+		if (str[i++] == '-')
+			sign = -1;
+	}
 	if (!str[i])
 		ft_error();
 	while (ft_isdigit(str[i]))

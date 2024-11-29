@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 09:37:03 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/27 15:17:03 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 11:19:54 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	ft_error(void)
 {
-	ft_putstr_fd("Error\n", STDERR_FILENO);
+	ft_putendl_fd("Error", STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
 

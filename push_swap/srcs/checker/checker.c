@@ -5,88 +5,92 @@
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/11/25 15:53:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/27 14:08:13 by spyun         ########   odam.nl         */
+/*   Created: 2024/11/25 15:53:57 by spyun         #+#    #+#                */
+/*   Updated: 2024/11/29 11:36:13 by spyun         ########   odam.nl        */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/push_swap.h"
+#include <unistd.h>
+#include <stdlib.h>
 
-void	ft_check_sub(t_stack **a, t_stack **b, char *line)
+static void	ft_execute_instruction(t_stack **a, t_stack **b, char *line)
 {
-	if (line[2] == 'a')
-		ft_rra(a, 1);
-	else if (line[2] == 'b')
-		ft_rrb(b, 1);
-	else if (line[2] == 'r')
-		ft_rrr(a, b, 1);
-}
-
-char	*ft_check(t_stack **a, t_stack **b, char *line)
-{
-	if (line[0] == 's' && line[1] == 'a' && line[2] == '\n')
+	if (!ft_strncmp(line, "sa", 2))
 		ft_sa(a, 1);
-	else if (line[0] == 's' && line[1] == 'b' && line[2] == '\n')
+	else if (!ft_strncmp(line, "sb", 2))
 		ft_sb(b, 1);
-	else if (line[0] == 'p' && line[1] == 'a' && line[2] == '\n')
-		ft_pa(a, b, 1);
-	else if (line[0] == 'p' && line[1] == 'b' && line[2] == '\n')
-		ft_pb(a, b, 1);
-	else if (line[0] == 'r' && line[1] == 'a' && line[2] == '\n')
-		ft_ra(a, 1);
-	else if (line[0] == 'r' && line[1] == 'b' && line[2] == '\n')
-		ft_rb(b, 1);
-	else if (line[0] == 'r' && line[1] == 'r' && line[3] == '\n')
-		ft_check_sub(a, b, line);
-	else if (line[0] == 'r' && line[1] == 'r' && line[2] == '\n')
-		ft_rr(a, b, 1);
-	else if (line[0] == 's' && line[1] == 's' && line[2] == '\n')
+	else if (!ft_strncmp(line, "ss", 2))
 		ft_ss(a, b, 1);
+	else if (!ft_strncmp(line, "pa", 2))
+		ft_pa(a, b, 1);
+	else if (!ft_strncmp(line, "pb", 2))
+		ft_pb(a, b, 1);
+	else if (!ft_strncmp(line, "ra", 2))
+		ft_ra(a, 1);
+	else if (!ft_strncmp(line, "rb", 2))
+		ft_rb(b, 1);
+	else if (!ft_strncmp(line, "rr", 2))
+		ft_rr(a, b, 1);
+	else if (!ft_strncmp(line, "rra", 3))
+		ft_rra(a, 1);
+	else if (!ft_strncmp(line, "rrb", 3))
+		ft_rrb(b, 1);
+	else if (!ft_strncmp(line, "rrr", 3))
+		ft_rrr(a, b, 1);
 	else
-		ft_error_ch();
-	return (get_next_line(0));
+		ft_error();
 }
 
-void	ft_checker_sub(t_stack **a, t_stack **b, char *line)
+static void	ft_read_and_execute(t_stack **a, t_stack **b)
 {
-	char	*tmp;
+	char	instr[4];
+	int		i;
+	int		ret;
+	char	c;
 
-	while (line && *line != '\n')
+	i = 0;
+	while ((ret = read(0, &c, 1)) > 0)
 	{
-		tmp = line;
-		line = ft_check(a, b, line);
-		free(tmp);
+		if (c == '\n')
+		{
+			if (i == 0)
+				continue ;
+			instr[i] = '\0';
+			ft_execute_instruction(a, b, instr);
+			i = 0;
+		}
+		else if (i < 3)
+			instr[i++] = c;
+		else
+			ft_error();
 	}
-	if (*b)
-		write(2, "KO\n", 3);
-	else if (!ft_checksorted(*a))
-		write(2, "KO\n", 3);
-	else
-		write(1, "OK\n", 3);
-	free(line);
+	if (ret == -1)
+		ft_error();
+	if (i != 0)
+		ft_error();
 }
 
 int	main(int argc, char **argv)
 {
 	t_stack	*a;
 	t_stack	*b;
-	char	*line;
 
-	b = NULL;
-	a = ft_process(argc, argv);
-	if (!a || ft_checkdup(a))
+	if (argc < 2)
+		return (EXIT_SUCCESS);
+	a = ft_parse_input(argc, argv);
+	if (!a || ft_has_duplicates(a))
 	{
-		ft_free (&a);
-		ft_error_ch();
+		ft_free(&a);
+		ft_error();
 	}
-	line = get_next_line(0);
-	if (!line && !ft_checksorted(a))
-		write(2, "KO\n", 3);
-	else if (!line && ft_checksorted(a))
-		write(1, "OK\n", 3);
+	b = NULL;
+	ft_read_and_execute(&a, &b);
+	if (ft_is_sorted(a) && !b)
+		ft_putendl_fd("OK", 1);
 	else
-		ft_checker_sub(&a, &b, line);
-	ft_free(&b);
+		ft_putendl_fd("KO", 1);
 	ft_free(&a);
-	return (0);
+	ft_free(&b);
+	return (EXIT_SUCCESS);
 }
