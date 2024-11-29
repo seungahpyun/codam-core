@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 08:53:50 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/29 09:25:57 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 15:25:08 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,55 +16,55 @@
 
 t_stack	*ft_process_single_input(char **argv)
 {
-	t_stack	*a;
+	t_stack	*stack_a;
 	int		i;
 	int		j;
-	char	**temp;
+	char	**split_array;
 
-	a = NULL;
+	stack_a = NULL;
 	i = 0;
-	temp = ft_split(argv[1], 32);
-	if (!temp)
+	split_array = ft_split(argv[1], 32);
+	if (!split_array)
 		ft_error();
-	while (temp[i])
+	while (split_array[i])
 	{
-		if (!is_valid_number(temp[i]))
+		if (!is_valid_number(split_array[i]))
 		{
-			ft_free(&a);
-			ft_free_split(temp);
+			ft_free(&stack_a);
+			ft_free_split(split_array);
 			ft_error();
 		}
-		j = ft_atoi(temp[i]);
-		ft_stack_add_back(&a, ft_stack_new(j));
+		j = ft_atoi(split_array[i]);
+		ft_stack_add_back(&stack_a, ft_stack_new(j));
 		i++;
 	}
-	ft_free_split(temp);
-	return (a);
+	ft_free_split(split_array);
+	return (stack_a);
 }
 
 t_stack	*ft_parse_input(int argc, char **argv)
 {
-	t_stack	*a;
+	t_stack	*stack_a;
 	int		i;
 	int		j;
 
-	a = NULL;
+	stack_a = NULL;
 	i = 1;
 	if (argc == 2)
-		a = ft_process_single_input(argv);
+		stack_a = ft_process_single_input(argv);
 	else
 	{
 		while (i < argc)
 		{
 			if ((!is_valid_number(argv[i])))
 			{
-				ft_free(&a);
+				ft_free(&stack_a);
 				ft_error();
 			}
 			j = ft_atoi(argv[i]);
-			ft_stack_add_back(&a, ft_stack_new(j));
+			ft_stack_add_back(&stack_a, ft_stack_new(j));
 			i++;
 		}
 	}
-	return (a);
+	return (stack_a);
 }

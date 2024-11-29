@@ -6,105 +6,106 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 10:54:24 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/27 08:52:44 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 15:33:01 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+#include <unistd.h>
 
-void	ft_rra(t_stack **a, int j)
+void	ft_rra(t_stack **stack_a, int print_flag)
 {
-	t_stack	*tmp;
+	t_stack	*temp;
 	int		i;
 
-	if (!*a || !(*a)->next)
+	if (!*stack_a || !(*stack_a)->next)
 		return ;
 	i = 0;
-	tmp = *a;
-	while ((*a)->next)
+	temp = *stack_a;
+	while ((*stack_a)->next)
 	{
-		*a = (*a)->next;
+		*stack_a = (*stack_a)->next;
 		i++;
 	}
-	(*a)->next = tmp;
+	(*stack_a)->next = temp;
 	while (i > 1)
 	{
-		tmp = tmp->next;
+		temp = temp->next;
 		i--;
 	}
-	tmp->next = NULL;
-	if (j == 0)
-		ft_putstr_fd("rra\n", 1);
+	temp->next = NULL;
+	if (print_flag == 0)
+		ft_putendl_fd("rra", STDOUT_FILENO);
 }
 
-void	ft_rrb(t_stack **b, int j)
+void	ft_rrb(t_stack **stack_b, int print_flag)
 {
-	t_stack	*tmp;
+	t_stack	*temp;
 	int		i;
 
-	if (!*b || !(*b)->next)
+	if (!*stack_b || !(*stack_b)->next)
 		return ;
 	i = 0;
-	tmp = *b;
-	while ((*b)->next)
+	temp = *stack_b;
+	while ((*stack_b)->next)
 	{
 		i++;
-		*b = (*b)->next;
+		*stack_b = (*stack_b)->next;
 	}
-	(*b)->next = tmp;
+	(*stack_b)->next = temp;
 	while (i > 1)
 	{
-		tmp = tmp->next;
+		temp = temp->next;
 		i--;
 	}
-	tmp->next = NULL;
-	if (j == 0)
-		ft_putstr_fd("rrb\n", 1);
+	temp->next = NULL;
+	if (print_flag == 0)
+		ft_putendl_fd("rrb", STDOUT_FILENO);
 }
 
-static void	ft_rrr_sub(t_stack **b, int j)
+static void	ft_rrr_sub(t_stack **stack_b, int print_flag)
 {
-	t_stack	*tmp;
+	t_stack	*temp;
 	int		i;
 
 	i = 0;
-	tmp = *b;
-	while ((*b)->next)
+	temp = *stack_b;
+	while ((*stack_b)->next)
 	{
 		i++;
-		*b = (*b)->next;
+		*stack_b = (*stack_b)->next;
 	}
-	(*b)->next = tmp;
+	(*stack_b)->next = temp;
 	while (i > 1)
 	{
-		tmp = tmp->next;
+		temp = temp->next;
 		i--;
 	}
-	tmp->next = NULL;
-	if (j == 0)
-		ft_putstr_fd("rrr\n", 1);
+	temp->next = NULL;
+	if (stack_b == 0)
+		ft_putendl_fd("rrr", STDOUT_FILENO);
 }
 
-void	ft_rrr(t_stack **a, t_stack **b, int j)
+void	ft_rrr(t_stack **stack_a, t_stack **stack_b, int print_flag)
 {
-	t_stack	*tmp;
+	t_stack	*temp;
 	int		i;
 
-	if (!*a || !((*a)->next) || !*b || !((*b)->next))
+	if (!*stack_a || !((*stack_a)->next) || !*stack_b || !((*stack_b)->next))
 		return ;
 	i = 0;
-	tmp = *a;
-	while ((*a)->next)
+	temp = *stack_a;
+	while ((*stack_a)->next)
 	{
 		i++;
-		*a = (*a)->next;
+		*stack_a = (*stack_a)->next;
 	}
-	(*a)->next = tmp;
+	(*stack_a)->next = temp;
 	while (i > 1)
 	{
-		tmp = tmp->next;
+		temp = temp->next;
 		i--;
 	}
-	tmp->next = NULL;
-	ft_rrr_sub(b, j);
+	temp->next = NULL;
+	ft_rrr_sub(stack_b, print_flag);
 }

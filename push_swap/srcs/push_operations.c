@@ -6,36 +6,37 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 10:54:31 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/26 09:04:02 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 15:26:50 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+#include <unistd.h>
 
-void	ft_pa(t_stack **a, t_stack **b, int j)
+void	ft_pa(t_stack **stack_a, t_stack **stack_b, int print_flag)
 {
 	t_stack	*temp;
 
-	if (!*b)
+	if (!*stack_b)
 		return ;
-	temp = *a;
-	*a = *b;
-	*b = (*b)->next;
-	(*a)->next = temp;
-	if (j == 0)
-		ft_putstr_fd("pa\n", 1);
+	temp = *stack_a;
+	*stack_a = *stack_b;
+	*stack_b = (*stack_b)->next;
+	(*stack_a)->next = temp;
+	if (print_flag == 0)
+		ft_putendl_fd("pa", STDOUT_FILENO);
 }
 
-void	ft_pb(t_stack **a, t_stack **b, int j)
+void	ft_pb(t_stack **stack_a, t_stack **stack_b, int print_flag)
 {
 	t_stack	*temp;
 
-	if (!*a)
+	if (!*stack_a)
 		return ;
-	temp = *b;
-	*b = *a;
-	*a = (*a)->next;
-	(*b)->next = temp;
-	if (j == 0)
-		ft_putstr_fd("pb\n", 1);
+	temp = *stack_b;
+	*stack_b = *stack_a;
+	*stack_a = (*stack_a)->next;
+	(*stack_b)->next = temp;
+	if (print_flag == 0)
+		ft_putendl_fd("pb", STDOUT_FILENO);
 }

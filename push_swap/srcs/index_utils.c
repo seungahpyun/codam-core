@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:27:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/26 15:48:42 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 15:20:18 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_find_index(t_stack *stack, long nbr)
 int	ft_find_place_a(t_stack *stack_a, int nbr_push)
 {
 	int		i;
-	t_stack	*tmp;
+	t_stack	*next_node;
 
 	if (!stack_a)
 		return (0);
@@ -42,14 +42,14 @@ int	ft_find_place_a(t_stack *stack_a, int nbr_push)
 		i = ft_find_index(stack_a, ft_min(stack_a));
 	else
 	{
-		tmp = stack_a->next;
-		if (!tmp)
+		next_node = stack_a->next;
+		if (!next_node)
 			return (i);
-		while (stack_a->nbr > nbr_push || tmp->nbr < nbr_push)
+		while (stack_a->nbr > nbr_push || next_node->nbr < nbr_push)
 		{
 			stack_a = stack_a->next;
-			tmp = stack_a->next;
-			if (!tmp)
+			next_node = stack_a->next;
+			if (!next_node)
 				break ;
 			i++;
 		}
@@ -60,7 +60,7 @@ int	ft_find_place_a(t_stack *stack_a, int nbr_push)
 int	ft_find_place_b(t_stack *stack_b, int nbr_push)
 {
 	int		i;
-	t_stack	*tmp;
+	t_stack	*next_node;
 
 	if (!stack_b)
 		return (0);
@@ -71,14 +71,14 @@ int	ft_find_place_b(t_stack *stack_b, int nbr_push)
 		i = ft_find_index(stack_b, ft_max(stack_b));
 	else
 	{
-		tmp = stack_b->next;
-		if (!tmp)
+		next_node = stack_b->next;
+		if (!next_node)
 			return (i);
-		while (stack_b->nbr < nbr_push || tmp->nbr > nbr_push)
+		while (stack_b->nbr < nbr_push || next_node->nbr > nbr_push)
 		{
 			stack_b = stack_b->next;
-			tmp = stack_b->next;
-			if (!tmp)
+			next_node = stack_b->next;
+			if (!next_node)
 				break ;
 			i++;
 		}
@@ -86,34 +86,34 @@ int	ft_find_place_b(t_stack *stack_b, int nbr_push)
 	return (i);
 }
 
-int	ft_min(t_stack *a)
+int	ft_min(t_stack *stack)
 {
 	int	min;
 
-	if (!a)
+	if (!stack)
 		return (0);
-	min = a->nbr;
-	while (a)
+	min = stack->nbr;
+	while (stack)
 	{
-		if (a->nbr < min)
-			min = a->nbr;
-		a = a->next;
+		if (stack->nbr < min)
+			min = stack->nbr;
+		stack = stack->next;
 	}
 	return (min);
 }
 
-int	ft_max(t_stack *a)
+int	ft_max(t_stack *stack)
 {
 	int	max;
 
-	if (!a)
+	if (!stack)
 		return (0);
-	max = a->nbr;
-	while (a)
+	max = stack->nbr;
+	while (stack)
 	{
-		if (a->nbr > max)
-			max = a->nbr;
-		a = a->next;
+		if (stack->nbr > max)
+			max = stack->nbr;
+		stack = stack->next;
 	}
 	return (max);
 }

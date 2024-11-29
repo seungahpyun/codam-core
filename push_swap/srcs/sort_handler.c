@@ -6,13 +6,13 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 10:33:10 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/27 15:16:02 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 15:17:10 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static void	ft_sort_b_until_3(t_stack **stack_a, t_stack **stack_b)
+static void	ft_move_to_b_except_three(t_stack **stack_a, t_stack **stack_b)
 {
 	t_stack	*tmp;
 	int		i;
@@ -39,7 +39,7 @@ static void	ft_sort_b_until_3(t_stack **stack_a, t_stack **stack_b)
 	}
 }
 
-static void	ft_sort_a(t_stack **stack_a, t_stack **stack_b)
+static void	ft_move_back_to_a(t_stack **stack_a, t_stack **stack_b)
 {
 	t_stack	*tmp;
 	int		i;
@@ -64,7 +64,7 @@ static void	ft_sort_a(t_stack **stack_a, t_stack **stack_b)
 	}
 }
 
-static t_stack	*ft_sort_b(t_stack **stack_a)
+static t_stack	 *ft_initialize_stack_b(t_stack **stack_a)
 {
 	t_stack	*stack_b;
 
@@ -77,7 +77,7 @@ static t_stack	*ft_sort_b(t_stack **stack_a)
 		if (ft_stack_size(*stack_a) > 3)
 			ft_pb(stack_a, &stack_b, 0);
 		if (ft_stack_size(*stack_a) > 3)
-			ft_sort_b_until_3(stack_a, &stack_b);
+			ft_move_to_b_except_three(stack_a, &stack_b);
 		if (!ft_is_sorted(*stack_a))
 			ft_sort_three(stack_a);
 	}
@@ -93,8 +93,8 @@ void	ft_sort(t_stack **stack_a)
 		return ;
 	if (ft_stack_size(*stack_a) <= 3)
 		return (ft_sort_small_stack(stack_a));
-	stack_b = ft_sort_b(stack_a);
+	stack_b = ft_initialize_stack_b(stack_a);
 	if (stack_b)
-		ft_sort_a(stack_a, &stack_b);
+		ft_move_back_to_a(stack_a, &stack_b);
 	ft_align_stack(stack_a);
 }
