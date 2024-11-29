@@ -42,6 +42,16 @@ static void	ft_execute_instruction(t_stack **a, t_stack **b, char *line)
 		ft_error();
 }
 
+static int	ft_handle_instruction(t_stack **a, t_stack **b, char *instr, int *i)
+{
+	if (*i == 0)
+		return (1);
+	instr[*i] = '\0';
+	ft_execute_instruction(a, b, instr);
+	*i = 0;
+	return (0);
+}
+
 static void	ft_read_and_execute(t_stack **a, t_stack **b)
 {
 	char	instr[4];
@@ -50,24 +60,24 @@ static void	ft_read_and_execute(t_stack **a, t_stack **b)
 	char	c;
 
 	i = 0;
-	while ((ret = read(0, &c, 1)) > 0)
+	ret = read(0, &c, 1);
+	while (ret > 0)
 	{
 		if (c == '\n')
 		{
-			if (i == 0)
+			if (ft_handle_instruction(a, b, instr, &i))
+			{
+				ret = read(0, &c, 1);
 				continue ;
-			instr[i] = '\0';
-			ft_execute_instruction(a, b, instr);
-			i = 0;
+			}
 		}
 		else if (i < 3)
 			instr[i++] = c;
 		else
 			ft_error();
+		ret = read(0, &c, 1);
 	}
-	if (ret == -1)
-		ft_error();
-	if (i != 0)
+	if (ret < 0 || i != 0)
 		ft_error();
 }
 
@@ -77,7 +87,7 @@ int	main(int argc, char **argv)
 	t_stack	*b;
 
 	if (argc < 2)
-		return (EXIT_SUCCESS);
+		return (0);
 	a = ft_parse_input(argc, argv);
 	if (!a || ft_has_duplicates(a))
 	{
@@ -92,5 +102,5 @@ int	main(int argc, char **argv)
 		ft_putendl_fd("KO", 1);
 	ft_free(&a);
 	ft_free(&b);
-	return (EXIT_SUCCESS);
+	return (0);
 }
