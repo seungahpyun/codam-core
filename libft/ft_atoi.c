@@ -6,7 +6,7 @@
 /*   By: spyun <marvin@42.fr>                         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/08 10:34:01 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/29 11:03:45 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 11:59:05 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	check_overflow(long result, int sign, char c)
 	next = (result * 10) + (c - '0');
 	if (sign > 0 && next > max)
 		return (-1);
-	if (sign < 0 && -next < min)
+	if (sign < 0 && - next < min)
 		return (0);
 	return (1);
 }
