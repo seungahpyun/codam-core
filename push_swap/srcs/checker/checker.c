@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/11/25 15:53:57 by spyun         #+#    #+#                */
-/*   Updated: 2024/11/29 11:36:13 by spyun         ########   odam.nl        */
+/*   Created: 2024/11/29 17:08:29 by spyun         #+#    #+#                 */
+/*   Updated: 2024/11/29 17:25:44 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,50 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-static void	ft_execute_instruction(t_stack **a, t_stack **b, char *line)
+static void	ft_execute_instruction(t_stack **stack_a,
+								t_stack **stack_b,
+								char *line)
 {
 	if (!ft_strncmp(line, "sa", 2))
-		ft_sa(a, 1);
+		ft_sa(stack_a, 1);
 	else if (!ft_strncmp(line, "sb", 2))
-		ft_sb(b, 1);
+		ft_sb(stack_b, 1);
 	else if (!ft_strncmp(line, "ss", 2))
-		ft_ss(a, b, 1);
+		ft_ss(stack_a, stack_b, 1);
 	else if (!ft_strncmp(line, "pa", 2))
-		ft_pa(a, b, 1);
+		ft_pa(stack_a, stack_b, 1);
 	else if (!ft_strncmp(line, "pb", 2))
-		ft_pb(a, b, 1);
+		ft_pb(stack_a, stack_b, 1);
 	else if (!ft_strncmp(line, "ra", 2))
-		ft_ra(a, 1);
+		ft_ra(stack_a, 1);
 	else if (!ft_strncmp(line, "rb", 2))
-		ft_rb(b, 1);
+		ft_rb(stack_b, 1);
 	else if (!ft_strncmp(line, "rr", 2))
-		ft_rr(a, b, 1);
+		ft_rr(stack_a, stack_b, 1);
 	else if (!ft_strncmp(line, "rra", 3))
-		ft_rra(a, 1);
+		ft_rra(stack_a, 1);
 	else if (!ft_strncmp(line, "rrb", 3))
-		ft_rrb(b, 1);
+		ft_rrb(stack_b, 1);
 	else if (!ft_strncmp(line, "rrr", 3))
-		ft_rrr(a, b, 1);
+		ft_rrr(stack_a, stack_b, 1);
 	else
 		ft_error();
 }
 
-static int	ft_handle_instruction(t_stack **a, t_stack **b, char *instr, int *i)
+static int	ft_handle_instruction(t_stack **stack_a,
+								t_stack **stack_b,
+								char *instr,
+								int *i)
 {
 	if (*i == 0)
 		return (1);
 	instr[*i] = '\0';
-	ft_execute_instruction(a, b, instr);
+	ft_execute_instruction(stack_a, stack_b, instr);
 	*i = 0;
 	return (0);
 }
 
-static void	ft_read_and_execute(t_stack **a, t_stack **b)
+static void	ft_read_and_execute(t_stack **stack_a, t_stack **stack_b)
 {
 	char	instr[4];
 	int		i;
@@ -65,7 +70,7 @@ static void	ft_read_and_execute(t_stack **a, t_stack **b)
 	{
 		if (c == '\n')
 		{
-			if (ft_handle_instruction(a, b, instr, &i))
+			if (ft_handle_instruction(stack_a, stack_b, instr, &i))
 			{
 				ret = read(0, &c, 1);
 				continue ;
@@ -83,24 +88,24 @@ static void	ft_read_and_execute(t_stack **a, t_stack **b)
 
 int	main(int argc, char **argv)
 {
-	t_stack	*a;
-	t_stack	*b;
+	t_stack	*stack_a;
+	t_stack	*stack_b;
 
 	if (argc < 2)
-		return (0);
-	a = ft_parse_input(argc, argv);
-	if (!a || ft_has_duplicates(a))
+		return (EXIT_SUCCESS);
+	stack_a = ft_parse_input(argc, argv);
+	if (!stack_a || ft_has_duplicates(stack_a))
 	{
-		ft_free(&a);
+		ft_free(&stack_a);
 		ft_error();
 	}
-	b = NULL;
-	ft_read_and_execute(&a, &b);
-	if (ft_is_sorted(a) && !b)
+	stack_b = NULL;
+	ft_read_and_execute(&stack_a, &stack_b);
+	if (ft_is_sorted(stack_a) && !stack_b)
 		ft_putendl_fd("OK", 1);
 	else
 		ft_putendl_fd("KO", 1);
-	ft_free(&a);
-	ft_free(&b);
-	return (0);
+	ft_free(&stack_a);
+	ft_free(&stack_b);
+	return (EXIT_SUCCESS);
 }
