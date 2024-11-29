@@ -6,19 +6,21 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 15:01:04 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/26 15:58:47 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/27 15:17:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+
 int	ft_rotate_type_ab(t_stack *a, t_stack *b)
 {
-	int		i, moves;
+	int		i;
+	int		moves;
 	t_stack	*tmp;
 
 	if (!a || !b)
 		return (-1);
-	tmp = a; 
+	tmp = a;
 	i = -1;
 	while (tmp)
 	{
@@ -41,12 +43,13 @@ int	ft_rotate_type_ab(t_stack *a, t_stack *b)
 
 int	ft_rotate_type_ba(t_stack *a, t_stack *b)
 {
-	int		i, moves;
+	int		i;
+	int		moves;
 	t_stack	*tmp;
 
 	if (!a || !b)
 		return (-1);
-	tmp = b; 
+	tmp = b;
 	i = -1;
 	while (tmp)
 	{

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/20 16:33:42 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/26 15:44:50 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/27 10:46:31 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_stack
 
 void	ft_error(void);
 void	ft_free(t_stack **lst);
+void	ft_free_split(char **split);
 
 t_stack	*ft_stack_new(long nbr);
 t_stack	*ft_stack_last(t_stack *stack);
@@ -35,6 +36,7 @@ t_stack	*ft_parse_input(int argc, char **argv);
 
 bool	ft_has_duplicates(t_stack *a);
 bool	ft_is_sorted(t_stack *a);
+bool	is_valid_number(char *str);
 
 void	ft_sa(t_stack **a, int j);
 void	ft_sb(t_stack **b, int j);

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 15:53:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/26 09:33:56 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/27 14:08:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	ft_checker_sub(t_stack **a, t_stack **b, char *line)
 		free(tmp);
 	}
 	if (*b)
-		write(1, "KO\n", 3);
+		write(2, "KO\n", 3);
 	else if (!ft_checksorted(*a))
-		write(1, "KO\n", 3);
+		write(2, "KO\n", 3);
 	else
 		write(1, "OK\n", 3);
 	free(line);
@@ -81,7 +81,7 @@ int	main(int argc, char **argv)
 	}
 	line = get_next_line(0);
 	if (!line && !ft_checksorted(a))
-		write(1, "KO\n", 3);
+		write(2, "KO\n", 3);
 	else if (!line && ft_checksorted(a))
 		write(1, "OK\n", 3);
 	else

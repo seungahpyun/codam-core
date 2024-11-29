@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 14:43:15 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/26 14:15:37 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/27 14:41:51 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_stack_size(t_stack *stack)
 
 void	ft_stack_add_back(t_stack **stack, t_stack *stack_new)
 {
-	if (!stack)
+	if (!stack || !stack_new)
 		return ;
 	if (!*stack)
 		*stack = stack_new;
