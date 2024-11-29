@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/20 15:22:25 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/29 09:32:42 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 11:51:00 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ int	main(int argc, char **argv)
 	if (!ft_is_sorted(a))
 		ft_sort(&a);
 	ft_free(&a);
-	return (0);
+	return (EXIT_SUCCESS);
 }

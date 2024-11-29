@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 09:47:12 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/29 09:15:13 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 11:02:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,3 @@ bool	is_valid_number(char *str)
 		i++;
 	return (str[i] == '\0');
 }
-
