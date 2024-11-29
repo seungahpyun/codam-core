@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 10:54:24 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/29 15:33:01 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 17:27:38 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	ft_rrr_sub(t_stack **stack_b, int print_flag)
 		i--;
 	}
 	temp->next = NULL;
-	if (stack_b == 0)
+	if (print_flag == 0)
 		ft_putendl_fd("rrr", STDOUT_FILENO);
 }
 

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/20 16:33:42 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/29 16:58:52 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 17:26:44 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,17 @@ bool	ft_has_duplicates(t_stack *a);
 bool	ft_is_sorted(t_stack *a);
 bool	is_valid_number(char *str);
 
-void	ft_sa(t_stack **a, int print_flag);
-void	ft_sb(t_stack **b, int print_flag);
-void	ft_ss(t_stack **a, t_stack **b, int print_flag);
-void	ft_pa(t_stack **a, t_stack **b, int print_flag);
-void	ft_pb(t_stack **a, t_stack **b, int print_flag);
-void	ft_ra(t_stack **a, int print_flag);
-void	ft_rb(t_stack **b, int j);
-void	ft_rr(t_stack **a, t_stack **b, int j);
-void	ft_rra(t_stack **a, int j);
-void	ft_rrb(t_stack **b, int j);
-void	ft_rrr(t_stack **a, t_stack **b, int j);
+void	ft_sa(t_stack **stack_a, int print_flag);
+void	ft_sb(t_stack **stack_b, int print_flag);
+void	ft_ss(t_stack **stack_a, t_stack **stack_b, int print_flag);
+void	ft_pa(t_stack **stack_a, t_stack **stack_b, int print_flag);
+void	ft_pb(t_stack **stack_a, t_stack **b, int print_flag);
+void	ft_ra(t_stack **stack_a, int print_flag);
+void	ft_rb(t_stack **stack_b, int print_flag);
+void	ft_rr(t_stack **stack_a, t_stack **stack_b, int print_flag);
+void	ft_rra(t_stack **stack_a, int print_flag);
+void	ft_rrb(t_stack **stack_b, int print_flag);
+void	ft_rrr(t_stack **stack_a, t_stack **stack_b, int print_flag);
 
 int		ft_find_index(t_stack *stack, long nbr);
 int		ft_find_place_a(t_stack *stack_a, int nbr_push);
@@ -58,24 +58,24 @@ int		ft_max(t_stack *a);
 
 void	ft_sort_small_stack(t_stack **stack_a);
 void	ft_align_stack(t_stack **stack_a);
-void	ft_sort_three(t_stack **a);
+void	ft_sort_three(t_stack **stack_a);
 void	ft_sort(t_stack **stack_a);
 
-int		ft_calc_rarb_a(t_stack *a, t_stack *b, int c);
-int		ft_calc_rarrb_a(t_stack *a, t_stack *b, int c);
-int		ft_calc_rrarrb_a(t_stack *a, t_stack *b, int c);
-int		ft_calc_rrarb_a(t_stack *a, t_stack *b, int c);
+int		ft_calc_rarb_a(t_stack *stack_a, t_stack *stack_b, int c);
+int		ft_calc_rarrb_a(t_stack *stack_a, t_stack *stack_b, int c);
+int		ft_calc_rrarrb_a(t_stack *stack_a, t_stack *stack_b, int c);
+int		ft_calc_rrarb_a(t_stack *stack_a, t_stack *stack_b, int c);
 
-int		ft_calc_rarb_b(t_stack *a, t_stack *b, int c);
-int		ft_calc_rarrb_b(t_stack *a, t_stack *b, int c);
-int		ft_calc_rrarb_b(t_stack *a, t_stack *b, int c);
-int		ft_calc_rrarrb_b(t_stack *a, t_stack *b, int c);
+int		ft_calc_rarb_b(t_stack *stack_a, t_stack *stack_b, int c);
+int		ft_calc_rarrb_b(t_stack *stack_a, t_stack *stack_b, int c);
+int		ft_calc_rrarb_b(t_stack *stack_a, t_stack *stack_b, int c);
+int		ft_calc_rrarrb_b(t_stack *stack_a, t_stack *stack_b, int c);
 
-int		ft_rotate_type_ab(t_stack *a, t_stack *b);
-int		ft_rotate_type_ba(t_stack *a, t_stack *b);
+int		ft_rotate_type_ab(t_stack *stack_a, t_stack *stack_b);
+int		ft_rotate_type_ba(t_stack *stack_a, t_stack *stack_b);
 
-int		ft_apply_rarb(t_stack **a, t_stack **b, int c, char s);
-int		ft_apply_rarrb(t_stack **a, t_stack **b, int c, char s);
-int		ft_apply_rrarb(t_stack **a, t_stack **b, int c, char s);
-int		ft_apply_rrarrb(t_stack **a, t_stack **b, int c, char s);
+int		ft_apply_rarb(t_stack **stack_a, t_stack **stack_b, int c, char s);
+int		ft_apply_rarrb(t_stack **stack_a, t_stack **stack_b, int c, char s);
+int		ft_apply_rrarb(t_stack **stack_a, t_stack **stack_b, int c, char s);
+int		ft_apply_rrarrb(t_stack **stack_a, t_stack **stack_b, int c, char s);
 #endif

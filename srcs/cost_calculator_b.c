@@ -6,62 +6,62 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:04:17 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/26 14:48:41 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 17:21:08 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int	ft_calc_rarb_b(t_stack *a, t_stack *b, int c)
+int	ft_calc_rarb_b(t_stack *stack_a, t_stack *stack_b, int c)
 {
 	int	i;
 
-	if (!a || !b)
+	if (!stack_a || !stack_b)
 		return (0);
-	i = ft_find_place_b(b, c);
-	if (i < ft_find_index(a, c))
-		i = ft_find_index(a, c);
+	i = ft_find_place_b(stack_b, c);
+	if (i < ft_find_index(stack_a, c))
+		i = ft_find_index(stack_a, c);
 	return (i);
 }
 
-int	ft_calc_rarrb_b(t_stack *a, t_stack *b, int c)
+int	ft_calc_rarrb_b(t_stack *stack_a, t_stack *stack_b, int c)
 {
 	int	i;
 
-	if (!a || !b)
-		return (0);
-	i = 0;
-	if (ft_find_place_b(b, c))
-		i = ft_stack_size(b) - ft_find_place_b(b, c);
-	i = ft_find_index(a, c) + i;
-	return (i);
-}
-
-int	ft_calc_rrarb_b(t_stack *a, t_stack *b, int c)
-{
-	int	i;
-
-	if (!a || !b)
+	if (!stack_a || !stack_b)
 		return (0);
 	i = 0;
-	if (ft_find_index(a, c))
-		i = ft_stack_size(a) - ft_find_index(a, c);
-	i = ft_find_place_b(b, c) + i;
+	if (ft_find_place_b(stack_b, c))
+		i = ft_stack_size(stack_b) - ft_find_place_b(stack_b, c);
+	i = ft_find_index(stack_a, c) + i;
 	return (i);
 }
 
-int	ft_calc_rrarrb_b(t_stack *a, t_stack *b, int c)
+int	ft_calc_rrarb_b(t_stack *stack_a, t_stack *stack_b, int c)
+{
+	int	i;
+
+	if (!stack_a || !stack_b)
+		return (0);
+	i = 0;
+	if (ft_find_index(stack_a, c))
+		i = ft_stack_size(stack_a) - ft_find_index(stack_a, c);
+	i = ft_find_place_b(stack_b, c) + i;
+	return (i);
+}
+
+int	ft_calc_rrarrb_b(t_stack *stack_a, t_stack *stack_b, int c)
 {
 	int	i;
 	int	j;
 
-	if (!a || !b)
+	if (!stack_a || !stack_b)
 		return (0);
 	i = 0;
-	if (ft_find_place_b(b, c))
-		i = ft_stack_size(b) - ft_find_place_b(b, c);
-	j = ft_stack_size(a) - ft_find_index(a, c);
-	if ((i < j) && ft_find_index(a, c))
+	if (ft_find_place_b(stack_b, c))
+		i = ft_stack_size(stack_b) - ft_find_place_b(stack_b, c);
+	j = ft_stack_size(stack_a) - ft_find_index(stack_a, c);
+	if ((i < j) && ft_find_index(stack_a, c))
 		i = j;
 	return (i);
 }
