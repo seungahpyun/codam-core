@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   ft_atoi.c                                           :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: spyun <marvin@42.fr>                          +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2024/10/08 10:34:01 by spyun          #+#    #+#                */
-/*   Updated: 2024/10/08 10:34:02 by spyun          ########   odam.nl        */
+/*                                                        ::::::::            */
+/*   ft_atoi.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: spyun <marvin@42.fr>                         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/08 10:34:01 by spyun         #+#    #+#                 */
+/*   Updated: 2024/11/29 09:31:04 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <limits.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 static size_t	skip_whitespace(const char *str)
 {
@@ -24,20 +26,29 @@ static size_t	skip_whitespace(const char *str)
 	return (i);
 }
 
-static int	check_overflow(long result, int sign, char c)
+static int check_overflow(long result, int sign, char c)
 {
-	if ((result > LONG_MAX / 10)
-		|| (result == LONG_MAX / 10 && (c - '0') > LONG_MAX % 10))
-	{
-		if (sign == 1)
-			return (-1);
-		else
-			return (0);
-	}
-	return (1);
+	long max;
+	long min;
+	long next;
+
+	max = 2147483647;
+	min = -2147483648;
+	next = (result * 10) + (c - '0');
+	if (sign > 0 && next > max)
+		return -1;
+	if (sign < 0 && -next < min)
+		return 0;
+	return 1;
 }
 
-int	ft_atoi(const char *str)
+static void	ft_error(void)
+{
+	ft_putstr_fd("Error\n", STDERR_FILENO);
+	exit(EXIT_FAILURE);
+}
+
+int ft_atoi(const char *str)
 {
 	size_t	i;
 	long	result;
@@ -48,18 +59,17 @@ int	ft_atoi(const char *str)
 	result = 0;
 	sign = 1;
 	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
-	}
+		sign = (str[i++] == '-') ? -1 : 1;
+	if (!str[i])
+		ft_error();
 	while (ft_isdigit(str[i]))
 	{
 		overflow_check = check_overflow(result, sign, str[i]);
 		if (overflow_check != 1)
-			return (overflow_check);
-		result = result * 10 + (str[i] - '0');
-		i++;
+			ft_error();
+		result = result * 10 + (str[i++] - '0');
 	}
+	if (str[i] != '\0')
+		ft_error();
 	return (sign * result);
 }

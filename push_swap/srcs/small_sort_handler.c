@@ -1,51 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   error_handler.c                                    :+:    :+:            */
+/*   small_sort_handler.c                               :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/11/21 09:37:03 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/27 15:17:03 by spyun         ########   odam.nl         */
+/*   Created: 2024/11/25 14:33:58 by spyun         #+#    #+#                 */
+/*   Updated: 2024/11/26 09:29:45 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-#include <stdlib.h>
-#include <unistd.h>
 
-void	ft_error(void)
+void	ft_sort_three(t_stack **a)
 {
-	ft_putstr_fd("Error\n", STDERR_FILENO);
-	exit(EXIT_FAILURE);
-}
-
-void	ft_free(t_stack **lst)
-{
-	t_stack	*temp;
-
-	if (!lst || !*lst)
-		return ;
-	while (*lst)
+	if (ft_min(*a) == (*a)->nbr)
 	{
-		temp = (*lst)->next;
-		(*lst)->nbr = 0;
-		free(*lst);
-		*lst = temp;
+		ft_rra(a, 0);
+		ft_sa(a, 0);
 	}
-}
-
-void	ft_free_split(char **split)
-{
-	int	i;
-
-	if (!split)
-		return ;
-	i = 0;
-	while (split[i])
+	else if (ft_max(*a) == (*a)->nbr)
 	{
-		free(split[i]);
-		i++;
+		ft_ra(a, 0);
+		if (!ft_is_sorted(*a))
+			ft_sa(a, 0);
 	}
-	free(split);
+	else
+	{
+		if (ft_find_index(*a, ft_max(*a)) == 1)
+			ft_rra(a, 0);
+		else
+			ft_sa(a, 0);
+	}
 }
