@@ -6,66 +6,66 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 15:01:04 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/27 15:17:13 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 15:47:29 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int	ft_rotate_type_ab(t_stack *a, t_stack *b)
+int	ft_rotate_type_ab(t_stack *stack_a, t_stack *stack_b)
 {
 	int		i;
 	int		moves;
-	t_stack	*tmp;
+	t_stack	*current_node;
 
-	if (!a || !b)
+	if (!stack_a || !stack_b)
 		return (-1);
-	tmp = a;
+	current_node = stack_a;
 	i = -1;
-	while (tmp)
+	while (current_node)
 	{
-		moves = ft_calc_rarb_b(a, b, tmp->nbr);
+		moves = ft_calc_rarb_b(stack_a, stack_b, current_node->nbr);
 		if (moves != -1 && (i == -1 || i > moves))
 			i = moves;
-		moves = ft_calc_rrarrb_b(a, b, tmp->nbr);
+		moves = ft_calc_rrarrb_b(stack_a, stack_b, current_node->nbr);
 		if (moves != -1 && (i == -1 || i > moves))
 			i = moves;
-		moves = ft_calc_rarrb_b(a, b, tmp->nbr);
+		moves = ft_calc_rarrb_b(stack_a, stack_b, current_node->nbr);
 		if (moves != -1 && (i == -1 || i > moves))
 			i = moves;
-		moves = ft_calc_rrarb_b(a, b, tmp->nbr);
+		moves = ft_calc_rrarb_b(stack_a, stack_b, current_node->nbr);
 		if (moves != -1 && (i == -1 || i > moves))
 			i = moves;
-		tmp = tmp->next;
+		current_node = current_node->next;
 	}
 	return (i);
 }
 
-int	ft_rotate_type_ba(t_stack *a, t_stack *b)
+int	ft_rotate_type_ba(t_stack *stack_a, t_stack *stack_b)
 {
 	int		i;
 	int		moves;
-	t_stack	*tmp;
+	t_stack	*current_node;
 
-	if (!a || !b)
+	if (!stack_a || !stack_b)
 		return (-1);
-	tmp = b;
+	current_node = stack_b;
 	i = -1;
-	while (tmp)
+	while (current_node)
 	{
-		moves = ft_calc_rarb_a(a, b, tmp->nbr);
+		moves = ft_calc_rarb_a(stack_a, stack_b, current_node->nbr);
 		if (moves != -1 && (i == -1 || i > moves))
 			i = moves;
-		moves = ft_calc_rrarrb_a(a, b, tmp->nbr);
+		moves = ft_calc_rrarrb_a(stack_a, stack_b, current_node->nbr);
 		if (moves != -1 && (i == -1 || i > moves))
 			i = moves;
-		moves = ft_calc_rarrb_a(a, b, tmp->nbr);
+		moves = ft_calc_rarrb_a(stack_a, stack_b, current_node->nbr);
 		if (moves != -1 && (i == -1 || i > moves))
 			i = moves;
-		moves = ft_calc_rrarb_a(a, b, tmp->nbr);
+		moves = ft_calc_rrarb_a(stack_a, stack_b, current_node->nbr);
 		if (moves != -1 && (i == -1 || i > moves))
 			i = moves;
-		tmp = tmp->next;
+		current_node = current_node->next;
 	}
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/20 15:22:25 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/29 11:51:00 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 15:28:00 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@
 
 int	main(int argc, char **argv)
 {
-	t_stack		*a;
+	t_stack		*stack_a;
 
 	if (argc < 2 || (argc == 2 && !*argv[1]))
 		exit(EXIT_SUCCESS);
-	a = ft_parse_input(argc, argv);
-	if (!a || ft_has_duplicates(a))
+	stack_a = ft_parse_input(argc, argv);
+	if (!stack_a || ft_has_duplicates(stack_a))
 	{
-		ft_free(&a);
+		ft_free(&stack_a);
 		ft_error();
 	}
-	if (!ft_is_sorted(a))
-		ft_sort(&a);
-	ft_free(&a);
+	if (!ft_is_sorted(stack_a))
+		ft_sort(&stack_a);
+	ft_free(&stack_a);
 	return (EXIT_SUCCESS);
 }

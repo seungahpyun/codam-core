@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 09:37:03 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/29 11:19:54 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 15:21:17 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ void	ft_error(void)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_free(t_stack **lst)
+void	ft_free(t_stack **stack_ptr)
 {
-	t_stack	*temp;
+	t_stack	*next_node;
 
-	if (!lst || !*lst)
+	if (!stack_ptr || !*stack_ptr)
 		return ;
-	while (*lst)
+	while (*stack_ptr)
 	{
-		temp = (*lst)->next;
-		(*lst)->nbr = 0;
-		free(*lst);
-		*lst = temp;
+		next_node = (*stack_ptr)->next;
+		(*stack_ptr)->nbr = 0;
+		free(*stack_ptr);
+		*stack_ptr = next_node;
 	}
 }
 

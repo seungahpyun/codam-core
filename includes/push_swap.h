@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/20 16:33:42 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/27 10:46:31 by spyun         ########   odam.nl         */
+/*   Updated: 2024/11/29 16:58:52 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ bool	ft_has_duplicates(t_stack *a);
 bool	ft_is_sorted(t_stack *a);
 bool	is_valid_number(char *str);
 
-void	ft_sa(t_stack **a, int j);
-void	ft_sb(t_stack **b, int j);
-void	ft_ss(t_stack **a, t_stack **b, int j);
-void	ft_pa(t_stack **a, t_stack **b, int j);
-void	ft_pb(t_stack **a, t_stack **b, int j);
-void	ft_ra(t_stack **a, int j);
+void	ft_sa(t_stack **a, int print_flag);
+void	ft_sb(t_stack **b, int print_flag);
+void	ft_ss(t_stack **a, t_stack **b, int print_flag);
+void	ft_pa(t_stack **a, t_stack **b, int print_flag);
+void	ft_pb(t_stack **a, t_stack **b, int print_flag);
+void	ft_ra(t_stack **a, int print_flag);
 void	ft_rb(t_stack **b, int j);
 void	ft_rr(t_stack **a, t_stack **b, int j);
 void	ft_rra(t_stack **a, int j);
