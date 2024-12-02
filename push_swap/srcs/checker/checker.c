@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/29 17:08:29 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/29 17:25:44 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/02 09:49:04 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ int	main(int argc, char **argv)
 	stack_b = NULL;
 	ft_read_and_execute(&stack_a, &stack_b);
 	if (ft_is_sorted(stack_a) && !stack_b)
-		ft_putendl_fd("OK", 1);
+		ft_putendl_fd("OK", STDOUT_FILENO);
 	else
-		ft_putendl_fd("KO", 1);
+		ft_putendl_fd("KO", STDERR_FILENO);
 	ft_free(&stack_a);
 	ft_free(&stack_b);
 	return (EXIT_SUCCESS);

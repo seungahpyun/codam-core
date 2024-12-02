@@ -6,44 +6,44 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 09:47:12 by spyun         #+#    #+#                 */
-/*   Updated: 2024/11/29 15:13:16 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/02 08:28:09 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 #include <stdbool.h>
 
-bool	ft_has_duplicates(t_stack *a)
+bool	ft_has_duplicates(t_stack *stack)
 {
 	t_stack	*temp;
 
-	while (a)
+	while (stack)
 	{
-		temp = a->next;
+		temp = stack->next;
 		while (temp)
 		{
-			if (a->nbr == temp->nbr)
+			if (stack->nbr == temp->nbr)
 				return (true);
 			temp = temp->next;
 		}
-		a = a->next;
+		stack = stack->next;
 	}
 	return (false);
 }
 
-bool	ft_is_sorted(t_stack *a)
+bool	ft_is_sorted(t_stack *stack)
 {
 	int	i;
 
-	if (!a)
+	if (!stack)
 		return (true);
-	i = a->nbr;
-	while (a)
+	i = stack->nbr;
+	while (stack)
 	{
-		if (i > a->nbr)
+		if (i > stack->nbr)
 			return (false);
-		i = a->nbr;
-		a = a->next;
+		i = stack->nbr;
+		stack = stack->next;
 	}
 	return (true);
 }
