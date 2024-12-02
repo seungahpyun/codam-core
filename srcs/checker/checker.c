@@ -6,11 +6,12 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/29 17:08:29 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/02 09:49:04 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/02 11:03:32 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/push_swap.h"
+#include "get_next_line/get_next_line.h" 
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -44,46 +45,18 @@ static void	ft_execute_instruction(t_stack **stack_a,
 		ft_error();
 }
 
-static int	ft_handle_instruction(t_stack **stack_a,
-								t_stack **stack_b,
-								char *instr,
-								int *i)
-{
-	if (*i == 0)
-		return (1);
-	instr[*i] = '\0';
-	ft_execute_instruction(stack_a, stack_b, instr);
-	*i = 0;
-	return (0);
-}
-
 static void	ft_read_and_execute(t_stack **stack_a, t_stack **stack_b)
 {
-	char	instr[4];
-	int		i;
-	int		ret;
-	char	c;
+	char	*line;
 
-	i = 0;
-	ret = read(0, &c, 1);
-	while (ret > 0)
+	while (1)
 	{
-		if (c == '\n')
-		{
-			if (ft_handle_instruction(stack_a, stack_b, instr, &i))
-			{
-				ret = read(0, &c, 1);
-				continue ;
-			}
-		}
-		else if (i < 3)
-			instr[i++] = c;
-		else
-			ft_error();
-		ret = read(0, &c, 1);
+		line = get_next_line(STDIN_FILENO);
+		if (!line)
+			break ;
+		ft_execute_instruction(stack_a, stack_b, line);
+		free(line);
 	}
-	if (ret < 0 || i != 0)
-		ft_error();
 }
 
 int	main(int argc, char **argv)
