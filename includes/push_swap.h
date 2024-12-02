@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/20 16:33:42 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/02 15:55:32 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/02 17:04:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PUSH_SWAP_H
 
 # include <stdbool.h>
-# include <limits.h>
 # include "../libft/libft.h"
 
 typedef struct s_stack
