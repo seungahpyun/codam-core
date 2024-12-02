@@ -8,7 +8,6 @@ INC_DIR = includes
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-# Main program source files
 SRC = cost_calculator_a.c \
 	cost_calculator_b.c \
 	error_handler.c \
