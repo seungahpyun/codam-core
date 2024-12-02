@@ -1,16 +1,14 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-
 NAME = push_swap
 BONUS = checker
-
 SRC_DIR = srcs
 OBJ_DIR = obj
 INC_DIR = includes
 LIBFT_DIR = libft
-
 LIBFT = $(LIBFT_DIR)/libft.a
 
+# Main program source files
 SRC = cost_calculator_a.c \
 	cost_calculator_b.c \
 	error_handler.c \
@@ -27,53 +25,45 @@ SRC = cost_calculator_a.c \
 	sort_helpers.c \
 	stack_utils.c \
 	swap_operations.c \
-	validation_handler.c \
+	validation_handler.c
 
 BONUS_SRC = checker.c
-
-COMMON_SRC = cost_calculator_a.c \
-	cost_calculator_b.c \
-	error_handler.c \
-	index_utils.c \
-	input_handler.c \
-	push_operations.c \
-	reverse_operations.c \
-	rotate_operations.c \
-	rotation_applier.c \
-	rotation_type_checker.c \
-	small_sort_handler.c \
-	sort_handler.c \
-	sort_helpers.c \
-	stack_utils.c \
-	swap_operations.c \
-	validation_handler.c \
+GNL_SRC = get_next_line.c
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 BONUS_SRCS = $(addprefix $(SRC_DIR)/checker/, $(BONUS_SRC))
-COMMON_SRCS = $(addprefix $(SRC_DIR)/, $(COMMON_SRC))
+GNL_SRCS = $(addprefix $(SRC_DIR)/checker/get_next_line/, $(GNL_SRC))
+
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 BONUS_OBJS = $(addprefix $(OBJ_DIR)/checker/, $(BONUS_SRC:.c=.o))
-COMMON_OBJS = $(addprefix $(OBJ_DIR)/, $(COMMON_SRC:.c=.o))
+GNL_OBJS = $(addprefix $(OBJ_DIR)/checker/get_next_line/, $(GNL_SRC:.c=.o))
+SHARED_OBJS = $(filter-out $(OBJ_DIR)/push_swap.o, $(OBJS))
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-bonus: $(LIBFT) $(COMMON_OBJS) $(BONUS_OBJS)
-	$(CC) $(CFLAGS) $(COMMON_OBJS) $(BONUS_OBJS) $(LIBFT) -o $(BONUS)
+bonus: $(LIBFT) $(SHARED_OBJS) $(BONUS_OBJS) $(GNL_OBJS)
+	$(CC) $(CFLAGS) $(SHARED_OBJS) $(BONUS_OBJS) $(GNL_OBJS) $(LIBFT) -o $(BONUS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR) -c $< -o $@
 
 $(OBJ_DIR)/checker/%.o: $(SRC_DIR)/checker/%.c | $(OBJ_DIR)/checker
-	$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR) -I$(SRC_DIR)/checker/get_next_line -c $< -o $@
+
+$(OBJ_DIR)/checker/get_next_line/%.o: $(SRC_DIR)/checker/get_next_line/%.c | $(OBJ_DIR)/checker/get_next_line
+	$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR) -I$(SRC_DIR)/checker/get_next_line -c $< -o $@
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/checker:
 	mkdir -p $(OBJ_DIR)/checker
+
+$(OBJ_DIR)/checker/get_next_line:
+	mkdir -p $(OBJ_DIR)/checker/get_next_line
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
