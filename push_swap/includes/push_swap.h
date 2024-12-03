@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/20 16:33:42 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/02 17:04:13 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/03 10:54:30 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ t_stack	*ft_parse_input(int argc, char **argv);
 
 bool	ft_has_duplicates(t_stack *a);
 bool	ft_is_sorted(t_stack *a);
-bool	is_valid_number(char *str);
+bool	ft_is_valid_number(const char *str);
+bool	ft_is_int_range(const char *str);
 
 void	ft_sa(t_stack **stack_a, int print_flag);
 void	ft_sb(t_stack **stack_b, int print_flag);
@@ -57,9 +58,13 @@ int		ft_min(t_stack *a);
 int		ft_max(t_stack *a);
 
 void	ft_sort_small_stack(t_stack **stack_a);
-void	ft_align_stack(t_stack **stack_a);
 void	ft_sort_three(t_stack **stack_a);
 void	ft_sort(t_stack **stack_a);
+
+void	ft_move_to_b_except_three(t_stack **stack_a, t_stack **stack_b);
+void	ft_move_back_to_a(t_stack **stack_a, t_stack **stack_b);
+t_stack	*ft_initialize_stack_b(t_stack **stack_a);
+void	ft_align_stack(t_stack **stack_a);
 
 int		ft_calc_rarb_a(t_stack *stack_a, t_stack *stack_b, int c);
 int		ft_calc_rarrb_a(t_stack *stack_a, t_stack *stack_b, int c);
