@@ -19,7 +19,6 @@ SRC = cost_calculator_a.c \
 	rotate_operations.c \
 	rotation_applier.c \
 	rotation_type_checker.c \
-	small_sort_handler.c \
 	sort_handler.c \
 	sort_helpers.c \
 	stack_utils.c \

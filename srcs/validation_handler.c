@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 09:47:12 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/03 08:54:01 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/03 09:11:59 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	ft_is_sorted(t_stack *stack)
 	return (true);
 }
 
-bool	ft_is_valid_number(char *str)
+bool	ft_is_valid_number(const char *str)
 {
 	int	i;
 
