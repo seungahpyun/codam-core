@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 08:53:50 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/03 08:43:12 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/03 08:48:54 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_stack	*ft_process_single_input(char **argv)
 
 	stack_a = NULL;
 	i = 0;
-	split_array = ft_split(argv[1], 32);
+	split_array = ft_split(argv[1], ' ');
 	if (!split_array)
 		ft_error();
 	while (split_array[i])
