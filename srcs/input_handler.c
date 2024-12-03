@@ -6,12 +6,12 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 08:53:50 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/02 17:04:17 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/03 08:43:12 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-# include <limits.h>
+#include <limits.h>
 
 static int	check_int_range(const char *str)
 {
