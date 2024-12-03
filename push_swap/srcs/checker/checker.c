@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/29 17:08:29 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/02 11:03:32 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/03 16:15:14 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,27 @@ static void	ft_execute_instruction(t_stack **stack_a,
 								t_stack **stack_b,
 								char *line)
 {
-	if (!ft_strncmp(line, "sa", 2))
+	if (!ft_strncmp(line, "sa", 2) && ft_strlen(line) == 3)
 		ft_sa(stack_a, 1);
-	else if (!ft_strncmp(line, "sb", 2))
+	else if (!ft_strncmp(line, "sb", 2) && ft_strlen(line) == 3)
 		ft_sb(stack_b, 1);
-	else if (!ft_strncmp(line, "ss", 2))
+	else if (!ft_strncmp(line, "ss", 2) && ft_strlen(line) == 3)
 		ft_ss(stack_a, stack_b, 1);
-	else if (!ft_strncmp(line, "pa", 2))
+	else if (!ft_strncmp(line, "pa", 2) && ft_strlen(line) == 3)
 		ft_pa(stack_a, stack_b, 1);
-	else if (!ft_strncmp(line, "pb", 2))
+	else if (!ft_strncmp(line, "pb", 2) && ft_strlen(line) == 3)
 		ft_pb(stack_a, stack_b, 1);
-	else if (!ft_strncmp(line, "ra", 2))
+	else if (!ft_strncmp(line, "ra", 2) && ft_strlen(line) == 3)
 		ft_ra(stack_a, 1);
-	else if (!ft_strncmp(line, "rb", 2))
+	else if (!ft_strncmp(line, "rb", 2) && ft_strlen(line) == 3)
 		ft_rb(stack_b, 1);
-	else if (!ft_strncmp(line, "rr", 2))
+	else if (!ft_strncmp(line, "rr", 2) && ft_strlen(line) == 3)
 		ft_rr(stack_a, stack_b, 1);
-	else if (!ft_strncmp(line, "rra", 3))
+	else if (!ft_strncmp(line, "rra", 3) && ft_strlen(line) == 4)
 		ft_rra(stack_a, 1);
-	else if (!ft_strncmp(line, "rrb", 3))
+	else if (!ft_strncmp(line, "rrb", 3) && ft_strlen(line) == 4)
 		ft_rrb(stack_b, 1);
-	else if (!ft_strncmp(line, "rrr", 3))
+	else if (!ft_strncmp(line, "rrr", 3) && ft_strlen(line) == 4)
 		ft_rrr(stack_a, stack_b, 1);
 	else
 		ft_error();
