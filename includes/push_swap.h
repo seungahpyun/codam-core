@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/20 16:33:42 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/02 17:04:13 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/03 08:54:33 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ t_stack	*ft_parse_input(int argc, char **argv);
 
 bool	ft_has_duplicates(t_stack *a);
 bool	ft_is_sorted(t_stack *a);
-bool	is_valid_number(char *str);
+bool	ft_is_valid_number(char *str);
+bool	ft_is_int_range(const char *str);
 
 void	ft_sa(t_stack **stack_a, int print_flag);
 void	ft_sb(t_stack **stack_b, int print_flag);
