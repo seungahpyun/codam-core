@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/04 09:58:18 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/04 17:37:00 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/04 18:41:36 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	execute_cmd(char *cmd, char **envp)
 	char	**cmd_args;
 	char	*cmd_path;
 
-	cmd_args = ft_split(cmd, ' ');
+	cmd_args = parse_cmd(cmd);
 	if (!cmd_args)
 		error_exit("ERROR : split failed", STDERR_FILENO);
 	if (!cmd_args[0])

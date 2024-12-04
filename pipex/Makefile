@@ -7,7 +7,8 @@ SRCS_DIR = srcs/
 SRCS = main.c \
 	check_args.c \
 	pipe_handler.c \
-	utils.c
+	utils.c \
+	cmd_parser.c
 SRCS_PATH = $(addprefix $(SRCS_DIR), $(SRCS))
 
 OBJS = $(SRCS_PATH:.c=.o)

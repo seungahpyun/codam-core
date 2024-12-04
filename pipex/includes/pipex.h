@@ -6,16 +6,18 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/04 09:51:45 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/04 13:21:59 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/04 18:44:26 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
+char 	**parse_cmd(char *str);
 void	error_exit(char *error_msg, int status);
 char	*find_path(char *cmd, char **envp);
 void	execute_cmd(char *cmd, char **envp);
+void	free_array(char **array);
 
 void	child_process(char **argv, char **envp, int *pipe_fd);
 void	parent_process(char **argv, char **envp, int *pipe_fd);
