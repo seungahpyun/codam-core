@@ -1,7 +1,7 @@
 NAME = pipex
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 SRCS_DIR = srcs/
 SRCS = main.c \
