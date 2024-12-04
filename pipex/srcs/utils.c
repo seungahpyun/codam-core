@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/04 09:58:18 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/04 14:15:16 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/04 17:37:00 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ void	error_exit(char *error_msg, int status)
 {
 	perror(error_msg);
 	exit(status);
+}
+
+void	free_array(char **array)
+{
+	int	i;
+
+	if (!array)
+		return ;
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	free(array);
 }
 
 char	*get_cmd_path(char **paths, char *cmd)
@@ -73,26 +85,17 @@ void	execute_cmd(char *cmd, char **envp)
 		error_exit("ERROR : split failed", STDERR_FILENO);
 	if (!cmd_args[0])
 	{
-		free(cmd_args);
-		perror("ERROR : empty command");
-		exit(127);
+		free_array(cmd_args);
+		error_exit("ERROR : empty command", 127);
 	}
 	cmd_path = find_path(cmd_args[0], envp);
 	if (!cmd_path)
 	{
-		while (*cmd_args)
-			free(*cmd_args++);
-		free(cmd_args);
-		perror("ERROR : command not found");
-		exit(127);
+		free_array(cmd_args);
+		error_exit("ERROR : command not found", 127);
 	}
-	if (execve(cmd_path, cmd_args, envp) == -1)
-	{
-		free(cmd_path);
-		while (*cmd_args)
-			free(*cmd_args++);
-		free(cmd_args);
-		perror("ERROR : execve failed");
-		exit(126);
-	}
+	execve(cmd_path, cmd_args, envp);
+	free(cmd_path);
+	free_array(cmd_args);
+	error_exit("ERROR : execve failed", 126);
 }

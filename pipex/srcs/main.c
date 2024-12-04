@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/04 09:51:48 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/04 14:16:02 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/04 17:16:31 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int	main(int argc, char **argv, char **envp)
 			if (exit_status != 0)
 				last_status = exit_status;
 		}
+	}
 	return (last_status);
 }

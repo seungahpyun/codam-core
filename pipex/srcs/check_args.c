@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/04 09:55:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/04 13:27:18 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/04 17:23:23 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 void	check_infile(char *infile)
 {
 	if (access(infile, F_OK) == -1)
-		error_exit("ERROR : infile does not exist", EXIT_FAILURE);
+		error_exit("ERROR : infile does not exist", 0);
 	if (access(infile, R_OK) == -1)
-		error_exit("ERROR : infile is not readable", STDERR_FILENO);
+		error_exit("ERROR : infile is not readable", 0);
 }
 
 void	check_outfile(char *outfile)
