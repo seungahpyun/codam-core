@@ -6,7 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/04 09:58:18 by spyun         #+#    #+#                 */
+<<<<<<< Updated upstream
 /*   Updated: 2024/12/04 18:41:36 by spyun         ########   odam.nl         */
+=======
+/*   Updated: 2024/12/05 08:33:08 by spyun         ########   odam.nl         */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
