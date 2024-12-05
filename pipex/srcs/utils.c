@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/04 09:58:18 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/05 08:37:13 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/05 10:07:49 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	error_exit(char *error_msg, int status)
+void	error_exit(void)
 {
 	perror("\033[31mError");
 	exit(EXIT_FAILURE);
@@ -82,20 +82,20 @@ void	execute_cmd(char *cmd, char **envp)
 
 	cmd_args = parse_cmd(cmd);
 	if (!cmd_args)
-		error_exit("ERROR : split failed", STDERR_FILENO);
+		error_exit();
 	if (!cmd_args[0])
 	{
 		free_array(cmd_args);
-		error_exit("ERROR : empty command", 127);
+		error_exit();
 	}
 	cmd_path = find_path(cmd_args[0], envp);
 	if (!cmd_path)
 	{
 		free_array(cmd_args);
-		error_exit("ERROR : command not found", 127);
+		error_exit();
 	}
 	execve(cmd_path, cmd_args, envp);
 	free(cmd_path);
 	free_array(cmd_args);
-	error_exit("ERROR : execve failed", 126);
+	error_exit();
 }
