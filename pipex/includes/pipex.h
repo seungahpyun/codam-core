@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/04 09:51:45 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/05 10:08:05 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/05 16:23:36 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PIPEX_H
 
 char 	**parse_cmd(char *str);
-void	error_exit(void);
+void	error_exit(int status);
 char	*find_path(char *cmd, char **envp);
 void	execute_cmd(char *cmd, char **envp);
 void	free_array(char **array);

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/04 09:51:48 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/04 17:16:31 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/05 16:21:29 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,12 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	int		status;
-	pid_t	wpid;
-	int		last_status;
-	int		exit_status;
+	int status;
 
-	last_status = 0;
 	check_args(argc, argv);
 	create_pipe(argv, envp);
-	while ((wpid = wait(&status)) > 0)
-	{
-		if (WIFEXITED(status))
-		{
-			exit_status = WEXITSTATUS(status);
-			if (exit_status != 0)
-				last_status = exit_status;
-		}
-	}
-	return (last_status);
+	wait(&status);
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (WEXITSTATUS(status));
 }

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/04 10:26:37 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/05 10:07:28 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/05 16:23:58 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	child_process(char **argv, char **envp, int *pipe_fd)
 
 	infile_fd = open(argv[1], O_RDONLY);
 	if (infile_fd == -1)
-		error_exit();
+		error_exit(EXIT_FAILURE);
 	dup2(infile_fd, STDIN_FILENO);
 	dup2(pipe_fd[1], STDOUT_FILENO);
 	close(pipe_fd[0]);
@@ -36,7 +36,7 @@ void	parent_process(char **argv, char **envp, int *pipe_fd)
 
 	outfile_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile_fd == -1)
-		error_exit();
+		error_exit(EXIT_FAILURE);
 	dup2(pipe_fd[0], STDIN_FILENO);
 	dup2(outfile_fd, STDOUT_FILENO);
 	close(pipe_fd[0]);
@@ -51,10 +51,10 @@ void	create_pipe(char **argv, char **envp)
 	pid_t	pid;
 
 	if (pipe(pipe_fd) == -1)
-		error_exit();
+		error_exit(EXIT_FAILURE);
 	pid = fork();
 	if (pid == -1)
-		error_exit();
+		error_exit(EXIT_FAILURE);
 	if (pid == 0)
 		child_process(argv, envp, pipe_fd);
 	else
