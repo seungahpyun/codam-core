@@ -6,11 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/04 09:58:18 by spyun         #+#    #+#                 */
-<<<<<<< Updated upstream
-/*   Updated: 2024/12/04 18:41:36 by spyun         ########   odam.nl         */
-=======
-/*   Updated: 2024/12/05 08:33:08 by spyun         ########   odam.nl         */
->>>>>>> Stashed changes
+/*   Updated: 2024/12/05 08:37:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +18,8 @@
 
 void	error_exit(char *error_msg, int status)
 {
-	perror(error_msg);
-	exit(status);
+	perror("\033[31mError");
+	exit(EXIT_FAILURE);
 }
 
 void	free_array(char **array)
