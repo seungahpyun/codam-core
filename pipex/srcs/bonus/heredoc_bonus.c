@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:16:48 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 10:58:13 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/09 11:44:27 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,3 @@ void	handle_here_doc(t_pipex *pipex)
 		error_exit("Dup2 failed\n");
 	close(temp_pipe[0]);
 }
-
