@@ -4,7 +4,6 @@ BONUS = pipex_bonus
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
-# Directories
 SRCS_DIR = srcs/
 MAND_DIR = $(SRCS_DIR)mandatory/
 BONUS_DIR = $(SRCS_DIR)bonus/
@@ -12,7 +11,6 @@ INCLUDES = -I includes/ -I libft/get_next_line -I libft/libft
 LIBFT_DIR = libft/libft/
 GNL_DIR = libft/get_next_line/
 
-# Mandatory source files
 MAND_SRCS = main.c \
 	check_args.c \
 	execute.c \
@@ -25,7 +23,6 @@ MAND_SRCS = main.c \
 MAND_SRCS_PATH = $(addprefix $(MAND_DIR), $(MAND_SRCS))
 MAND_OBJS = $(MAND_SRCS_PATH:.c=.o)
 
-# Bonus source files
 BONUS_SRCS = main_bonus.c \
 	execute_bonus.c \
 	heredoc_bonus.c \
@@ -39,12 +36,10 @@ BONUS_SRCS = main_bonus.c \
 BONUS_SRCS_PATH = $(addprefix $(BONUS_DIR), $(BONUS_SRCS))
 BONUS_OBJS = $(BONUS_SRCS_PATH:.c=.o)
 
-# Get Next Line
 GNL_SRCS = get_next_line.c
 GNL_SRCS_PATH = $(addprefix $(GNL_DIR), $(GNL_SRCS))
 GNL_OBJS = $(GNL_SRCS_PATH:.c=.o)
 
-# Libft
 LIBFT = $(LIBFT_DIR)libft.a
 
 all: $(NAME)
