@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:56:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 13:53:55 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/09 15:20:43 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,19 @@ static char	*get_cmd_path(char **paths, char *cmd)
 	int		i;
 
 	i = 0;
+	if (!cmd || !paths)
+		return (NULL);
 	while (paths[i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
+		if (!part_path)
+			return (NULL);
 		path = ft_strjoin(part_path, cmd);
 		free(part_path);
+		if (!path)
+			return (NULL);
 		if (access(path, F_OK | X_OK) == 0)
-		{
-			while (paths[i])
-				free(paths[i++]);
-			free(paths);
 			return (path);
-		}
 		free(path);
 		i++;
 	}
@@ -42,6 +43,10 @@ char	*find_path(char *cmd, char **envp)
 	char	**paths;
 	char	*path;
 
+	if (!cmd || !envp)
+		return (NULL);
+	if (access(cmd, F_OK | X_OK) == 0)
+		return (ft_strdup(cmd));
 	while (*envp && ft_strncmp("PATH=", *envp, 5))
 		envp++;
 	if (!*envp)
@@ -50,6 +55,7 @@ char	*find_path(char *cmd, char **envp)
 	if (!paths)
 		return (NULL);
 	path = get_cmd_path(paths, cmd);
+	free_array(paths);
 	return (path);
 }
 

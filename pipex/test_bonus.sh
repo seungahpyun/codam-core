@@ -1,99 +1,148 @@
 #!/bin/bash
 
+# Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
 NC='\033[0m'
 
-function run_test() {
-    local infile="$1"
-    local cmd1="$2"
-    local cmd2="$3"
-    local test_name="$4"
+# Executable and test files
+PIPEX="./pipex_bonus"
+INPUT_FILE="input.txt"
+OUTPUT_FILE="output.txt"
+EXPECTED_FILE="expected.txt"
+HERE_DOC_FILE="here_doc_out.txt"
 
-    echo -e "\n=== Test $test_name ==="
-    echo "Command: < $infile $cmd1 | $cmd2"
+# Cleanup function
+cleanup() {
+    rm -f "$INPUT_FILE" "$OUTPUT_FILE" "$EXPECTED_FILE" "$HERE_DOC_FILE"
+    touch "$OUTPUT_FILE"
+    touch "$EXPECTED_FILE"
+}
 
-    # Run shell command
-    eval "< $infile $cmd1 | $cmd2" > shell_out 2> shell_err
-    SHELL_STATUS=$?
+# Error handling
+handle_error() {
+    echo -e "${RED}Error: $1${NC}"
+    cleanup
+    exit 1
+}
 
-    # Run pipex
-    ./pipex "$infile" "$cmd1" "$cmd2" pipex_out 2> pipex_err
-    PIPEX_STATUS=$?
+# Test setup
+setup_test_files() {
+    echo "Hello World!" > "$INPUT_FILE"
+    echo "This is a test file" >> "$INPUT_FILE"
+    echo "Testing multiple pipes" >> "$INPUT_FILE"
+    echo "1234567890" >> "$INPUT_FILE"
+    echo "ABCDEFGHIJKLMNOPQRSTUVWXYZ" >> "$INPUT_FILE"
+}
 
-    # Compare output files
-    if diff shell_out pipex_out >/dev/null 2>&1; then
-        echo -e "${GREEN}Outputs match ✓${NC}"
+# Function to compare outputs
+compare_outputs() {
+    if diff "$OUTPUT_FILE" "$EXPECTED_FILE" > /dev/null; then
+        echo -e "${GREEN}Test passed!${NC}"
+        return 0
     else
-        echo -e "${RED}Outputs differ ✗${NC}"
-        echo "Expected output:"
-        cat shell_out
-        echo "Your output:"
-        cat pipex_out
-    fi
-
-    # For errors, just check if both return non-zero status
-    if [ $SHELL_STATUS -eq 0 ] && [ $PIPEX_STATUS -eq 0 ]; then
-        echo -e "${GREEN}Both commands succeeded ✓${NC}"
-    elif [ $SHELL_STATUS -ne 0 ] && [ $PIPEX_STATUS -ne 0 ]; then
-        echo -e "${GREEN}Both commands failed as expected ✓${NC}"
-    else
-        echo -e "${RED}Exit status mismatch (shell: $SHELL_STATUS, pipex: $PIPEX_STATUS) ✗${NC}"
+        echo -e "${RED}Test failed!${NC}"
+        echo -e "${YELLOW}Expected output:${NC}"
+        cat "$EXPECTED_FILE"
+        echo -e "${YELLOW}Your output:${NC}"
+        cat "$OUTPUT_FILE"
+        echo -e "${YELLOW}Diff:${NC}"
+        diff "$EXPECTED_FILE" "$OUTPUT_FILE"
+        return 1
     fi
 }
 
-# Setup
-make
-mkdir -p test_files
-printf "Hello World\nThis is a test\nLine 3\n" > test_files/input.txt
-printf "Random\nData\nFor\nTesting\n" > test_files/random.txt
-echo "Creating test files..." > test_files/with_permission
-chmod 000 test_files/with_permission
+# Test multiple pipes
+test_multiple_pipes() {
+    echo -e "\n${YELLOW}Testing multiple pipes...${NC}"
 
-# Basic functionality tests
-echo -e "\n=== Basic Functionality Tests ==="
-run_test test_files/input.txt "cat" "wc -l" "basic cat and wc"
-run_test test_files/input.txt "grep test" "wc -w" "grep and wc"
-run_test test_files/random.txt "sort" "uniq" "sort and uniq"
+    # Test 1: Three commands
+    echo -e "\nTest 1: cat | grep | wc"
+    > "$OUTPUT_FILE"
+    > "$EXPECTED_FILE"
+    < "$INPUT_FILE" cat | grep a | wc -l > "$EXPECTED_FILE"
+    "$PIPEX" "$INPUT_FILE" "cat" "grep a" "wc -l" "$OUTPUT_FILE"
+    compare_outputs
 
-# Error handling tests
-echo -e "\n=== Error Handling Tests ==="
-echo "Testing non-existent input file..."
-./pipex "nonexistent.txt" "cat" "wc" out 2>/dev/null
-if [ $? -ne 0 ]; then
-    echo -e "${GREEN}Error handled correctly ✓${NC}"
-else
-    echo -e "${RED}Error not handled ✗${NC}"
-fi
+    # Test 2: Four commands with simplified tr
+    echo -e "\nTest 2: cat | grep | tr | wc"
+    > "$OUTPUT_FILE"
+    > "$EXPECTED_FILE"
+    < "$INPUT_FILE" cat | grep e | tr e E | wc -l > "$EXPECTED_FILE"
+    "$PIPEX" "$INPUT_FILE" "cat" "grep e" "tr e E" "wc -l" "$OUTPUT_FILE"
+    compare_outputs
 
-echo "Testing invalid command..."
-./pipex test_files/input.txt "invalidcmd" "wc" out 2>/dev/null
-if [ $? -ne 0 ]; then
-    echo -e "${GREEN}Error handled correctly ✓${NC}"
-else
-    echo -e "${RED}Error not handled ✗${NC}"
-fi
+    # Test 3: Path commands with simplified tr
+    echo -e "\nTest 3: Multiple path commands"
+    > "$OUTPUT_FILE"
+    > "$EXPECTED_FILE"
+    < "$INPUT_FILE" /bin/cat | /usr/bin/grep e | /usr/bin/tr e E > "$EXPECTED_FILE"
+    "$PIPEX" "$INPUT_FILE" "/bin/cat" "/usr/bin/grep e" "/usr/bin/tr e E" "$OUTPUT_FILE"
+    compare_outputs
+}
 
-echo "Testing file permission denied..."
-./pipex test_files/with_permission "cat" "wc" out 2>/dev/null
-if [ $? -ne 0 ]; then
-    echo -e "${GREEN}Error handled correctly ✓${NC}"
-else
-    echo -e "${RED}Error not handled ✗${NC}"
-fi
+# Test here_doc functionality
+test_heredoc() {
+    echo -e "\n${YELLOW}Testing here_doc...${NC}"
 
-# Arguments test
-echo -e "\n=== Arguments Test ==="
-echo "Testing incorrect number of arguments..."
-./pipex "file1" "cmd1" out 2>/dev/null
-if [ $? -ne 0 ]; then
-    echo -e "${GREEN}Error handled correctly ✓${NC}"
-else
-    echo -e "${RED}Error not handled ✗${NC}"
-fi
+    # Test 1: Basic here_doc
+    echo -e "\nTest 1: Basic here_doc"
+    > "$OUTPUT_FILE"
+    > "$EXPECTED_FILE"
+    cat << EOF | grep line | wc -l > "$EXPECTED_FILE"
+line 1
+line 2
+line 3
+EOF
+    "$PIPEX" here_doc LIMITER "grep line" "wc -l" "$OUTPUT_FILE" << EOF
+line 1
+line 2
+line 3
+LIMITER
+EOF
+    compare_outputs
 
-# Cleanup
-rm -f shell_out shell_err pipex_out pipex_err out
-rm -rf test_files
+    # Test 2: here_doc with tr (single character translation)
+    echo -e "\nTest 2: here_doc with multiple commands"
+    > "$OUTPUT_FILE"
+    > "$EXPECTED_FILE"
+    cat << EOF | grep line | tr l L > "$EXPECTED_FILE"
+line 1
+line 2
+line 3
+EOF
+    "$PIPEX" here_doc LIMITER "grep line" "tr l L" "$OUTPUT_FILE" << EOF
+line 1
+line 2
+line 3
+LIMITER
+EOF
+    compare_outputs
+}
 
-echo -e "\nAll tests completed."
+# Main test execution
+main() {
+    # Check if pipex_bonus executable exists
+    if [ ! -f "$PIPEX" ]; then
+        handle_error "pipex_bonus executable not found"
+    fi
+
+    # Initial cleanup
+    cleanup
+
+    # Create test files
+    setup_test_files
+
+    # Run tests
+    test_multiple_pipes
+    test_heredoc
+
+    # Final cleanup
+    cleanup
+
+    echo -e "\n${GREEN}All tests completed!${NC}"
+}
+
+# Run main function
+main
