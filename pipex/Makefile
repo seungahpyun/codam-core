@@ -1,27 +1,61 @@
 NAME = pipex
+BONUS = pipex_bonus
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
+# Directories
 SRCS_DIR = srcs/
-SRCS = main.c \
+MAND_DIR = $(SRCS_DIR)mandatory/
+BONUS_DIR = $(SRCS_DIR)bonus/
+INCLUDES = -I includes/ -I libft/get_next_line -I libft/libft
+LIBFT_DIR = libft/libft/
+GNL_DIR = libft/get_next_line/
+
+# Mandatory source files
+MAND_SRCS = main.c \
 	check_args.c \
-	pipe_handler.c \
+	execute.c \
+	init.c \
 	utils.c \
-	cmd_parser.c
-SRCS_PATH = $(addprefix $(SRCS_DIR), $(SRCS))
+	cmd_parser.c \
+	cmd_utils.c \
+	parse_utils.c
 
-OBJS = $(SRCS_PATH:.c=.o)
+MAND_SRCS_PATH = $(addprefix $(MAND_DIR), $(MAND_SRCS))
+MAND_OBJS = $(MAND_SRCS_PATH:.c=.o)
 
-INCLUDES = -I includes/
+# Bonus source files
+BONUS_SRCS = main_bonus.c \
+	execute_bonus.c \
+	heredoc_bonus.c \
+	init_bonus.c \
+	pipes_bonus.c \
+	utils_bonus.c \
+	cmd_parser_bonus.c \
+	cmd_utils_bonus.c  \
+	parse_utils_bonus.c
 
-LIBFT_DIR = libft/
+BONUS_SRCS_PATH = $(addprefix $(BONUS_DIR), $(BONUS_SRCS))
+BONUS_OBJS = $(BONUS_SRCS_PATH:.c=.o)
+
+# Get Next Line
+GNL_SRCS = get_next_line.c
+GNL_SRCS_PATH = $(addprefix $(GNL_DIR), $(GNL_SRCS))
+GNL_OBJS = $(GNL_SRCS_PATH:.c=.o)
+
+# Libft
 LIBFT = $(LIBFT_DIR)libft.a
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+$(NAME): $(LIBFT) $(MAND_OBJS)
+	$(CC) $(CFLAGS) $(MAND_OBJS) $(LIBFT) -o $(NAME)
+
+bonus: $(BONUS)
+
+$(BONUS): $(LIBFT) $(BONUS_OBJS) $(GNL_OBJS)
+	$(CC) $(CFLAGS) $(BONUS_OBJS) $(GNL_OBJS) $(LIBFT) -o $(BONUS)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
@@ -31,13 +65,15 @@ $(LIBFT):
 
 clean:
 	make -C $(LIBFT_DIR) clean
-	rm -f $(OBJS)
+	rm -f $(MAND_OBJS)
+	rm -f $(BONUS_OBJS)
+	rm -f $(GNL_OBJS)
 
 fclean: clean
 	make -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
+	rm -f $(BONUS)
 
 re: fclean all
 
-.PHONY: all clean fclean re
-
+.PHONY: all bonus clean fclean re

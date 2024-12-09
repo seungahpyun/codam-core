@@ -1,40 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utils.c                                            :+:    :+:            */
+/*   cmd_utils_bonus.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/12/04 09:58:18 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/05 16:22:43 by spyun         ########   odam.nl         */
+/*   Created: 2024/12/09 07:56:54 by spyun         #+#    #+#                 */
+/*   Updated: 2024/12/09 08:08:32 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
-#include "../libft/libft.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include "../includes/pipex_bonus.h"
 
-void	error_exit(int status)
-{
-	perror("\033[31mError");
-	exit(status);
-}
-
-void	free_array(char **array)
-{
-	int	i;
-
-	if (!array)
-		return ;
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-	free(array);
-}
-
-char	*get_cmd_path(char **paths, char *cmd)
+static char	*get_cmd_path(char **paths, char *cmd)
 {
 	char	*path;
 	char	*part_path;
@@ -84,7 +62,7 @@ void	execute_cmd(char *cmd, char **envp)
 	if (!cmd_args || !cmd_args[0])
 	{
 		free_array(cmd_args);
-		error_exit(127);
+		error_exit("Command parsing failed");
 	}
 	if (access(cmd_args[0], F_OK | X_OK) == 0)
 		cmd_path = ft_strdup(cmd_args[0]);
@@ -93,13 +71,12 @@ void	execute_cmd(char *cmd, char **envp)
 	if (!cmd_path)
 	{
 		free_array(cmd_args);
-		error_exit(127);
+		error_exit("Command not found");
 	}
 	if (execve(cmd_path, cmd_args, envp) == -1)
 	{
 		free(cmd_path);
 		free_array(cmd_args);
-		error_exit(127);
+		error_exit("Command execution failed");
 	}
 }
-

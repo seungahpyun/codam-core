@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   cmd_parser.c                                       :+:    :+:            */
+/*   parse_utils.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/12/04 18:39:44 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/05 15:43:47 by spyun         ########   odam.nl         */
+/*   Created: 2024/12/09 10:01:56 by spyun         #+#    #+#                 */
+/*   Updated: 2024/12/09 10:07:02 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 #include "../libft/libft.h"
-#include <stdlib.h>
 
-static int	is_quote(char c)
+int	is_quote(char c)
 {
 	return (c == '"' || c == '\'');
 }
 
-static char	*parse_quoted_arg(char *str, int *i)
+char	*parse_quoted_arg(char *str, int *i)
 {
 	char	quote;
 	int		start;
@@ -34,7 +33,7 @@ static char	*parse_quoted_arg(char *str, int *i)
 	return (ft_strdup(&str[start]));
 }
 
-static char	*parse_non_quoted_arg(char *str, int *i)
+char	*parse_non_quoted_arg(char *str, int *i)
 {
 	char	*token;
 	int		start;
@@ -51,35 +50,13 @@ static char	*parse_non_quoted_arg(char *str, int *i)
 	return (token);
 }
 
-char	**parse_cmd(char *str)
+char	**init_args(char *str, int *arg_count)
 {
 	char	**args;
-	char	*token;
-	int		i;
-	int		arg_count;
 
-	i = 0;
-	arg_count = 0;
+	*arg_count = 0;
 	args = malloc(sizeof(char *) * (ft_strlen(str) + 1));
 	if (!args)
 		return (NULL);
-	while (str[i])
-	{
-		while (str[i] && str[i] == ' ')
-			i++;
-		if (!str[i])
-			break ;
-		if (is_quote(str[i]))
-			token = parse_quoted_arg(str, &i);
-		else
-			token = parse_non_quoted_arg(str, &i);
-		if (!token)
-		{
-			free_array(args);
-			return (NULL);
-		}
-		args[arg_count++] = token;
-	}
-	args[arg_count] = NULL;
 	return (args);
 }
