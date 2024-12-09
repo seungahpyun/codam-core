@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 08:01:55 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 15:11:13 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/09 15:13:49 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*find_path(char *cmd, char **envp)
 	char	**paths;
 	char	*path;
 
-	if(!cmd)
+	if (!cmd)
 		return (NULL);
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (ft_strdup(cmd));
