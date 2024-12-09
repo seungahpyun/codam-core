@@ -12,6 +12,8 @@ run_valgrind_test() {
              --track-origins=yes \
              --verbose \
              --log-file=valgrind-out.txt \
+			 --track-fds=all \
+			 --trace-children=yes \
              $command
 
     if grep -q "definitely lost" valgrind-out.txt; then
@@ -77,3 +79,21 @@ echo "\n=== Cleaning up ==="
 rm -f infile.txt outfile.txt noperm.txt valgrind-out.txt
 
 echo "\n=== All tests completed ==="
+
+
+# ---------------------------------------------------------------
+# # Basic test
+# valgrind --leak-check=full ./pipex infile.txt "ls -l" "wc -l" outfile.txt
+
+# # Test with quotes
+# valgrind --leak-check=full ./pipex infile.txt "grep 'test'" "wc -l" outfile.txt
+
+# # Test invalid command
+# valgrind --leak-check=full ./pipex infile.txt "invalidcmd" "wc -l" outfile.txt
+
+# # For bonus part
+# # Test here_doc
+# valgrind --leak-check=full ./pipex here_doc EOF "cat" "wc -l" outfile.txt
+
+# # Test multiple pipes
+# valgrind --leak-check=full ./pipex infile.txt "ls" "grep test" "wc -l" outfile.txt
