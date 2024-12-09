@@ -2,7 +2,7 @@ NAME = pipex
 BONUS = pipex_bonus
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
 # Directories
 SRCS_DIR = srcs/
