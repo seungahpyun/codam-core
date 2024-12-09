@@ -12,7 +12,7 @@ run_valgrind_test() {
              --track-origins=yes \
              --verbose \
              --log-file=valgrind-out.txt \
-			 --track-fds=all \
+			 --track-fds=yes \
 			 --trace-children=yes \
              $command
 
