@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:16:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 09:59:46 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/09 10:57:54 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static void	handle_first_cmd(t_pipex *pipex, char **envp, int cmd_index)
 		dup2(fd_in, STDIN_FILENO);
 		close(fd_in);
 	}
-	dup2(pipex->pipes[0][1], STDOUT_FILENO);
+	if (cmd_index < pipex->pipe_count)
+		dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO);
 	close_pipes(pipex);
 	execute_cmd(pipex->cmds[cmd_index], envp);
 }
