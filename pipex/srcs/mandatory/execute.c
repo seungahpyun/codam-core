@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:20:59 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 14:03:00 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/09 15:03:14 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ static void	parent_process(t_pipex *pipex, char **envp)
 
 	outfile_fd = open(pipex->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile_fd == -1)
+	{
+		close(pipex->pipe_fd[0]);
+		close(pipex->pipe_fd[1]);
 		error_exit("Output file error");
+	}
 	if (dup2(pipex->pipe_fd[0], STDIN_FILENO) == -1)
 		error_exit("Dup2 failed");
 	if (dup2(outfile_fd, STDOUT_FILENO) == -1)

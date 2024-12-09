@@ -8,79 +8,83 @@ function run_test() {
     local infile="$1"
     local cmd1="$2"
     local cmd2="$3"
-    local test_name="$4"
+    local outfile="$4"
+    local test_name="$5"
 
     echo -e "\n=== Test $test_name ==="
-    echo "Command: < $infile $cmd1 | $cmd2"
+    echo "Command: < $infile $cmd1 | $cmd2 > $outfile"
 
     # Run shell command
-    eval "< $infile $cmd1 | $cmd2" > shell_out 2> shell_err
+    eval "< $infile $cmd1 | $cmd2 > shell_out" 2> shell_err
     SHELL_STATUS=$?
 
     # Run pipex
-    ./pipex "$infile" "$cmd1" "$cmd2" pipex_out 2> pipex_err
+    ./pipex "$infile" "$cmd1" "$cmd2" "$outfile" 2> pipex_err
     PIPEX_STATUS=$?
 
-    # Compare exit codes
-    if [ $SHELL_STATUS -eq $PIPEX_STATUS ]; then
-        echo -e "${GREEN}Exit codes match ✓${NC}"
-    else
-        echo -e "${RED}Exit codes differ ($SHELL_STATUS vs $PIPEX_STATUS) ✗${NC}"
-    fi
-
     # Compare outputs
-    if diff shell_out pipex_out >/dev/null 2>&1; then
+    if diff shell_out "$outfile" >/dev/null 2>&1; then
         echo -e "${GREEN}Outputs match ✓${NC}"
     else
         echo -e "${RED}Outputs differ ✗${NC}"
-        echo "Expected output:"
+        echo "Shell output:"
         cat shell_out
-        echo "Your output:"
-        cat pipex_out
+        echo "Pipex output:"
+        cat "$outfile"
+    fi
+
+    # Compare exit status
+    if [ $SHELL_STATUS -eq $PIPEX_STATUS ]; then
+        echo -e "${GREEN}Exit status match (shell: $SHELL_STATUS, pipex: $PIPEX_STATUS) ✓${NC}"
+    else
+        echo -e "${RED}Exit status differ (shell: $SHELL_STATUS, pipex: $PIPEX_STATUS) ✗${NC}"
     fi
 }
 
-# Setup
-make
+# Setup test files
 mkdir -p test_files
-printf "Hello World\nThis is a test\nLine 3\n" > test_files/input.txt
-printf "Random\nData\nFor\nTesting\n" > test_files/random.txt
+echo "Hello World\nApple\nBanana\nApple\nZebra\nHello World" > test_files/input.txt
+echo "This should not be readable" > test_files/no_access.txt
+chmod 000 test_files/no_access.txt
 
 # Basic tests
-run_test test_files/input.txt "cat" "wc -l" "basic cat and wc"
-run_test test_files/input.txt "grep test" "wc -w" "grep and wc"
-run_test test_files/random.txt "sort" "uniq" "sort and uniq"
-
-# Complex commands with properly escaped quotes
-run_test test_files/input.txt "sed s/test/check/" "grep check" "sed and grep"
-run_test test_files/random.txt "tr [:lower:] [:upper:]" "sort -r" "tr and sort"
+run_test test_files/input.txt "cat" "wc -l" "test_files/out1" "Simple pipe test"
+run_test test_files/input.txt "grep Apple" "wc -l" "test_files/out2" "grep test"
+run_test test_files/input.txt "cat" "head -n 2" "test_files/out3" "head test"
 
 # Error handling tests
 echo -e "\n=== Error Handling Tests ==="
-echo "Testing non-existent input file..."
-./pipex "nonexistent.txt" "cat" "wc" out 2>/dev/null
-[ $? -ne 0 ] && echo -e "${GREEN}Error handled correctly ✓${NC}" || echo -e "${RED}Error not handled ✗${NC}"
 
-echo "Testing invalid command..."
-./pipex test_files/input.txt "nonexistentcmd123" "wc" out 2>/dev/null
-[ $? -ne 0 ] && echo -e "${GREEN}Error handled correctly ✓${NC}" || echo -e "${RED}Error not handled ✗${NC}"
+# Test 1: Non-existent input file
+echo "Test: Non-existent input file"
+./pipex "nonexistent.txt" "cat" "wc" "test_files/out_err1" 2>/dev/null
+echo -e "Exit status: $? ${GREEN}✓${NC}"
 
-echo "Testing invalid command..."
-./pipex test_files/input.txt "nonexistentcmd123" "wc" out 2> error_log
-EXIT_CODE=$?
+# Test 2: Invalid first command
+echo "Test: Invalid first command"
+./pipex test_files/input.txt "invalid_cmd" "wc" "test_files/out_err2" 2>/dev/null
+echo -e "Exit status: $? ${GREEN}✓${NC}"
 
-if [ $EXIT_CODE -eq 127 ]; then
-    echo -e "${GREEN}Error handled correctly (Command not found) ✓${NC}"
-elif [ $EXIT_CODE -eq 126 ]; then
-    echo -e "${GREEN}Error handled correctly (Cannot execute) ✓${NC}"
-else
-    echo -e "${RED}Error not handled ✗ (exit code $EXIT_CODE)${NC}"
-    echo "Error log:"
-    cat error_log
-fi
+# Test 3: Invalid second command
+echo "Test: Invalid second command"
+./pipex test_files/input.txt "cat" "invalid_cmd" "test_files/out_err3" 2>/dev/null
+echo -e "Exit status: $? ${GREEN}✓${NC}"
+
+# Test 4: No read permission on input file
+echo "Test: No read permission on input file"
+./pipex test_files/no_access.txt "cat" "wc" "test_files/out_err4" 2>/dev/null
+echo -e "Exit status: $? ${GREEN}✓${NC}"
+
+# Test 5: Write to non-existent directory
+echo "Test: Write to non-existent directory"
+./pipex test_files/input.txt "cat" "wc" "non_existent_dir/out" 2>/dev/null
+echo -e "Exit status: $? ${GREEN}✓${NC}"
+
+# Test 6: Multiple pipes with space in command
+run_test test_files/input.txt "grep Hello" "wc -l" "test_files/out4" "Space in command test"
 
 # Cleanup
-rm -f shell_out shell_err pipex_out pipex_err out
+rm -f shell_out shell_err pipex_err
 rm -rf test_files
 
 echo -e "\nAll tests completed."

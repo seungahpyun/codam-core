@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 08:01:55 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 14:02:49 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/09 15:11:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char	*find_path(char *cmd, char **envp)
 	char	**paths;
 	char	*path;
 
+	if(!cmd)
+		return (NULL);
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (ft_strdup(cmd));
 	while (*envp && ft_strncmp("PATH=", *envp, 5))
@@ -65,21 +67,18 @@ void	execute_cmd(char *cmd, char **envp)
 	if (!cmd_args || !cmd_args[0])
 	{
 		free_array(cmd_args);
-		ft_putstr_fd("Command parsing failed\n", 2);
-		exit(127);
+		error_exit("Command parsing failed");
 	}
 	cmd_path = find_path(cmd_args[0], envp);
 	if (!cmd_path)
 	{
-		ft_putstr_fd("Command not found\n", 2);
 		free_array(cmd_args);
-		exit(127);
+		error_exit("Command not found");
 	}
 	if (execve(cmd_path, cmd_args, envp) == -1)
 	{
-		perror("Command execution failed");
 		free(cmd_path);
 		free_array(cmd_args);
-		exit(126);
+		error_exit("Command execution failed");
 	}
 }

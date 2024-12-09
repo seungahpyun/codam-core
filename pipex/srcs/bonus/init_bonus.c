@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:13:41 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 10:00:47 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/09 15:12:59 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	allocate_memory(t_pipex *pipex)
 	if (!pipex->pids)
 	{
 		free(pipex->pipes);
-		error_exit("Malloc failed\n");
+		error_exit("Malloc failed");
 	}
 }
 

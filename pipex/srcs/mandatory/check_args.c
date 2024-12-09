@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:21:58 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 09:56:43 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/09 14:25:19 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ static void	check_outfile(char *outfile)
 void	check_args(int argc, char **argv)
 {
 	if (argc != 5)
-	{
-		ft_putstr_fd("Usage: ./pipex infile cmd1 cmd2 outfile\n", 2);
-		exit(EXIT_FAILURE);
-	}
+		error_exit("Usage: ./pipex infile cmd1 cmd2 outfile");
 	check_infile(argv[1]);
 	check_outfile(argv[4]);
 }
