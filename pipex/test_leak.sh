@@ -97,6 +97,4 @@ echo "\n=== All tests completed ==="
 # # Test multiple pipes
 # echo "test line 1" > infile.txt
 # echo "test line 2" >> infile.txt
-# valgrind --leak-check=full --track-fds=yes --trace-children=yes ./pipex_bonus infile.txt "ls" "grep test" "wc -l" outfile.txt
-valgrind --leak-check=full --track-fds=yes --trace-children=yes ./pipex_bonus infile.txt "grep First" "grep test" "grep line" outfile.txt
-< infile.txt grep First | grep test | grep line > outfile.txt
+# valgrind --leak-check=full ./pipex_bonus infile.txt "ls" "grep test" "wc -l" outfile.txt

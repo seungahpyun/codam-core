@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:16:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 08:11:48 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 08:16:25 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,4 @@ void	execute_commands(t_pipex *pipex, char **envp)
 	i = 0;
 	while (i < pipex->cmd_count)
 		waitpid(pipex->pids[i++], &status, 0);
-	cleanup_pipex(pipex);
 }
