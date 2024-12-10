@@ -6,12 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:35:21 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 10:02:40 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 09:39:39 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
-#include "../libft/libft.h"
 
 static void	add_token(char **args, char *token, int *arg_count)
 {

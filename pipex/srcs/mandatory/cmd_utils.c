@@ -6,12 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 08:01:55 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 07:07:59 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 09:39:43 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
-#include "../libft/libft.h"
 
 static char	*get_cmd_path(char **paths, char *cmd)
 {

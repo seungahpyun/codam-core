@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/04 09:51:45 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 14:46:04 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 09:39:27 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <sys/wait.h>
+# include "../libft/libft/libft.h"
 
 typedef struct s_pipex
 {

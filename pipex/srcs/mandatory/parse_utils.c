@@ -6,12 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 10:01:56 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 10:07:02 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 09:39:53 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
-#include "../libft/libft.h"
 
 int	is_quote(char c)
 {
