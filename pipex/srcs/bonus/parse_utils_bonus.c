@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 10:03:03 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 10:41:53 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 08:30:42 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ char	**init_args(char *str, int *arg_count)
 	args = malloc(sizeof(char *) * (ft_strlen(str) + 1));
 	if (!args)
 		return (NULL);
+	ft_memset(args, 0, sizeof(char *) * (ft_strlen(str) + 1));
 	return (args);
 }
