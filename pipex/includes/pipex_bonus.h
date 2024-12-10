@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:10:55 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 09:00:44 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 09:08:41 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*find_path(char *cmd, char **envp);
 char	**parse_cmd(char *str);
 void	free_array(char **array);
 void	handle_here_doc(t_pipex *pipex);
-void	execute_cmd(char *cmd, char **envp);
+void	execute_cmd(char *cmd, char **envp, t_pipex *pipex);
 void	close_pipes(t_pipex *pipex);
 int		is_quote(char c);
 char	*parse_quoted_arg(char *str, int *i);
