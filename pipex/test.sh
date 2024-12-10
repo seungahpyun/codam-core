@@ -57,27 +57,27 @@ echo -e "\n=== Error Handling Tests ==="
 
 # Test 1: Non-existent input file
 echo "Test: Non-existent input file"
-./pipex_bonus "nonexistent.txt" "cat" "wc" "test_files/out_err1" 2>/dev/null
+./pipex "nonexistent.txt" "cat" "wc" "test_files/out_err1" 2>/dev/null
 echo -e "Exit status: $? ${GREEN}✓${NC}"
 
 # Test 2: Invalid first command
 echo "Test: Invalid first command"
-./pipex_bonus test_files/input.txt "invalid_cmd" "wc" "test_files/out_err2" 2>/dev/null
+./pipex test_files/input.txt "invalid_cmd" "wc" "test_files/out_err2" 2>/dev/null
 echo -e "Exit status: $? ${GREEN}✓${NC}"
 
 # Test 3: Invalid second command
 echo "Test: Invalid second command"
-./pipex_bonus test_files/input.txt "cat" "invalid_cmd" "test_files/out_err3" 2>/dev/null
+./pipex test_files/input.txt "cat" "invalid_cmd" "test_files/out_err3" 2>/dev/null
 echo -e "Exit status: $? ${GREEN}✓${NC}"
 
 # Test 4: No read permission on input file
 echo "Test: No read permission on input file"
-./pipex_bonus test_files/no_access.txt "cat" "wc" "test_files/out_err4" 2>/dev/null
+./pipex test_files/no_access.txt "cat" "wc" "test_files/out_err4" 2>/dev/null
 echo -e "Exit status: $? ${GREEN}✓${NC}"
 
 # Test 5: Write to non-existent directory
 echo "Test: Write to non-existent directory"
-./pipex_bonus test_files/input.txt "cat" "wc" "non_existent_dir/out" 2>/dev/null
+./pipex test_files/input.txt "cat" "wc" "non_existent_dir/out" 2>/dev/null
 echo -e "Exit status: $? ${GREEN}✓${NC}"
 
 # Test 6: Multiple pipes with space in command
