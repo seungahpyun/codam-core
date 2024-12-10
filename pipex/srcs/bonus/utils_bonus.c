@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:17:30 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 09:56:18 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 07:31:54 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ void	cleanup_pipex(t_pipex *pipex)
 	{
 		i = 0;
 		while (i < pipex->pipe_count)
+		{
+			close(pipex->pipes[i][0]);
+			close(pipex->pipes[i][1]);
 			free(pipex->pipes[i++]);
+		}
 		free(pipex->pipes);
 	}
 	if (pipex->pids)

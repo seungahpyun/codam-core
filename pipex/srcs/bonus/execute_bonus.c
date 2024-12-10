@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:16:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 15:12:14 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 07:34:42 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,16 @@ static void	handle_first_cmd(t_pipex *pipex, char **envp, int cmd_index)
 	{
 		fd_in = open(pipex->infile, O_RDONLY);
 		if (fd_in == -1)
+		{
+			close_pipes(pipex);
 			error_exit("Input file error");
-		dup2(fd_in, STDIN_FILENO);
+		}
+		if (dup2(fd_in, STDIN_FILENO) == -1)
+		{
+			close(fd_in);
+			close_pipes(pipex);
+			error_exit("Dup2 failed");
+		}
 		close(fd_in);
 	}
 	if (cmd_index < pipex->pipe_count)
@@ -53,8 +61,18 @@ static void	handle_last_cmd(t_pipex *pipex, char **envp, int cmd_index)
 	fd_out = open(pipex->outfile, flags, 0644);
 	if (fd_out == -1)
 		error_exit("Output file error");
-	dup2(pipex->pipes[cmd_index - 1][0], STDIN_FILENO);
-	dup2(fd_out, STDOUT_FILENO);
+	if (dup2(pipex->pipes[cmd_index - 1][0], STDIN_FILENO) == -1)
+	{
+		close(fd_out);
+		close_pipes(pipex);
+		error_exit("Dup2 failed");
+	}
+	if (dup2(fd_out, STDOUT_FILENO) == -1)
+	{
+		close(fd_out);
+		close_pipes(pipex);
+		error_exit("Dup2 failed");
+	}
 	close(fd_out);
 	close_pipes(pipex);
 	execute_cmd(pipex->cmds[cmd_index], envp);

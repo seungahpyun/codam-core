@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:16:48 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 15:12:53 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 07:35:31 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void	handle_here_doc(t_pipex *pipex)
 	}
 	close(temp_pipe[1]);
 	if (dup2(temp_pipe[0], STDIN_FILENO) == -1)
+	{
+		close(temp_pipe[0]);
 		error_exit("Dup2 failed");
+	}
 	close(temp_pipe[0]);
 }

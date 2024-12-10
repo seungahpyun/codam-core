@@ -83,17 +83,19 @@ echo "\n=== All tests completed ==="
 
 # ---------------------------------------------------------------
 # # Basic test
-# valgrind --leak-check=full ./pipex infile.txt "ls -l" "wc -l" outfile.txt
+# valgrind --leak-check=full --track-fds=yes --trace-children=yes ./pipex infile.txt "ls -l" "wc -l" outfile.txt
 
 # # Test with quotes
-# valgrind --leak-check=full ./pipex infile.txt "grep 'test'" "wc -l" outfile.txt
+# valgrind --leak-check=full --track-fds=yes --trace-children=yes ./pipex infile.txt "grep 'test'" "wc -l" outfile.txt
 
 # # Test invalid command
-# valgrind --leak-check=full ./pipex infile.txt "invalidcmd" "wc -l" outfile.txt
+# valgrind --leak-check=full --track-fds=yes --trace-children=yes ./pipex infile.txt "invalidcmd" "wc -l" outfile.txt
 
 # # For bonus part
 # # Test here_doc
-# valgrind --leak-check=full ./pipex here_doc EOF "cat" "wc -l" outfile.txt
-
+# echo -e "test line 1\ntest line 2\nEOF" | valgrind --leak-check=full --track-fds=yes --trace-children=yes ./pipex_bonus here_doc EOF "cat" "wc -l" outfile.txt
 # # Test multiple pipes
-# valgrind --leak-check=full ./pipex infile.txt "ls" "grep test" "wc -l" outfile.txt
+#
+# echo "test line 1" > infile.txt
+# echo "test line 2" >> infile.txt
+# valgrind --leak-check=full --track-fds=yes --trace-children=yes ./pipex_bonus infile.txt "ls" "grep test" "wc -l" outfile.txt
