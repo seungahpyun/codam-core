@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:16:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 09:01:14 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 09:10:26 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	handle_first_cmd(t_pipex *pipex, char **envp, int cmd_index)
 	if (cmd_index < pipex->pipe_count)
 		dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO);
 	close_pipes(pipex);
-	execute_cmd(pipex->cmds[cmd_index], envp);
+	execute_cmd(pipex->cmds[cmd_index], envp, pipex);
 }
 
 static void	handle_middle_cmd(t_pipex *pipex, char **envp, int cmd_index)
@@ -37,7 +37,7 @@ static void	handle_middle_cmd(t_pipex *pipex, char **envp, int cmd_index)
 	dup2(pipex->pipes[cmd_index - 1][0], STDIN_FILENO);
 	dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO);
 	close_pipes(pipex);
-	execute_cmd(pipex->cmds[cmd_index], envp);
+	execute_cmd(pipex->cmds[cmd_index], envp, pipex);
 }
 
 static void	handle_last_cmd(t_pipex *pipex, char **envp, int cmd_index)
@@ -57,7 +57,7 @@ static void	handle_last_cmd(t_pipex *pipex, char **envp, int cmd_index)
 	dup2(fd_out, STDOUT_FILENO);
 	close(fd_out);
 	close_pipes(pipex);
-	execute_cmd(pipex->cmds[cmd_index], envp);
+	execute_cmd(pipex->cmds[cmd_index], envp, pipex);
 }
 
 void	execute_commands(t_pipex *pipex, char **envp)
