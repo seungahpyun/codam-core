@@ -2,10 +2,10 @@ NAME = pipex
 BONUS = pipex_bonus
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-# -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror # -fsanitize=address -g
 
 SRCS_DIR = srcs/
+OBJS_DIR = objs/
 MAND_DIR = $(SRCS_DIR)mandatory/
 BONUS_DIR = $(SRCS_DIR)bonus/
 INCLUDES = -I includes/ -I libft/get_next_line -I libft/libft
@@ -22,7 +22,7 @@ MAND_SRCS = main.c \
 	parse_utils.c
 
 MAND_SRCS_PATH = $(addprefix $(MAND_DIR), $(MAND_SRCS))
-MAND_OBJS = $(MAND_SRCS_PATH:.c=.o)
+MAND_OBJS = $(addprefix $(OBJS_DIR), $(MAND_SRCS:.c=.o))
 
 BONUS_SRCS = main_bonus.c \
 	execute_bonus.c \
@@ -31,24 +31,27 @@ BONUS_SRCS = main_bonus.c \
 	pipes_bonus.c \
 	utils_bonus.c \
 	cmd_parser_bonus.c \
-	cmd_utils_bonus.c  \
+	cmd_utils_bonus.c \
 	parse_utils_bonus.c
 
 BONUS_SRCS_PATH = $(addprefix $(BONUS_DIR), $(BONUS_SRCS))
-BONUS_OBJS = $(BONUS_SRCS_PATH:.c=.o)
+BONUS_OBJS = $(addprefix $(OBJS_DIR), $(BONUS_SRCS:.c=.o))
 
 GNL_SRCS = get_next_line.c
 GNL_SRCS_PATH = $(addprefix $(GNL_DIR), $(GNL_SRCS))
-GNL_OBJS = $(GNL_SRCS_PATH:.c=.o)
+GNL_OBJS = $(addprefix $(OBJS_DIR), $(GNL_SRCS:.c=.o))
 
 LIBFT = $(LIBFT_DIR)libft.a
 
-all: $(NAME)
+all: $(OBJS_DIR) $(NAME)
+
+$(OBJS_DIR):
+	mkdir -p $(OBJS_DIR)
 
 $(NAME): $(LIBFT) $(MAND_OBJS)
 	$(CC) $(CFLAGS) $(MAND_OBJS) $(LIBFT) -o $(NAME)
 
-bonus: $(BONUS)
+bonus: $(OBJS_DIR) $(BONUS)
 
 $(BONUS): $(LIBFT) $(BONUS_OBJS) $(GNL_OBJS)
 	$(CC) $(CFLAGS) $(BONUS_OBJS) $(GNL_OBJS) $(LIBFT) -o $(BONUS)
@@ -56,14 +59,18 @@ $(BONUS): $(LIBFT) $(BONUS_OBJS) $(GNL_OBJS)
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
-%.o: %.c
+$(OBJS_DIR)%.o: $(MAND_DIR)%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJS_DIR)%.o: $(BONUS_DIR)%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJS_DIR)%.o: $(GNL_DIR)%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	make -C $(LIBFT_DIR) clean
-	rm -f $(MAND_OBJS)
-	rm -f $(BONUS_OBJS)
-	rm -f $(GNL_OBJS)
+	rm -rf $(OBJS_DIR)
 
 fclean: clean
 	make -C $(LIBFT_DIR) fclean
