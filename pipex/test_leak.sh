@@ -16,11 +16,18 @@ run_valgrind_test() {
 			 --trace-children=yes \
              $command
 
-    if grep -q "definitely lost" valgrind-out.txt; then
+    if grep -q "definitely lost: [1-9]" valgrind-out.txt || \
+       grep -q "indirectly lost: [1-9]" valgrind-out.txt; then
         echo "❌ Memory leak detected in $test_name"
         cat valgrind-out.txt
     else
-        echo "✅ No memory leaks in $test_name"
+        # Check if there are any error contexts
+        if grep -q "ERROR SUMMARY: [1-9]" valgrind-out.txt; then
+            echo "❌ Errors found in $test_name"
+            cat valgrind-out.txt
+        else
+            echo "✅ No memory leaks in $test_name"
+        fi
     fi
 }
 
