@@ -65,14 +65,14 @@ echo "\n=== Bonus Part Tests ==="
 
 # Test 8: Here_doc
 echo "\n=== Test 8: Here_doc ==="
-run_valgrind_test "Here_doc" "./pipex here_doc EOF 'cat' 'grep test' outfile.txt" << EOF
+run_valgrind_test "Here_doc" "./pipex_bonus here_doc EOF 'cat' 'grep test' outfile.txt" << EOF
 test line 1
 test line 2
 EOF
 
 # Test 9: Multiple pipes
 echo "\n=== Test 9: Multiple Pipes ==="
-run_valgrind_test "Multiple pipes" "./pipex infile.txt 'cat' 'grep Hello' 'wc -l' outfile.txt"
+run_valgrind_test "Multiple pipes" "./pipex_bonus infile.txt 'cat' 'grep Hello' 'wc -l' outfile.txt"
 
 # Cleanup
 echo "\n=== Cleaning up ==="
