@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:56:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 07:47:03 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 07:55:22 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	execute_cmd(char *cmd, char **envp)
 {
 	char	**cmd_args;
 	char	*cmd_path;
+	int		fd;
 
 	cmd_args = parse_cmd(cmd);
 	if (!cmd_args || !cmd_args[0])
@@ -79,13 +80,16 @@ void	execute_cmd(char *cmd, char **envp)
 		free_array(cmd_args);
 		error_exit("Command not found");
 	}
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	close(STDERR_FILENO);
+	fd = 3;
+	while (fd < 256)
+		close(fd++);
 	if (execve(cmd_path, cmd_args, envp) == -1)
 	{
 		free(cmd_path);
 		free_array(cmd_args);
 		error_exit("Command execution failed");
 	}
+	free(cmd_path);
+	free_array(cmd_args);
+	exit(EXIT_FAILURE);
 }
