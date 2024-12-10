@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:16:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 07:43:13 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 07:50:03 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,31 @@ static void	handle_first_cmd(t_pipex *pipex, char **envp, int cmd_index)
 		close(fd_in);
 	}
 	if (cmd_index < pipex->pipe_count)
-		dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO);
+	{
+		if (dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO) == -1)
+		{
+			close_pipes(pipex);
+			error_exit("Dup2 failed");
+		}
+	}
 	close_pipes(pipex);
 	execute_cmd(pipex->cmds[cmd_index], envp);
 }
 
 static void	handle_middle_cmd(t_pipex *pipex, char **envp, int cmd_index)
 {
-	dup2(pipex->pipes[cmd_index - 1][0], STDIN_FILENO);
-	dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO);
+	// dup2(pipex->pipes[cmd_index - 1][0], STDIN_FILENO);
+	// dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO);
+	if (dup2(pipex->pipes[cmd_index - 1][0], STDIN_FILENO) == -1)
+	{
+		close_pipes(pipex);
+		error_exit("Dup2 failed");
+	}
+	if (dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO) == -1)
+	{
+		close_pipes(pipex);
+		error_exit("Dup2 failed");
+	}
 	close_pipes(pipex);
 	execute_cmd(pipex->cmds[cmd_index], envp);
 }
