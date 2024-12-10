@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:17:30 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 08:18:11 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 09:00:10 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ void	cleanup_pipex(t_pipex *pipex)
 		free(pipex->pids);
 }
 
-void	error_exit(const char *msg)
+void	error_exit(const char *msg, t_pipex *pipex)
 {
+	cleanup_pipex(pipex);
 	perror(msg);
 	exit(EXIT_FAILURE);
 }

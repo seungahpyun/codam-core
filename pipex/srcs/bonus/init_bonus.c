@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:13:41 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 15:37:13 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 09:01:32 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ static void	allocate_memory(t_pipex *pipex)
 {
 	pipex->pipes = malloc(sizeof(int *) * pipex->pipe_count);
 	if (!pipex->pipes)
-		error_exit("Malloc failed\n");
+		error_exit("Malloc failed", pipex);
 	pipex->pids = malloc(sizeof(pid_t) * pipex->cmd_count);
 	if (!pipex->pids)
 	{
 		free(pipex->pipes);
-		error_exit("Malloc failed");
+		error_exit("Malloc failed", pipex);
 	}
 }
 
