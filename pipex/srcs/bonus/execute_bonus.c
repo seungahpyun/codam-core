@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:16:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 07:34:42 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 07:43:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,11 @@ void	execute_commands(t_pipex *pipex, char **envp)
 	{
 		pipex->pids[i] = fork();
 		if (pipex->pids[i] == -1)
+		{
+			close_pipes(pipex);
+			cleanup_pipex(pipex);
 			error_exit("Fork failed");
+		}
 		if (pipex->pids[i] == 0)
 		{
 			if (i == 0)
