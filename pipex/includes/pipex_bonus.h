@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:10:55 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 10:05:33 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 08:50:56 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ typedef struct s_pipex
 	bool	here_doc;
 	char	*limiter;
 }	t_pipex;
+
+typedef struct s_parse
+{
+	char	**args;
+	int		i;
+	int		arg_count;
+	int		error;
+}	t_parse;
 
 void	init_pipex(t_pipex *pipex, int argc, char **argv);
 void	create_pipes(t_pipex *pipex);

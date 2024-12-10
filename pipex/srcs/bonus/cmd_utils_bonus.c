@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:56:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 08:18:28 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 08:47:07 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ static char	*get_cmd_path(char **paths, char *cmd)
 	int		i;
 
 	i = 0;
-	if (!cmd || !paths)
+	if (!cmd || !paths || !cmd[0])
 		return (NULL);
+	if (access(cmd, F_OK | X_OK) == 0)
+		return (ft_strdup(cmd));
 	while (paths[i])
 	{
 		part_path = ft_strjoin(paths[i], "/");

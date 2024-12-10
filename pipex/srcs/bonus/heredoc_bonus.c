@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:16:48 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 08:18:25 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 08:46:15 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	handle_here_doc(t_pipex *pipex)
 	int		temp_pipe[2];
 
 	if (pipe(temp_pipe) == -1)
-		error_exit("Pipe failed\n");
+		error_exit("Pipe failed");
 	while (1)
 	{
 		ft_putstr_fd("heredoc> ", STDOUT_FILENO);
-		line = get_next_line(0);
+		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			break ;
 		if (ft_strncmp(line, pipex->limiter, ft_strlen(pipex->limiter)) == 0
@@ -38,4 +38,5 @@ void	handle_here_doc(t_pipex *pipex)
 	if (dup2(temp_pipe[0], STDIN_FILENO) == -1)
 		error_exit("Dup2 failed");
 	close(temp_pipe[0]);
+	close(temp_pipe[1]);
 }
