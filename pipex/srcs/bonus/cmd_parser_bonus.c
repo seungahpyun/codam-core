@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:53:10 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 08:34:44 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/10 08:35:58 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 // 	(*arg_count)++;
 // }
 
-// static void	skip_spaces(char *str, int *i)
-// {
-// 	while (str[*i] && str[*i] == ' ')
-// 		(*i)++;
-// }
+static void	skip_spaces(char *str, int *i)
+{
+	while (str[*i] && str[*i] == ' ')
+		(*i)++;
+}
 
 // static void	process_cmd(char **args, char *str, int *i, int *arg_count)
 // {
