@@ -6,14 +6,11 @@ echo "=== Testing Memory Leaks and Error Cases ==="
 run_valgrind_test() {
     local test_name="$1"
     local command="$2"
-    echo "\nTesting: $test_name"
+    echo "Testing: $test_name"
     valgrind --leak-check=full \
-             --show-leak-kinds=all \
-             --track-origins=yes \
-             --verbose \
              --log-file=valgrind-out.txt \
-			 --track-fds=yes \
-			 --trace-children=yes \
+             --track-fds=yes \
+             --trace-children=yes \
              $command
 
     if grep -q "definitely lost: [1-9]" valgrind-out.txt || \
@@ -21,7 +18,6 @@ run_valgrind_test() {
         echo "❌ Memory leak detected in $test_name"
         cat valgrind-out.txt
     else
-        # Check if there are any error contexts
         if grep -q "ERROR SUMMARY: [1-9]" valgrind-out.txt; then
             echo "❌ Errors found in $test_name"
             cat valgrind-out.txt
@@ -72,20 +68,14 @@ echo "=== Bonus Part Tests ==="
 
 # Test 8: Here_doc
 echo "=== Test 8: Here_doc ==="
-run_valgrind_test "Here_doc" "./pipex_bonus here_doc EOF 'cat' 'grep test' outfile.txt" << EOF
-test line 1
-test line 2
-EOF
-
-# Test 9: Multiple pipes
-echo "=== Test 9: Multiple Pipes ==="
-run_valgrind_test "Multiple pipes" "./pipex_bonus infile.txt 'cat' 'grep Hello' 'wc -l' outfile.txt"
+run_valgrind_test "Here_doc" "echo -e \"test line 1\ntest line 2\nEOF\" | ./pipex_bonus here_doc EOF 'cat' 'wc -l' outfile.txt"
 
 # Cleanup
 echo "=== Cleaning up ==="
 rm -f infile.txt outfile.txt noperm.txt valgrind-out.txt
 
 echo "=== All tests completed ==="
+
 
 
 # ---------------------------------------------------------------

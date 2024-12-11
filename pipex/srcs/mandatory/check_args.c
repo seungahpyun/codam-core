@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:21:58 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 09:39:33 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/11 12:32:41 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ static void	check_outfile(char *outfile)
 void	check_args(int argc, char **argv)
 {
 	if (argc != 5)
-		error_exit("Usage: ./pipex infile cmd1 cmd2 outfile");
+	{
+		ft_putstr_fd("Error: Not enough arguments", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
 	check_infile(argv[1]);
 	check_outfile(argv[4]);
 }

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:12:45 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 09:18:09 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/11 12:33:24 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ int	main(int argc, char **argv, char **envp)
 	status = 0;
 	exit_status = 0;
 	if (argc < 5)
-		error_exit("Usage: ./pipex file1 cmd1 cmd2 cmd3 \
-		... cmdn file2", &pipex);
+	{
+		ft_putstr_fd("Error: Not enough arguments", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
 	init_pipex(&pipex, argc, argv);
 	create_pipes(&pipex);
 	execute_commands(&pipex, envp);
