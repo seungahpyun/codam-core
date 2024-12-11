@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:21:58 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/11 12:32:41 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/11 12:43:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	check_args(int argc, char **argv)
 {
 	if (argc != 5)
 	{
-		ft_putstr_fd("Error: Not enough arguments", STDERR_FILENO);
+		ft_putstr_fd("Error: Not enough arguments\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
 	check_infile(argv[1]);
