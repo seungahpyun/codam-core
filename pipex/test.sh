@@ -53,7 +53,7 @@ run_test test_files/input.txt "grep Apple" "wc -l" "test_files/out2" "grep test"
 run_test test_files/input.txt "cat" "head -n 2" "test_files/out3" "head test"
 
 # Error handling tests
-echo -e "\n=== Error Handling Tests ==="
+echo -e "=== Error Handling Tests ==="
 
 # Test 1: Non-existent input file
 echo "Test: Non-existent input file"
@@ -87,4 +87,4 @@ run_test test_files/input.txt "grep Hello" "wc -l" "test_files/out4" "Space in c
 rm -f shell_out shell_err pipex_err
 rm -rf test_files
 
-echo -e "\nAll tests completed."
+echo -e "All tests completed."

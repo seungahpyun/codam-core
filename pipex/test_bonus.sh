@@ -55,10 +55,10 @@ compare_outputs() {
 
 # Test multiple pipes
 test_multiple_pipes() {
-    echo -e "\n${YELLOW}Testing multiple pipes...${NC}"
+    echo -e "${YELLOW}Testing multiple pipes...${NC}"
 
     # Test 1: Three commands
-    echo -e "\nTest 1: cat | grep | wc"
+    echo -e "Test 1: cat | grep | wc"
     > "$OUTPUT_FILE"
     > "$EXPECTED_FILE"
     < "$INPUT_FILE" cat | grep a | wc -l > "$EXPECTED_FILE"
@@ -66,7 +66,7 @@ test_multiple_pipes() {
     compare_outputs
 
     # Test 2: Four commands with simplified tr
-    echo -e "\nTest 2: cat | grep | tr | wc"
+    echo -e "Test 2: cat | grep | tr | wc"
     > "$OUTPUT_FILE"
     > "$EXPECTED_FILE"
     < "$INPUT_FILE" cat | grep e | tr e E | wc -l > "$EXPECTED_FILE"
@@ -74,7 +74,7 @@ test_multiple_pipes() {
     compare_outputs
 
     # Test 3: Path commands with simplified tr
-    echo -e "\nTest 3: Multiple path commands"
+    echo -e "Test 3: Multiple path commands"
     > "$OUTPUT_FILE"
     > "$EXPECTED_FILE"
     < "$INPUT_FILE" /bin/cat | /usr/bin/grep e | /usr/bin/tr e E > "$EXPECTED_FILE"
@@ -84,10 +84,10 @@ test_multiple_pipes() {
 
 # Test here_doc functionality
 test_heredoc() {
-    echo -e "\n${YELLOW}Testing here_doc...${NC}"
+    echo -e "${YELLOW}Testing here_doc...${NC}"
 
     # Test 1: Basic here_doc
-    echo -e "\nTest 1: Basic here_doc"
+    echo -e "Test 1: Basic here_doc"
     > "$OUTPUT_FILE"
     > "$EXPECTED_FILE"
     cat << EOF | grep line | wc -l > "$EXPECTED_FILE"
@@ -104,7 +104,7 @@ EOF
     compare_outputs
 
     # Test 2: here_doc with tr (single character translation)
-    echo -e "\nTest 2: here_doc with multiple commands"
+    echo -e "Test 2: here_doc with multiple commands"
     > "$OUTPUT_FILE"
     > "$EXPECTED_FILE"
     cat << EOF | grep line | tr l L > "$EXPECTED_FILE"
@@ -141,7 +141,7 @@ main() {
     # Final cleanup
     cleanup
 
-    echo -e "\n${GREEN}All tests completed!${NC}"
+    echo -e "${GREEN}All tests completed!${NC}"
 }
 
 # Run main function

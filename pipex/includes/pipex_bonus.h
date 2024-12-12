@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:10:55 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/12 09:08:31 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/12 09:24:57 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	init_pipex(t_pipex *pipex, int argc, char **argv);
 void	create_pipes(t_pipex *pipex);
 void	execute_commands(t_pipex *pipex, char **envp);
 void	cleanup_pipex(t_pipex *pipex);
-void	error_exit(const char *msg, t_pipex *pipex);
+void	error_exit(char *msg, t_pipex *pipex);
 void	perror_exit(const char *msg, t_pipex *pipex);
 char	*find_path(char *cmd, char **envp);
 char	**parse_cmd(char *str);
