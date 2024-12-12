@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:12:45 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/11 12:43:21 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/12 13:51:27 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 	exit_status = 0;
 	if (argc < 5)
 	{
-		ft_putstr_fd("Error: Not enough arguments\n", STDERR_FILENO);
+		ft_putendl_fd("Error: Not enough arguments", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
 	init_pipex(&pipex, argc, argv);
