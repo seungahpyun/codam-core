@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:59 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/12 14:44:08 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/12 20:26:49 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,36 @@ static int	check_wall(t_game *game)
 		i++;
 	}
 	return (1);
+}
+
+static int	check_player(t_game *game)
+{
+	int	valid_path;
+	int	player_found;
+	int	i;
+	int	j;
+
+	player_found = 0;
+	i = 0;
+	while (i < game->height)
+	{
+		j = 0;
+		while (j < game->width)
+		{
+			if (game->map[i][j] == 'P')
+			{
+				game->player_x = j;
+				game->player_y = i;
+				player_found++;
+			}
+			j++;
+		}
+		i++;
+	}
+	if (player_found != 1)
+		return (0);
+	valid_path = check_valid_path(game);
+	return (valid_path);
 }
 
 static int	count_elements(t_game *game)
@@ -78,7 +108,7 @@ static int	check_characters(t_game *game)
 		while (j < game->width)
 		{
 			c = game->map[i][j];
-			if (c != '0' && c != '1' && c != 'C' && 
+			if (c != '0' && c != '1' && c != 'C' &&
 				c != 'E' && c != 'P')
 				return (0);
 			j++;
@@ -87,14 +117,28 @@ static int	check_characters(t_game *game)
 	}
 	return (1);
 }
-
 int	validate_map(t_game *game)
 {
-	if(!check_wall(game))
+	if (!check_wall(game))
+	{
+		ft_putendl_fd("Error: Invalid wall configuration", 2);
 		return (0);
-	if(!check_player(game))
+	}
+	if (!check_characters(game))
+	{
+		ft_putendl_fd("Error: Invalid characters in map", 2);
 		return (0);
-	if(!count_elements(game))
+	}
+	if (!count_elements(game))
+	{
+		ft_putendl_fd("Error: Invalid number of elements", 2);
 		return (0);
+	}
+	if (!check_player(game))
+	{
+		ft_putendl_fd("Error: Invalid player position or path", 2);
+		return (0);
+	}
 	return (1);
 }
+

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 11:56:04 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/12 13:50:51 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/12 20:30:51 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_game	game;
-	
+
 	check_args(argc, argv);
 	ft_memset(&game, 0, sizeof(t_game));
 	if (init_game(&game, argv[1]) == -1)
@@ -24,5 +24,6 @@ int	main(int argc, char **argv)
 		exit_game(&game, 1);
 	}
 	mlx_loop(game.mlx);
+	exit_game(&game, 0);
 	return (0);
 }
