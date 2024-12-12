@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:16:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 09:10:26 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/12 09:08:54 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	handle_first_cmd(t_pipex *pipex, char **envp, int cmd_index)
 	{
 		fd_in = open(pipex->infile, O_RDONLY);
 		if (fd_in == -1)
-			error_exit("Input file error", pipex);
+			perror_exit("Input file error", pipex);
 		dup2(fd_in, STDIN_FILENO);
 		close(fd_in);
 	}
@@ -52,7 +52,7 @@ static void	handle_last_cmd(t_pipex *pipex, char **envp, int cmd_index)
 		flags |= O_TRUNC;
 	fd_out = open(pipex->outfile, flags, 0644);
 	if (fd_out == -1)
-		error_exit("Output file error", pipex);
+		perror_exit("Output file error", pipex);
 	dup2(pipex->pipes[cmd_index - 1][0], STDIN_FILENO);
 	dup2(fd_out, STDOUT_FILENO);
 	close(fd_out);
@@ -70,7 +70,7 @@ void	execute_commands(t_pipex *pipex, char **envp)
 	{
 		pipex->pids[i] = fork();
 		if (pipex->pids[i] == -1)
-			error_exit("Fork failed", pipex);
+			perror_exit("Fork failed", pipex);
 		if (pipex->pids[i] == 0)
 		{
 			if (i == 0)

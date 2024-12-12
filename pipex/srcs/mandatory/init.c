@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:20:34 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/09 09:53:58 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/12 09:02:01 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void	init_pipex(t_pipex *pipex, char **argv)
 void	create_pipe(t_pipex *pipex)
 {
 	if (pipe(pipex->pipe_fd) == -1)
-		error_exit("Pipe failed");
+		perror_exit("Pipe failed");
 }

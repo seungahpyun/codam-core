@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 08:01:55 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/10 09:39:43 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/12 09:05:36 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ void	execute_cmd(char *cmd, char **envp)
 	if (!cmd_path)
 	{
 		free_array(cmd_args);
-		error_exit("Command not found");
+		perror_exit("Command not found");
 	}
 	if (execve(cmd_path, cmd_args, envp) == -1)
 	{
 		free(cmd_path);
 		free_array(cmd_args);
-		error_exit("Command execution failed");
+		perror_exit("Command execution failed");
 	}
 }
