@@ -6,7 +6,7 @@
 /*   By: spyun <marvin@42.fr>                         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/08 08:24:47 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/02 15:38:53 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/13 15:53:31 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <stddef.h>
+# include "get_next_line.h"
 
 typedef struct s_list
 {

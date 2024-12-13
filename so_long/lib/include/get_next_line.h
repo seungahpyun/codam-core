@@ -6,7 +6,7 @@
 /*   By: spyun <marvin@42.fr>                         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/24 11:16:58 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 09:02:08 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/13 15:55:39 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
 # endif
+
+# include "libft.h"
 
 typedef struct s_gnl_list
 {
