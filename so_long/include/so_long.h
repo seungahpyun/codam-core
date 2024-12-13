@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 11:48:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/12 20:03:54 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/13 08:51:30 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+
+# include "libft.h"
 
 typedef struct s_game
 {
