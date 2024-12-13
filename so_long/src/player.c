@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:49 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 10:34:56 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/13 15:26:50 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ static void	move_player(t_game *game, int new_x, int new_y)
 	if (check_collision(game, new_x, new_y))
 		return ;
 	game->moves++;
-	ft_putnbr_fd(game->moves, 1);
-	ft_putchar_fd('\n', 1);
+	display_moves(game);
 	if (check_exit(game, new_x, new_y))
 	{
 		ft_putendl_fd("Game Complete!", 1);

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:52 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 10:41:19 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/13 15:34:21 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static void	render_map(t_game *game)
 int	render_frame(t_game *game)
 {
 	render_map(game);
+	render_enermies(game);
 	render_player(game, game->player_x, game->player_y);
+	display_moves(game);
 	return (0);
 }

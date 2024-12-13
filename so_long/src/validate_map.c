@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:59 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 10:45:17 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/13 15:33:55 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,26 @@ static int	check_characters(t_game *game)
 		i++;
 	}
 	return (1);
+}
+
+static void	(t_game *game)
+{
+	int	i;
+	int	j;
+
+	game->enemy_count = 0;
+	i = 0;
+	while (i < game->height)
+	{
+		j = 0;
+		while (j < game->width)
+		{
+			if (game->map[i][j] == 'X')
+				game->enemy_count++;
+			j++;
+		}
+		i++;
+	}
 }
 
 int	validate_map(t_game *game)
