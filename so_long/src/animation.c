@@ -1,29 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   animation.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/12/12 11:56:04 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 10:52:23 by spyun         ########   odam.nl         */
+/*   Created: 2024/12/13 11:00:59 by spyun         #+#    #+#                 */
+/*   Updated: 2024/12/13 11:01:00 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
-
-int	main(int argc, char **argv)
-{
-	t_game	game;
-
-	check_args(argc, argv);
-	ft_memset(&game, 0, sizeof(t_game));
-	if (init_game(&game, argv[1]) == -1)
-	{
-		ft_putendl_fd("Error: ", 2);
-		exit_game(&game, 1);
-	}
-	mlx_loop(game.mlx);
-	exit_game(&game, 0);
-	return (0);
-}

@@ -6,13 +6,13 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 15:18:09 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/12 20:30:00 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/13 10:38:11 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-static char **copy_map(t_game *game)
+static char	**copy_map(t_game *game)
 {
 	char	**temp_map;
 	int		i;

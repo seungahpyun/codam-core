@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:49 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/12 20:31:40 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/13 10:34:56 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,15 @@ static void	move_player(t_game *game, int new_x, int new_y)
 
 int	key_hook(int keycode, t_game *game)
 {
-	if (keycode == KEY_ESC)
+	if (keycode == 53)
 		exit_game(game, 0);
-	else if (keycode == KEY_W || keycode == KEY_UP)
+	else if (keycode == 13 || keycode == 126)
 		move_player(game, game->player_x, game->player_y - 1);
-	else if (keycode == KEY_S || keycode == KEY_DOWN)
+	else if (keycode == 1 || keycode == 125)
 		move_player(game, game->player_x, game->player_y + 1);
-	else if (keycode == KEY_A || keycode == KEY_LEFT)
+	else if (keycode == 0 || keycode == 123)
 		move_player(game, game->player_x - 1, game->player_y);
-	else if (keycode == KEY_D || keycode == KEY_RIGHT)
+	else if (keycode == 2 || keycode == 124)
 		move_player(game, game->player_x + 1, game->player_y);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/12 20:30:21 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/13 10:38:46 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,3 @@ void	load_textures(t_game *game)
 	game->exit_img = load_image(game, "textures/exit.xpm");
 	game->empty_img = load_image(game, "textures/empty.xpm");
 }
-
-
