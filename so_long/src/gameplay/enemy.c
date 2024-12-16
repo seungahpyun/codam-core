@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:01:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 15:31:02 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 09:56:42 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	move_enemy(t_game *game, t_enemy *enemy)
 	enemy->y = next_y;
 }
 
-void	update_enemies(t_game *game)
+void	update_enemy(t_game *game)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ void	update_enemies(t_game *game)
 	}
 }
 
-int	init_enemies(t_game *game)
+int	init_enemy(t_game *game)
 {
 	int	i;
 	int	x;

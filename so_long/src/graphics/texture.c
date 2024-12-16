@@ -6,37 +6,43 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 10:38:46 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 09:55:15 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-static void	*load_image(t_game *game, char *path)
+mlx_image_t	*load_image(t_game *game, const char *path)
 {
-	int		width;
-	int		height;
-	void	*img;
+	mlx_texture_t	*texture;
+	mlx_image_t		*img;
 
-	img = mlx_xpm_file_to_image(game->mlx, path, &width, &height);
+	texture = mlx_load_png(path);
+	if (!texture)
+		error_exit("Failed to load texture", game);
+	img = mlx_texture_to_image(game->mlx, texture);
 	if (!img)
 	{
-		ft_putendl_fd("Error: Failed to load image", 2);
-		exit_game(game, 1);
+		mlx_delete_texture(texture);
+		error_exit("Failed to create image", game);
 	}
+	mlx_delete_texture(texture);
 	return (img);
 }
 
 void	load_textures(t_game *game)
 {
-	game->wall_img = NULL;
-	game->player_img = NULL;
-	game->collect_img = NULL;
-	game->exit_img = NULL;
-	game->empty_img = NULL;
-	game->wall_img = load_image(game, "textures/wall.xpm");
-	game->player_img = load_image(game, "textures/player.xpm");
-	game->collect_img = load_image(game, "textures/collectible.xpm");
-	game->exit_img = load_image(game, "textures/exit.xpm");
-	game->empty_img = load_image(game, "textures/empty.xpm");
+	game->wall_img = load_image(game, "textures/wall.png");
+	game->player_img = load_image(game, "textures/player.png");
+	game->collect_img = load_image(game, "textures/collect.png");
+	game->exit_img = load_image(game, "textures/exit.png");
+	game->empty_img = load_image(game, "textures/empty.png");
+	if ((mlx_image_to_window(game->mlx, game->wall_img, 0, 0) < 0
+		|| mlx_image_to_window(game->mlx, game->player_img, 0, 0) < 0
+		|| mlx_image_to_window(game->mlx, game->collect_img, 0, 0) < 0
+		|| mlx_image_to_window(game->mlx, game->exit_img, 0, 0) < 0
+		|| mlx_image_to_window(game->mlx, game->empty_img, 0, 0) < 0))
+	{
+		error_exit("Failed to display textures", game);
+	}
 }

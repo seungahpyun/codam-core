@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:01:02 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 15:26:23 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 09:44:23 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ static char	*create_moves_str(int moves)
 void	display_moves(t_game *game)
 {
 	char	*moves_str;
-	void	*mlx;
-	void	*win;
 
-	mlx = game->mlx;
-	win = game->window;
 	moves_str = create_moves_str(game->moves);
 	if (!moves_str)
 		error_exit("Failed to create moves string", game);
-	mlx_string_put(mlx, win, 10, 20, 0xFFFFFF, moves_str);
+	if (game->moves_text)
+		mlx_delete_image(game->mlx, game->moves_text);
+	game->moves_text = mlx_put_string(game->mlx, moves_str, 10, 10);
+	if (!game->moves_text)
+		error_exit("Failed to display moves", game);
 	free(moves_str);
 }

@@ -6,13 +6,13 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 10:46:15 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 10:57:30 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 10:04:03 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-static void	free_allocated_map(t_game *game, int last_row)
+void	free_allocated_map(t_game *game, int last_row)
 {
 	int	i;
 
@@ -26,28 +26,7 @@ static void	free_allocated_map(t_game *game, int last_row)
 	game->map = NULL;
 }
 
-static int	allocate_map(t_game *game)
-{
-	int	i;
-
-	game->map = (char **)malloc(sizeof(char *) * game->height);
-	if (!game->map)
-		return (0);
-	i = 0;
-	while (i < game->height)
-	{
-		game->map[i] = (char *)malloc(sizeof(char) * (game->width + 1));
-		if (!game->map[i])
-		{
-			free_allocated_map(game, i);
-			return (0);
-		}
-		i++;
-	}
-	return (1);
-}
-
-static int	fill_map(t_game *game, char *file)
+int	fill_map(t_game *game, char *file)
 {
 	int		fd;
 	char	*line;
@@ -70,6 +49,27 @@ static int	fill_map(t_game *game, char *file)
 		i++;
 	}
 	close(fd);
+	return (1);
+}
+
+int	allocate_map(t_game *game)
+{
+	int	i;
+
+	game->map = (char **)malloc(sizeof(char *) * game->height);
+	if (!game->map)
+		return (0);
+	i = 0;
+	while (i < game->height)
+	{
+		game->map[i] = (char *)malloc(sizeof(char) * (game->width + 1));
+		if (!game->map[i])
+		{
+			free_allocated_map(game, i);
+			return (0);
+		}
+		i++;
+	}
 	return (1);
 }
 

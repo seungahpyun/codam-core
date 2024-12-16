@@ -6,13 +6,13 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:00:59 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 15:29:36 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 09:40:55 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-static void	init_player_animation(t_game *game)
+void	init_player_animation(t_game *game)
 {
 	game->player.current_frame = 0;
 	game->player.frame_count = 4;

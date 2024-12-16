@@ -3,7 +3,6 @@ BONUS_NAME	= so_long_bonus
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
-MLX_FLAGS	= -lmlx -framework OpenGL -framework AppKit
 RM			= rm -f
 
 # Directories
@@ -13,6 +12,14 @@ OBJ_DIR		= obj
 BONUS_OBJ_DIR	= obj_bonus
 LIB_DIR		= lib
 INC_DIR		= include
+MLX_DIR		= $(LIB_DIR)/MLX42
+
+# MLX42 settings
+MLX			= $(MLX_DIR)/build/libmlx42.a
+MLX_FLAGS	= -ldl -lglfw -pthread -lm
+# Linux: -ldl -lglfw -pthread -lm
+# MacOS: -framework Cocoa -framework OpenGL -framework IOKit
+MLX_INC		= -I$(MLX_DIR)/include/MLX42
 
 # Library
 LIB			= $(LIB_DIR)/libft.a
@@ -21,7 +28,7 @@ LIB			= $(LIB_DIR)/libft.a
 CORE_FILES	= main.c game_lifecycle.c utils.c
 GAMEPLAY_FILES	= player.c enemy.c
 GRAPHICS_FILES	= animation.c display.c render.c texture.c
-MAP_FILES	= map_memory.c parse_map.c path_check.c validate_elements.c validate_map.c
+MAP_FILES	= map_memory.c parse_map.c path_check.c validate_element.c validate_map.c
 
 # Full source file paths
 CORE_SRCS	= $(addprefix $(SRC_DIR)/core/, $(CORE_FILES))
@@ -40,19 +47,32 @@ BONUS_SRCS	= $(SRCS:$(SRC_DIR)/%=$(BONUS_DIR)/%)
 BONUS_OBJS	= $(BONUS_SRCS:$(BONUS_DIR)/%.c=$(BONUS_OBJ_DIR)/%.o)
 
 # Include paths
-INC			= -I$(INC_DIR) -I$(LIB_DIR)/include
+INC			= -I$(INC_DIR) -I$(LIB_DIR)/include -I$(MLX_DIR)/include/MLX42
 
-all: $(NAME)
+# Colors for output
+GREEN		= \033[0;32m
+RESET		= \033[0m
 
-bonus: $(BONUS_NAME)
+all: $(MLX) $(NAME)
+
+bonus: $(MLX) $(BONUS_NAME)
+
+# MLX42 compilation
+$(MLX):
+	@cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4
 
 $(NAME): $(LIB) $(OBJS)
-	$(CC) $(OBJS) $(LIB) $(MLX_FLAGS) -o $(NAME)
+	@echo "$(GREEN)Linking $@...$(RESET)"
+	@$(CC) $(OBJS) $(LIB) $(MLX) $(MLX_FLAGS) -o $(NAME)
+	@echo "$(GREEN)Build complete: $(NAME)$(RESET)"
 
 $(BONUS_NAME): $(LIB) $(BONUS_OBJS)
-	$(CC) $(BONUS_OBJS) $(LIB) $(MLX_FLAGS) -o $(BONUS_NAME)
+	@echo "$(GREEN)Linking $@...$(RESET)"
+	@$(CC) $(BONUS_OBJS) $(LIB) $(MLX) $(MLX_FLAGS) -o $(BONUS_NAME)
+	@echo "$(GREEN)Build complete: $(BONUS_NAME)$(RESET)"
 
 $(LIB):
+	@echo "$(GREEN)Building libft...$(RESET)"
 	@make -C $(LIB_DIR)
 
 # Create object files for main program
@@ -66,11 +86,14 @@ $(BONUS_OBJ_DIR)/%.o: $(BONUS_DIR)/%.c
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean:
-	$(RM) -r $(OBJ_DIR) $(BONUS_OBJ_DIR)
+	@echo "$(GREEN)Cleaning object files...$(RESET)"
+	@$(RM) -r $(OBJ_DIR) $(BONUS_OBJ_DIR)
 	@make -C $(LIB_DIR) clean
+	@rm -rf $(MLX_DIR)/build
 
 fclean: clean
-	$(RM) $(NAME) $(BONUS_NAME)
+	@echo "$(GREEN)Cleaning executables...$(RESET)"
+	@$(RM) $(NAME) $(BONUS_NAME)
 	@make -C $(LIB_DIR) fclean
 
 re: fclean all

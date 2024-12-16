@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:49 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 15:26:50 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 09:39:01 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	check_exit(t_game *game, int x, int y)
 	return (0);
 }
 
-static void	move_player(t_game *game, int new_x, int new_y)
+void	move_player(t_game *game, int new_x, int new_y)
 {
 	if (check_collision(game, new_x, new_y))
 		return ;

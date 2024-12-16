@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   validate_elements.c                                :+:    :+:            */
+/*   validate_element.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 10:44:27 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 10:56:59 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 10:11:54 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	check_single_element(t_game *game, int i, int j, char type)
 	return (0);
 }
 
-static int	count_elements(t_game *game)
+int	count_elements(t_game *game)
 {
 	int	i;
 	int	j;
@@ -57,7 +57,7 @@ static int	count_elements(t_game *game)
 	return (player == 1 && exit == 1 && game->collectibles > 0);
 }
 
-static int	find_player(t_game *game)
+int	find_player(t_game *game)
 {
 	int	i;
 	int	j;

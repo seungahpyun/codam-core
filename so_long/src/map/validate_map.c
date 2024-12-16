@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:59 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 15:33:55 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 10:13:50 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	check_characters(t_game *game)
 	return (1);
 }
 
-static void	(t_game *game)
+static void count_enermy(t_game *game)
 {
 	int	i;
 	int	j;
@@ -100,9 +100,9 @@ int	validate_map(t_game *game)
 		ft_putendl_fd("Error: Invalid characters in map", 2);
 		return (0);
 	}
-	if (!count_elements(game))
+	if (!validate_elements(game))
 	{
-		ft_putendl_fd("Error: Invalid number of elements", 2);
+		ft_putendl_fd("Error: Invalid element configuration", 2);
 		return (0);
 	}
 	if (!check_player(game))
@@ -110,5 +110,6 @@ int	validate_map(t_game *game)
 		ft_putendl_fd("Error: Invalid player position or path", 2);
 		return (0);
 	}
+	count_enermy(game);
 	return (1);
 }

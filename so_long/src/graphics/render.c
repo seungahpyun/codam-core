@@ -6,20 +6,29 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:52 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 15:34:21 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 10:02:32 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-static void	render_tile(t_game *game, int x, int y, void *img)
+static void	render_tile(t_game *game, int x, int y, mlx_image_t *img)
 {
-	mlx_put_image_to_window(game->mlx, game->window, img, x * 32, y * 32);
+	(void)game;
+	if (img && img->instances)
+	{
+		img->instances[0].x = x * TILE_SIZE;
+		img->instances[0].y = y * TILE_SIZE;
+	}
 }
 
-static void	render_player(t_game *game, int x, int y)
+static void	render_player(t_game *game)
 {
-	render_tile(game, game->player_x, game->player_y, game->player_img);
+	if(game->player_img && game->player_img->instances)
+	{
+		game->player_img->instances[0].x = game->player_x * TILE_SIZE;
+		game->player_img->instances[0].y = game->player_y * TILE_SIZE;
+	}
 }
 
 static void	render_map(t_game *game)
@@ -50,8 +59,8 @@ static void	render_map(t_game *game)
 int	render_frame(t_game *game)
 {
 	render_map(game);
-	render_enermies(game);
-	render_player(game, game->player_x, game->player_y);
+	render_enemy(game);
+	render_player(game);
 	display_moves(game);
 	return (0);
 }
