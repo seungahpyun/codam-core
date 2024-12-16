@@ -2,7 +2,7 @@ NAME		= so_long
 BONUS_NAME	= so_long_bonus
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g
 RM			= rm -f
 
 # Directories
@@ -63,12 +63,12 @@ $(MLX):
 
 $(NAME): $(LIB) $(OBJS)
 	@echo "$(GREEN)Linking $@...$(RESET)"
-	@$(CC) $(OBJS) $(LIB) $(MLX) $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(OBJS) $(LIB) $(MLX) $(MLX_FLAGS) -fsanitize=address -o $(NAME)
 	@echo "$(GREEN)Build complete: $(NAME)$(RESET)"
 
 $(BONUS_NAME): $(LIB) $(BONUS_OBJS)
 	@echo "$(GREEN)Linking $@...$(RESET)"
-	@$(CC) $(BONUS_OBJS) $(LIB) $(MLX) $(MLX_FLAGS) -o $(BONUS_NAME)
+	@$(CC) $(BONUS_OBJS) $(LIB) $(MLX) $(MLX_FLAGS) -fsanitize=address -o $(BONUS_NAME)
 	@echo "$(GREEN)Build complete: $(BONUS_NAME)$(RESET)"
 
 $(LIB):

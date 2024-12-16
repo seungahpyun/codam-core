@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:00:14 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 12:14:01 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 14:35:18 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	free_textures(t_game *game)
 		mlx_delete_image(game->mlx, game->empty_img);
 	if (game->enemy_img)
 		mlx_delete_image(game->mlx, game->enemy_img);
+	if (game->moves_text)
+		mlx_delete_image(game->mlx, game->moves_text);
 }
 
 static void	game_loop(void *param)
@@ -66,7 +68,7 @@ static void	key_handler(mlx_key_data_t keydata, void *param)
 int	init_game(t_game *game, char *file)
 {
 	if (!game || !file)
-		return (0);
+		return (-1);
 	ft_memset(game, 0, sizeof(t_game));
 	game->width = 0;
 	game->height = 0;
@@ -78,34 +80,25 @@ int	init_game(t_game *game, char *file)
 	if (!parse_map(game, file))
 	{
 		ft_putendl_fd("Error: Failed to parse map", 2);
-		return (0);
+		return (-1);
 	}
-	game->mlx = mlx_init(game->width * TILE_SIZE, game->height * TILE_SIZE,
-		"so_long", true);
+	game->mlx = mlx_init(game->width * TILE_SIZE,
+		game->height * TILE_SIZE, "so_long", true);
 	if (!game->mlx)
-		return (0);
+		return (-1);
 	load_textures(game);
-	mlx_key_hook(game->mlx, key_handler, game);
-	mlx_loop_hook(game->mlx, game_loop, game);
-	mlx_close_hook(game->mlx, (mlx_closefun)close_game, game);
-	return (1);
+	mlx_key_hook(game->mlx, &key_handler, game);
+	mlx_loop_hook(game->mlx, &game_loop, game);
+	mlx_close_hook(game->mlx, (mlx_closefunc)close_game, game);
+	return (0);
 }
 
 void	exit_game(t_game *game, int status)
 {
-	int	i;
-
-	i = 0;
+	if (!game)
+		exit(status);
 	if (game->map)
-	{
-		while (i < game->height)
-		{
-			if (game->map[i])
-				free(game->map[i]);
-			i++;
-		}
-		free(game->map);
-	}
+		free_allocated_map(game, game->height);
 	if (game->mlx)
 	{
 		free_textures(game);
@@ -114,8 +107,7 @@ void	exit_game(t_game *game, int status)
 	exit(status);
 }
 
-int	close_game(t_game *game)
+void	close_game(t_game *game)
 {
 	exit_game(game, 0);
-	return (0);
 }

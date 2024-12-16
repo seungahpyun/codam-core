@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 10:46:15 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 12:08:03 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 14:36:38 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	free_allocated_map(t_game *game, int last_row)
 	i = 0;
 	while (i < last_row)
 	{
-		free(game->map[i]);
+		if (game->map[i])
+			free(game->map[i]);
 		i++;
 	}
 	free(game->map);
@@ -28,37 +29,38 @@ void	free_allocated_map(t_game *game, int last_row)
 
 int	fill_map(t_game *game, char *file)
 {
-    int		fd;
-    char	*line;
-    int		i;
-    size_t	len;
+	int		fd;
+	char	*line;
+	int		i;
 
-    if ((fd = open(file, O_RDONLY)) == -1)
-        return (0);
-
-    i = 0;
-    while (i < game->height)
-    {
-        if (!(line = get_next_line(fd)))
-        {
-            close(fd);
-            return (0);
-        }
-        len = ft_strlen(line);
-        if (len > 0 && line[len - 1] == '\n')
-            line[len - 1] = '\0';
-        ft_strlcpy(game->map[i], line, game->width + 1);
-        free(line);
-        i++;
-    }
-    close(fd);
-    return (1);
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return (0);
+	i = 0;
+	while (i < game->height)
+	{
+		line = get_next_line(fd);
+		if (!line)
+		{
+			close(fd);
+			return (0);
+		}
+		if (ft_strlen(line) > 0 && line[ft_strlen(line) - 1] == '\n')
+			line[ft_strlen(line) - 1] = '\0';
+		ft_strlcpy(game->map[i], line, game->width + 1);
+		free(line);
+		i++;
+	}
+	close(fd);
+	return (1);
 }
 
 int	allocate_map(t_game *game)
 {
 	int	i;
 
+	if (!game || game->height <= 0 || game->width <= 0)
+		return (0);
 	game->map = (char **)malloc(sizeof(char *) * game->height);
 	if (!game->map)
 		return (0);
@@ -71,6 +73,7 @@ int	allocate_map(t_game *game)
 			free_allocated_map(game, i);
 			return (0);
 		}
+		game->map[i][game->width] = '\0';
 		i++;
 	}
 	return (1);

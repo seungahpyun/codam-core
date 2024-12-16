@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 11:48:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 10:19:46 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 14:25:49 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct s_enemy
 	int		y;
 	int		dx;
 	int		dy;
+	int		current_frame;
+	int		frame_count;
 }	t_enemy;
 
 typedef struct s_path
@@ -84,7 +86,7 @@ void	check_args(int argc, char **argv);
 int		init_game(t_game *game, char *file);
 void	exit_game(t_game *game, int status);
 void	error_exit(char *message, t_game *game);
-int		close_game(t_game *game);
+void		close_game(t_game *game);
 
 /* Map memory management */
 int     allocate_map(t_game *game);
