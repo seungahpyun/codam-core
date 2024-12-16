@@ -6,11 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 11:56:04 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 10:52:23 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 10:17:35 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
 
 int	main(int argc, char **argv)
 {

@@ -6,11 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:52 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 10:02:32 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 10:17:58 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
 
 static void	render_tile(t_game *game, int x, int y, mlx_image_t *img)
 {

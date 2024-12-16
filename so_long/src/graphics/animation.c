@@ -6,11 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:00:59 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 09:40:55 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 12:15:10 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
 
 void	init_player_animation(t_game *game)
 {
@@ -19,37 +19,37 @@ void	init_player_animation(t_game *game)
 	game->player.frame_delay = 0;
 	game->player.direction = DIRECTION_RIGHT;
 	game->player.frames[DIRECTION_RIGHT][0] = load_image(game,
-			"textures/player_right1.xpm");
+			"textures/player/right1.xpm");
 	game->player.frames[DIRECTION_RIGHT][1] = load_image(game,
-			"textures/player_right2.xpm");
+			"textures/player/right2.xpm");
 	game->player.frames[DIRECTION_RIGHT][2] = load_image(game,
-			"textures/player_right3.xpm");
+			"textures/player/right3.xpm");
 	game->player.frames[DIRECTION_RIGHT][3] = load_image(game,
-			"textures/player_right4.xpm");
+			"textures/player/right4.xpm");
 	game->player.frames[DIRECTION_LEFT][0] = load_image(game,
-			"textures/player_left1.xpm");
+			"textures/player/left1.xpm");
 	game->player.frames[DIRECTION_LEFT][1] = load_image(game,
-			"textures/player_left2.xpm");
+			"textures/player/left2.xpm");
 	game->player.frames[DIRECTION_LEFT][2] = load_image(game,
-			"textures/player_left3.xpm");
+			"textures/player/left3.xpm");
 	game->player.frames[DIRECTION_LEFT][3] = load_image(game,
-			"textures/player_left4.xpm");
+			"textures/player/left4.xpm");
 	game->player.frames[DIRECTION_UP][0] = load_image(game,
-			"textures/player_up1.xpm");
+			"textures/player/up1.xpm");
 	game->player.frames[DIRECTION_UP][1] = load_image(game,
-			"textures/player_up2.xpm");
+			"textures/player/up2.xpm");
 	game->player.frames[DIRECTION_UP][2] = load_image(game,
-			"textures/player_up3.xpm");
+			"textures/player/up3.xpm");
 	game->player.frames[DIRECTION_UP][3] = load_image(game,
-			"textures/player_up4.xpm");
+			"textures/player/up4.xpm");
 	game->player.frames[DIRECTION_DOWN][0] = load_image(game,
-			"textures/player_down1.xpm");
+			"textures/player/down1.xpm");
 	game->player.frames[DIRECTION_DOWN][1] = load_image(game,
-			"textures/player_down2.xpm");
+			"textures/player/down2.xpm");
 	game->player.frames[DIRECTION_DOWN][2] = load_image(game,
-			"textures/player_down3.xpm");
+			"textures/player/down3.xpm");
 	game->player.frames[DIRECTION_DOWN][3] = load_image(game,
-			"textures/player_down4.xpm");
+			"textures/player/down4.xpm");
 }
 
 void	update_animation(t_game *game)

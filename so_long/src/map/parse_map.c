@@ -6,11 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:47 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/13 10:50:13 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 12:10:39 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
 
 static int	check_line_length(char *line, int width)
 {
@@ -67,6 +67,8 @@ static int	get_map_dimensions(t_game *game, char *file)
 
 int	parse_map(t_game *game, char *file)
 {
+	if (!game || !file)
+		return (0);
 	if (!get_map_dimensions(game, file))
 		return (0);
 	if (!allocate_map(game))

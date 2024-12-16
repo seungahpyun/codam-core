@@ -6,11 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:01:02 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 09:44:23 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 10:17:54 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
 
 static char	*create_moves_str(int moves)
 {

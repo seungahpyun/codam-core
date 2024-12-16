@@ -6,14 +6,16 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:00:14 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 09:21:19 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 12:14:01 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
 
 static void	free_textures(t_game *game)
 {
+	if (!game)
+		return ;
 	if (game->wall_img)
 		mlx_delete_image(game->mlx, game->wall_img);
 	if (game->player_img)
@@ -24,6 +26,8 @@ static void	free_textures(t_game *game)
 		mlx_delete_image(game->mlx, game->exit_img);
 	if (game->empty_img)
 		mlx_delete_image(game->mlx, game->empty_img);
+	if (game->enemy_img)
+		mlx_delete_image(game->mlx, game->enemy_img);
 }
 
 static void	game_loop(void *param)
@@ -31,6 +35,8 @@ static void	game_loop(void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
+	if (!game)
+		return ;
 	render_frame(game);
 }
 
@@ -39,6 +45,8 @@ static void	key_handler(mlx_key_data_t keydata, void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
+	if (!game)
+		return ;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(game->mlx);
 	else if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP)
@@ -57,17 +65,23 @@ static void	key_handler(mlx_key_data_t keydata, void *param)
 
 int	init_game(t_game *game, char *file)
 {
+	if (!game || !file)
+		return (0);
+	ft_memset(game, 0, sizeof(t_game));
 	game->width = 0;
 	game->height = 0;
 	game->moves = 0;
 	game->collectibles = 0;
+	game->enemy_count = 0;
+	game->map = NULL;
+	game->mlx = NULL;
 	if (!parse_map(game, file))
 	{
 		ft_putendl_fd("Error: Failed to parse map", 2);
 		return (0);
 	}
 	game->mlx = mlx_init(game->width * TILE_SIZE, game->height * TILE_SIZE,
-		"so_long", false);
+		"so_long", true);
 	if (!game->mlx)
 		return (0);
 	load_textures(game);

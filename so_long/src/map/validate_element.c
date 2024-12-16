@@ -6,11 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 10:44:27 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 10:11:54 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 10:18:24 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
 
 static int	check_single_element(t_game *game, int i, int j, char type)
 {

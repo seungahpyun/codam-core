@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 11:48:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 10:07:32 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 10:19:46 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_game
 	mlx_image_t	*collect_img;
 	mlx_image_t	*exit_img;
 	mlx_image_t	*empty_img;
+	mlx_image_t	*enemy_img;
 	mlx_image_t	*moves_text;
 }	t_game;
 

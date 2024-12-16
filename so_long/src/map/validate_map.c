@@ -6,16 +6,18 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:59 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 10:13:50 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 12:00:35 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
 
 static int	check_wall(t_game *game)
 {
 	int	i;
 
+	if (!game || !game->map)
+		return (0);
 	i = 0;
 	while (i < game->width)
 	{

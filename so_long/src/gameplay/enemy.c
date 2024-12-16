@@ -6,11 +6,33 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:01:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 09:56:42 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 10:20:45 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
+
+void	game_over(t_game *game)
+{
+	ft_putendl_fd("Game Over! You hit an enemy!", 1);
+	exit_game(game, 0);
+}
+
+void	render_enemy(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->enemy_count)
+	{
+		if (game->enemy_img && game->enemy_img->instances)
+		{
+			game->enemy_img->instances[i].x = game->enemies[i].x * TILE_SIZE;
+			game->enemy_img->instances[i].y = game->enemies[i].y * TILE_SIZE;
+		}
+		i++;
+	}
+}
 
 static void	move_enemy(t_game *game, t_enemy *enemy)
 {

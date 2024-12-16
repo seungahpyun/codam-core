@@ -6,11 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:49 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 09:39:01 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 10:17:46 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
 
 static int	check_collision(t_game *game, int new_x, int new_y)
 {

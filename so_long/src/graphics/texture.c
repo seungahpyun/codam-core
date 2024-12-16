@@ -6,11 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 09:55:15 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 10:20:12 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
 
 mlx_image_t	*load_image(t_game *game, const char *path)
 {
@@ -37,11 +37,13 @@ void	load_textures(t_game *game)
 	game->collect_img = load_image(game, "textures/collect.png");
 	game->exit_img = load_image(game, "textures/exit.png");
 	game->empty_img = load_image(game, "textures/empty.png");
+	game->enemy_img = load_image(game, "textures/enemy.png");
 	if ((mlx_image_to_window(game->mlx, game->wall_img, 0, 0) < 0
 		|| mlx_image_to_window(game->mlx, game->player_img, 0, 0) < 0
 		|| mlx_image_to_window(game->mlx, game->collect_img, 0, 0) < 0
 		|| mlx_image_to_window(game->mlx, game->exit_img, 0, 0) < 0
-		|| mlx_image_to_window(game->mlx, game->empty_img, 0, 0) < 0))
+		|| mlx_image_to_window(game->mlx, game->empty_img, 0, 0) < 0
+		|| mlx_image_to_window(game->mlx, game->enemy_img, 0, 0) < 0))
 	{
 		error_exit("Failed to display textures", game);
 	}
