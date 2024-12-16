@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 15:18:09 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 10:18:18 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 16:41:27 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static char	**copy_map(t_game *game)
 	char	**temp_map;
 	int		i;
 
+	if (!game || !game->map || game->height <= 0)
+		return (NULL);
 	temp_map = (char **)malloc(sizeof(char *) * game->height);
 	if (!temp_map)
 		return (NULL);
@@ -26,10 +28,8 @@ static char	**copy_map(t_game *game)
 		temp_map[i] = ft_strdup(game->map[i]);
 		if (!temp_map[i])
 		{
-			while (i > 0)
-			{
-				free(temp_map[--i]);
-			}
+			while (--i >= 0)
+				free(temp_map[i]);
 			free(temp_map);
 			return (NULL);
 		}
@@ -41,6 +41,8 @@ static char	**copy_map(t_game *game)
 static void	flood_fill(char **map, int x, int y, t_path *path)
 {
 	if (x < 0 || y < 0 || x >= path->width || y >= path->height)
+		return ;
+	if (map[y][x] == '1' || map[y][x] == 'F')
 		return ;
 	if (map[y][x] == 'C')
 		path->collectibles++;
@@ -57,10 +59,13 @@ static void	clean_temp_map(char **temp_map, int height)
 {
 	int	i;
 
+	if (!temp_map)
+		return ;
 	i = 0;
-	while (i < height && temp_map[i])
+	while (i < height)
 	{
-		free(temp_map[i]);
+		if (temp_map[i])
+			free(temp_map[i]);
 		i++;
 	}
 	free(temp_map);
@@ -72,6 +77,8 @@ int	check_valid_path(t_game *game)
 	t_path	path;
 	int		is_valid;
 
+	if (!game || !game->map)
+		return (0);
 	temp_map = copy_map(game);
 	if (!temp_map)
 		return (0);

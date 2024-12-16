@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:01:02 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 10:17:54 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 16:29:52 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static char	*create_moves_str(int moves)
 {
-	char	*moves_str;
 	char	*temp;
+	char	*moves_str;
 
 	temp = ft_itoa(moves);
 	if (!temp)
@@ -29,6 +29,8 @@ void	display_moves(t_game *game)
 {
 	char	*moves_str;
 
+	if (!game)
+		return ;
 	moves_str = create_moves_str(game->moves);
 	if (!moves_str)
 		error_exit("Failed to create moves string", game);

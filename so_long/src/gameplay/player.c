@@ -6,65 +6,100 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:49 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 10:17:46 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 16:38:27 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	check_collision(t_game *game, int new_x, int new_y)
+static bool	is_valid_move(t_game *game, int new_x, int new_y)
 {
+	if (new_x < 0 || new_y < 0 || new_x >= game->width || new_y >= game->height)
+		return (false);
 	if (game->map[new_y][new_x] == '1')
-		return (1);
-	return (0);
+		return (false);
+	return (true);
 }
 
 static void	collect_item(t_game *game, int x, int y)
 {
+	if (!game || !game->map)
+		return ;
 	if (game->map[y][x] == 'C')
 	{
 		game->collectibles--;
 		game->map[y][x] = '0';
+		ft_putstr_fd("Collected item! Remaining: ", 1);
+		ft_putnbr_fd(game->collectibles, 1);
+		ft_putchar_fd('\n', 1);
 	}
 }
 
-static int	check_exit(t_game *game, int x, int y)
+static bool	check_exit(t_game *game, int x, int y)
 {
+	if (!game || !game->map)
+		return (false);
 	if (game->map[y][x] == 'E')
 	{
 		if (game->collectibles == 0)
-			return (1);
+		{
+			ft_putendl_fd("Congratulations! Game Complete!", 1);
+			return (true);
+		}
+		ft_putstr_fd("Collect all items first! Remaining: ", 1);
+		ft_putnbr_fd(game->collectibles, 1);
+		ft_putchar_fd('\n', 1);
 	}
-	return (0);
+	return (false);
+}
+
+static void	update_player_direction(t_game *game, int new_x, int new_y)
+{
+	if (!game)
+		return ;
+	if (new_x > game->player_x)
+		game->player.direction = DIRECTION_RIGHT;
+	else if (new_x < game->player_x)
+		game->player.direction = DIRECTION_LEFT;
+	else if (new_y > game->player_y)
+		game->player.direction = DIRECTION_DOWN;
+	else if (new_y < game->player_y)
+		game->player.direction = DIRECTION_UP;
 }
 
 void	move_player(t_game *game, int new_x, int new_y)
 {
-	if (check_collision(game, new_x, new_y))
+	if (!game || !is_valid_move(game, new_x, new_y))
 		return ;
+	update_player_direction(game, new_x, new_y);
 	game->moves++;
 	display_moves(game);
+	collect_item(game, new_x, new_y);
 	if (check_exit(game, new_x, new_y))
 	{
-		ft_putendl_fd("Game Complete!", 1);
-		exit_game(game, 0);
+		cleanup_game(game);
+		exit(EXIT_SUCCESS);
 	}
-	collect_item(game, new_x, new_y);
 	game->player_x = new_x;
 	game->player_y = new_y;
 }
 
-int	key_hook(int keycode, t_game *game)
+bool	init_player(t_game *game)
 {
-	if (keycode == 53)
-		exit_game(game, 0);
-	else if (keycode == 13 || keycode == 126)
-		move_player(game, game->player_x, game->player_y - 1);
-	else if (keycode == 1 || keycode == 125)
-		move_player(game, game->player_x, game->player_y + 1);
-	else if (keycode == 0 || keycode == 123)
-		move_player(game, game->player_x - 1, game->player_y);
-	else if (keycode == 2 || keycode == 124)
-		move_player(game, game->player_x + 1, game->player_y);
-	return (0);
+	if (!game)
+		return (false);
+	game->player.direction = DIRECTION_RIGHT;
+	game->player.current_frame = 0;
+	game->player.frame_count = 4;
+	game->player.frame_delay = 0;
+	game->moves = 0;
+	return (true);
+}
+
+void	update_player_position(t_game *game)
+{
+	if (!game || !game->player_img || !game->player_img->instances)
+		return ;
+	game->player_img->instances[0].x = game->player_x * TILE_SIZE;
+	game->player_img->instances[0].y = game->player_y * TILE_SIZE;
 }

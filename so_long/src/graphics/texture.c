@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 10:20:12 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 16:31:09 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,43 @@ mlx_image_t	*load_image(t_game *game, const char *path)
 	mlx_texture_t	*texture;
 	mlx_image_t		*img;
 
+	if (!game || !game->mlx || !path)
+		return (NULL);
 	texture = mlx_load_png(path);
 	if (!texture)
 		error_exit("Failed to load texture", game);
 	img = mlx_texture_to_image(game->mlx, texture);
-	if (!img)
-	{
-		mlx_delete_texture(texture);
-		error_exit("Failed to create image", game);
-	}
 	mlx_delete_texture(texture);
+	if (!img)
+		error_exit("Failed to create image", game);
 	return (img);
+}
+
+static bool	display_image(t_game *game, mlx_image_t *img)
+{
+	if (!game || !game->mlx || !img)
+		return (false);
+	if (mlx_image_to_window(game->mlx, img, 0, 0) < 0)
+		return (false);
+	return (true);
 }
 
 void	load_textures(t_game *game)
 {
+	if (!game)
+		return ;
 	game->wall_img = load_image(game, "textures/wall.png");
 	game->player_img = load_image(game, "textures/player.png");
 	game->collect_img = load_image(game, "textures/collect.png");
 	game->exit_img = load_image(game, "textures/exit.png");
 	game->empty_img = load_image(game, "textures/empty.png");
 	game->enemy_img = load_image(game, "textures/enemy.png");
-	if ((mlx_image_to_window(game->mlx, game->wall_img, 0, 0) < 0
-		|| mlx_image_to_window(game->mlx, game->player_img, 0, 0) < 0
-		|| mlx_image_to_window(game->mlx, game->collect_img, 0, 0) < 0
-		|| mlx_image_to_window(game->mlx, game->exit_img, 0, 0) < 0
-		|| mlx_image_to_window(game->mlx, game->empty_img, 0, 0) < 0
-		|| mlx_image_to_window(game->mlx, game->enemy_img, 0, 0) < 0))
+	if (!display_image(game, game->wall_img)
+		|| !display_image(game, game->player_img)
+		|| !display_image(game, game->collect_img)
+		|| !display_image(game, game->exit_img)
+		|| !display_image(game, game->empty_img)
+		|| !display_image(game, game->enemy_img))
 	{
 		error_exit("Failed to display textures", game);
 	}

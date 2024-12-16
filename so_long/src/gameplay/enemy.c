@@ -6,77 +6,91 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:01:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 10:20:45 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/16 16:44:06 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	game_over(t_game *game)
+static bool	is_valid_move(t_game *game, int x, int y)
 {
-	ft_putendl_fd("Game Over! You hit an enemy!", 1);
-	exit_game(game, 0);
+	if (x < 0 || y < 0 || x >= game->width || y >= game->height)
+		return (false);
+	if (game->map[y][x] == '1' || game->map[y][x] == 'C'
+		|| game->map[y][x] == 'E')
+		return (false);
+	return (true);
 }
 
-void	render_enemy(t_game *game)
+static void	reverse_enemy_direction(t_enemy *enemy)
 {
-	int	i;
-
-	i = 0;
-	while (i < game->enemy_count)
-	{
-		if (game->enemy_img && game->enemy_img->instances)
-		{
-			game->enemy_img->instances[i].x = game->enemies[i].x * TILE_SIZE;
-			game->enemy_img->instances[i].y = game->enemies[i].y * TILE_SIZE;
-		}
-		i++;
-	}
+	enemy->dx *= -1;
+	enemy->dy *= -1;
 }
 
-static void	move_enemy(t_game *game, t_enemy *enemy)
+static void	move_single_enemy(t_game *game, t_enemy *enemy)
 {
 	int	next_x;
 	int	next_y;
 
 	next_x = enemy->x + enemy->dx;
 	next_y = enemy->y + enemy->dy;
-	if (game->map[next_y][next_x] == '1' ||
-		game->map[next_y][next_x] == 'C' ||
-		game->map[next_y][next_x] == 'E')
+	if (!is_valid_move(game, next_x, next_y))
 	{
-		enemy->dx *= -1;
-		enemy->dy *= -1;
+		reverse_enemy_direction(enemy);
 		return ;
 	}
 	enemy->x = next_x;
 	enemy->y = next_y;
 }
 
-void	update_enemy(t_game *game)
+void	render_enemy(t_game *game)
 {
 	int	i;
 
+	if (!game || !game->enemy_img || !game->enemy_img->instances)
+		return ;
 	i = 0;
 	while (i < game->enemy_count)
 	{
-		move_enemy(game, &game->enemies[i]);
-		if (game->player_x == game->enemies[i].x &&
-			game->player_y == game->enemies[i].y)
-			game_over(game);
+		game->enemy_img->instances[i].x = game->enemies[i].x * TILE_SIZE;
+		game->enemy_img->instances[i].y = game->enemies[i].y * TILE_SIZE;
 		i++;
 	}
 }
 
-int	init_enemy(t_game *game)
+void	update_enemy(t_game *game)
+{
+	int	i;
+
+	if (!game || !game->enemies)
+		return ;
+	i = 0;
+	while (i < game->enemy_count)
+	{
+		move_single_enemy(game, &game->enemies[i]);
+		if (game->player_x == game->enemies[i].x
+			&& game->player_y == game->enemies[i].y)
+		{
+			ft_putendl_fd("Game Over! You hit an enemy!", 1);
+			cleanup_game(game);
+			exit(EXIT_SUCCESS);
+		}
+		i++;
+	}
+}
+
+bool	init_enemy(t_game *game)
 {
 	int	i;
 	int	x;
 	int	y;
 
+	if (!game || game->enemy_count <= 0)
+		return (true);
 	game->enemies = malloc(sizeof(t_enemy) * game->enemy_count);
 	if (!game->enemies)
-		return (0);
+		return (false);
 	i = 0;
 	y = 0;
 	while (y < game->height)
@@ -86,6 +100,8 @@ int	init_enemy(t_game *game)
 		{
 			if (game->map[y][x] == 'X')
 			{
+				if (i >= game->enemy_count)
+					return (false);
 				game->enemies[i].x = x;
 				game->enemies[i].y = y;
 				game->enemies[i].dx = 1;
@@ -97,5 +113,5 @@ int	init_enemy(t_game *game)
 		}
 		y++;
 	}
-	return (1);
+	return (i == game->enemy_count);
 }

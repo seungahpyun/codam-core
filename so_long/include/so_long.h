@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/12/12 11:48:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 14:25:49 by spyun         ########   odam.nl         */
+/*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
+/*   Updated: 2024/12/16 16:54:36 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <stdbool.h>
 # include "libft.h"
 # include "MLX42.h"
 
@@ -38,17 +39,17 @@ typedef struct s_player
 	int			frame_count;
 	int			frame_delay;
 	t_direction	direction;
-	mlx_image_t	*frames[4][4]; // 4 directions, 4 frames
+	mlx_image_t	*frames[4][4];
 }	t_player;
 
 typedef struct s_enemy
 {
-	int		x;
-	int		y;
-	int		dx;
-	int		dy;
-	int		current_frame;
-	int		frame_count;
+	int	x;
+	int	y;
+	int	dx;
+	int	dy;
+	int	current_frame;
+	int	frame_count;
 }	t_enemy;
 
 typedef struct s_path
@@ -81,52 +82,41 @@ typedef struct s_game
 	mlx_image_t	*moves_text;
 }	t_game;
 
-/* Initialization and cleanup */
-void	check_args(int argc, char **argv);
-int		init_game(t_game *game, char *file);
-void	exit_game(t_game *game, int status);
-void	error_exit(char *message, t_game *game);
-void		close_game(t_game *game);
 
-/* Map memory management */
-int     allocate_map(t_game *game);
-int     fill_map(t_game *game, char *file);
-void    free_allocated_map(t_game *game, int last_row);
+bool		init_game(t_game *game, char *file);
+void		cleanup_game(t_game *game);
+void		error_exit(char *message, t_game *game);
+void		check_args(int argc, char **argv);
 
-/* Map parsing and validation */
-int		parse_map(t_game *game, char *file);
-int		validate_map(t_game *game);
-int		validate_elements(t_game *game);
-int		check_valid_path(t_game *game);
-int		allocate_and_fill_map(t_game *game, char *file);
-void	free_allocated_map(t_game *game, int last_row);
+void		validate_file_extension(const char *filename);
+void		check_file_access(const char *filename);
 
-/* Graphics and rendering */
+int			parse_map(t_game *game, char *file);
+bool		validate_map(t_game *game);
+int			validate_elements(t_game *game);
+int			check_valid_path(t_game *game);
+int			find_player(t_game *game);
+int			count_elements(t_game *game);
+
+int			allocate_map(t_game *game);
+int			fill_map(t_game *game, char *file);
+void		free_allocated_map(t_game *game, int last_row);
+int			allocate_and_fill_map(t_game *game, char *file);
+
+int			render_frame(t_game *game);
 mlx_image_t	*load_image(t_game *game, const char *path);
-void	load_textures(t_game *game);
-int		render_frame(t_game *game);
-int		render_next_frame(t_game *game);
+void		load_textures(t_game *game);
 
-/* Animation functions */
-void     init_player_animation(t_game *game);
-void    update_animation(t_game *game);
-void    *get_current_player_sprite(t_game *game);
+void		move_player(t_game *game, int new_x, int new_y);
+bool		init_player(t_game *game);
+bool		init_player_animation(t_game *game);
+void		update_player_position(t_game *game);
+void		update_animation(t_game *game);
+mlx_image_t	*get_current_player_sprite(t_game *game);
+bool		init_enemy(t_game *game);
+void		update_enemy(t_game *game);
+void		render_enemy(t_game *game);
 
-/* Player and game mechanics */
-int		key_hook(int keycode, t_game *game);
-void	move_player(t_game *game, int x, int y);
-
-/* Game states and updates */
-void	update_game_state(t_game *game);
-void	display_moves(t_game *game);
-
-/* Map validation functions */
-int     find_player(t_game *game);
-int     count_elements(t_game *game);
-
-int		init_enemy(t_game *game);
-void	update_enemy(t_game *game);
-void	render_enemy(t_game *game);
-void	game_over(t_game *game);
+void		display_moves(t_game *game);
 
 #endif
