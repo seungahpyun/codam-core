@@ -6,24 +6,33 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:00:59 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 16:39:29 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/17 17:20:41 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include <stdio.h>
 
 static bool	load_direction_frames(t_game *game, t_direction dir,
 	const char *base_path)
 {
-	char	path[100];
+	char	path[256];
+	char	num[2];
 	int		i;
 
 	i = 0;
 	while (i < 4)
 	{
+		ft_memset(path, 0, sizeof(path));
 		ft_strlcpy(path, base_path, sizeof(path));
-		ft_strlcat(path, ft_itoa(i + 1), sizeof(path));
+		ft_strlcat(path, "/", sizeof(path));
+		ft_strlcat(path, base_path + ft_strlen("textures/player/"), sizeof(path));
+		num[0] = (i + 1) + '0';
+		num[1] = '\0';
+		ft_strlcat(path, num, sizeof(path));
 		ft_strlcat(path, ".png", sizeof(path));
+
+		printf("Loading animation frame: %s\n", path);
 		game->player.frames[dir][i] = load_image(game, path);
 		if (!game->player.frames[dir][i])
 			return (false);

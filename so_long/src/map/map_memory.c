@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 10:46:15 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 16:31:56 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/17 17:15:47 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,6 @@ void	free_allocated_map(t_game *game, int last_row)
 	game->map = NULL;
 }
 
-static char	*get_line_without_nl(int fd)
-{
-	char	*line;
-	char	*temp;
-
-	line = get_next_line(fd);
-	if (!line)
-		return (NULL);
-	if (ft_strlen(line) > 0 && line[ft_strlen(line) - 1] == '\n')
-	{
-		temp = ft_substr(line, 0, ft_strlen(line) - 1);
-		free(line);
-		if (!temp)
-			return (NULL);
-		return (temp);
-	}
-	return (line);
-}
-
 int	fill_map(t_game *game, char *file)
 {
 	int		fd;
@@ -60,13 +41,20 @@ int	fill_map(t_game *game, char *file)
 	i = 0;
 	while (i < game->height)
 	{
-		line = get_line_without_nl(fd);
+		line = get_next_line(fd);
 		if (!line)
 		{
 			close(fd);
 			return (0);
 		}
-		ft_strlcpy(game->map[i], line, game->width + 1);
+		if (line[ft_strlen(line) - 1] == '\n')
+			line[ft_strlen(line) - 1] = '\0';
+		if (!ft_strlcpy(game->map[i], line, game->width + 1))
+		{
+			free(line);
+			close(fd);
+			return (0);
+		}
 		free(line);
 		i++;
 	}

@@ -6,59 +6,17 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:47 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 16:32:39 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/17 17:15:37 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include <stdio.h>
 
-static int	check_line_length(char *line, int width)
-{
-	int	line_len;
-
-	if (!line)
-		return (0);
-	line_len = ft_strlen(line);
-	if (line[line_len - 1] == '\n')
-		line_len--;
-	return (line_len == width);
-}
-
-static int	get_first_line_width(int fd, int *width)
-{
-	char	*line;
-
-	line = get_next_line(fd);
-	if (!line)
-		return (0);
-	*width = ft_strlen(line);
-	if (line[*width - 1] == '\n')
-		(*width)--;
-	free(line);
-	return (1);
-}
-
-static int	process_map_lines(int fd, t_game *game)
-{
-	char	*line;
-	int		success;
-
-	success = 1;
-	while (success)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		game->height++;
-		if (!check_line_length(line, game->width))
-			success = 0;
-		free(line);
-	}
-	return (success);
-}
 
 static int	get_map_dimensions(t_game *game, char *file)
 {
+	char	*line;
 	int		fd;
 
 	if (!game || !file)
@@ -67,38 +25,86 @@ static int	get_map_dimensions(t_game *game, char *file)
 	if (fd == -1)
 		return (0);
 	game->height = 0;
-	if (!get_first_line_width(fd, &game->width))
+	game->width = 0;
+	while (1)
 	{
-		close(fd);
-		return (0);
-	}
-	if (!process_map_lines(fd, game))
-	{
-		close(fd);
-		return (0);
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		if (ft_strlen(line) > 0)
+		{
+			if (line[ft_strlen(line) - 1] == '\n')
+				line[ft_strlen(line) - 1] = '\0';
+			if (game->height == 0)
+				game->width = ft_strlen(line);
+			else if (game->width != (int)ft_strlen(line))
+			{
+				free(line);
+				close(fd);
+				return (0);
+			}
+			game->height++;
+		}
+		free(line);
 	}
 	close(fd);
-	return (1);
+	printf("Final dimensions: width=%d, height=%d\n", game->width, game->height);
+	return (game->width > 0 && game->height > 0);
 }
+
+// int	parse_map(t_game *game, char *file)
+// {
+// 	if (!game || !file)
+// 		return (0);
+// 	if (!get_map_dimensions(game, file))
+// 	{
+// 		ft_putendl_fd("Error: Invalid map dimensions", 2);
+// 		return (0);
+// 	}
+// 	if (!allocate_and_fill_map(game, file))
+// 	{
+// 		ft_putendl_fd("Error: Map allocation failed", 2);
+// 		return (0);
+// 	}
+// 	if (!validate_map(game))
+// 	{
+// 		free_allocated_map(game, game->height);
+// 		return (0);
+// 	}
+// 	return (1);
+// }
 
 int	parse_map(t_game *game, char *file)
 {
 	if (!game || !file)
 		return (0);
+
+	printf("Starting map parsing...\n");
 	if (!get_map_dimensions(game, file))
 	{
 		ft_putendl_fd("Error: Invalid map dimensions", 2);
 		return (0);
 	}
+	printf("Map dimensions: width=%d, height=%d\n", game->width, game->height);
+
 	if (!allocate_and_fill_map(game, file))
 	{
 		ft_putendl_fd("Error: Map allocation failed", 2);
 		return (0);
 	}
+	printf("Map allocation successful\n");
+
+	// Debug print the loaded map
+	for (int i = 0; i < game->height; i++)
+	{
+		printf("Row %d: [%s]\n", i, game->map[i]);
+	}
+
 	if (!validate_map(game))
 	{
 		free_allocated_map(game, game->height);
 		return (0);
 	}
+	printf("Map validation successful\n");
 	return (1);
 }

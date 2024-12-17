@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 16:54:36 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/17 17:26:04 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,5 @@ void		update_enemy(t_game *game);
 void		render_enemy(t_game *game);
 
 void		display_moves(t_game *game);
-
+char		*create_moves_str(int moves);
 #endif

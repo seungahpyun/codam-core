@@ -6,11 +6,12 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:59 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 16:54:22 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/17 17:15:57 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include <stdio.h>
 
 static bool	check_wall(t_game *game)
 {
@@ -18,20 +19,39 @@ static bool	check_wall(t_game *game)
 
 	if (!game || !game->map)
 		return (false);
+
+	printf("Checking walls...\n");
 	i = 0;
 	while (i < game->width)
 	{
-		if (game->map[0][i] != '1' || game->map[game->height - 1][i] != '1')
+		if (game->map[0][i] != '1')
+		{
+			printf("Top wall broken at position %d\n", i);
 			return (false);
+		}
+		if (game->map[game->height - 1][i] != '1')
+		{
+			printf("Bottom wall broken at position %d\n", i);
+			return (false);
+		}
 		i++;
 	}
 	i = 0;
 	while (i < game->height)
 	{
-		if (game->map[i][0] != '1' || game->map[i][game->width - 1] != '1')
+		if (game->map[i][0] != '1')
+		{
+			printf("Left wall broken at position %d\n", i);
 			return (false);
+		}
+		if (game->map[i][game->width - 1] != '1')
+		{
+			printf("Right wall broken at position %d\n", i);
+			return (false);
+		}
 		i++;
 	}
+	printf("Wall check successful\n");
 	return (true);
 }
 

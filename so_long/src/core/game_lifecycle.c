@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:00:14 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 16:51:08 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/17 17:22:45 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,26 +82,39 @@ bool	init_game(t_game *game, char *file)
 {
 	if (!game || !file)
 		return (false);
+
 	ft_memset(game, 0, sizeof(t_game));
+
 	if (!parse_map(game, file))
 	{
 		ft_putendl_fd("Error: Failed to parse map", STDERR_FILENO);
 		return (false);
 	}
+
 	game->mlx = mlx_init(game->width * TILE_SIZE,
 			game->height * TILE_SIZE, "so_long", true);
 	if (!game->mlx)
 		return (false);
+
 	load_textures(game);
-	init_player_animation(game);
+	if (!init_player(game))
+		return (false);
+	if (!init_player_animation(game))
+		return (false);
+
 	if (game->enemy_count > 0 && !init_enemy(game))
 	{
 		cleanup_game(game);
 		return (false);
 	}
+
+	// Initial render
+	render_frame(game);
+
 	mlx_key_hook(game->mlx, &key_handler, game);
 	mlx_loop_hook(game->mlx, &game_loop, game);
 	mlx_close_hook(game->mlx, (mlx_closefunc)cleanup_game, game);
+
 	return (true);
 }
 

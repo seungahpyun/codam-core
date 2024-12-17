@@ -6,13 +6,13 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:01:02 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 16:29:52 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/17 17:26:37 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static char	*create_moves_str(int moves)
+char	*create_moves_str(int moves)
 {
 	char	*temp;
 	char	*moves_str;
@@ -34,8 +34,12 @@ void	display_moves(t_game *game)
 	moves_str = create_moves_str(game->moves);
 	if (!moves_str)
 		error_exit("Failed to create moves string", game);
+
+	// Delete previous text if exists
 	if (game->moves_text)
 		mlx_delete_image(game->mlx, game->moves_text);
+
+	// Draw new text
 	game->moves_text = mlx_put_string(game->mlx, moves_str, 10, 10);
 	if (!game->moves_text)
 		error_exit("Failed to display moves", game);
