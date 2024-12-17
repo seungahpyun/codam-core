@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 16:31:09 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/17 16:14:37 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	load_textures(t_game *game)
 	if (!game)
 		return ;
 	game->wall_img = load_image(game, "textures/wall.png");
-	game->player_img = load_image(game, "textures/player.png");
+	game->player_img = load_image(game, "textures/player/down/down1.png");
 	game->collect_img = load_image(game, "textures/collect.png");
 	game->exit_img = load_image(game, "textures/exit.png");
 	game->empty_img = load_image(game, "textures/empty.png");
