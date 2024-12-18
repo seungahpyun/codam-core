@@ -6,11 +6,13 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:01:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 16:44:06 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/18 14:47:34 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+# define ENEMY_MOVE_DELAY 30
 
 static bool	is_valid_move(t_game *game, int x, int y)
 {
@@ -61,10 +63,15 @@ void	render_enemy(t_game *game)
 
 void	update_enemy(t_game *game)
 {
-	int	i;
+	static int	delay_count = 0;
+	int			i;
 
 	if (!game || !game->enemies)
 		return ;
+	delay_count++;
+	if (delay_count < ENEMY_MOVE_DELAY)
+		return ;
+	delay_count = 0;
 	i = 0;
 	while (i < game->enemy_count)
 	{

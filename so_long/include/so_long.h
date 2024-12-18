@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/17 17:26:04 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/18 14:21:24 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "libft.h"
 # include "MLX42.h"
 
-# define TILE_SIZE 32
+# define TILE_SIZE 128
 # define ANIMATION_SPEED 10
 
 typedef void (*mlx_closefun)(void*);

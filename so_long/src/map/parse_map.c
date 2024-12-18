@@ -6,13 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:47 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/18 10:15:41 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/18 10:24:23 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <stdio.h>
-
 
 static int	get_map_dimensions(t_game *game, char *file)
 {
@@ -48,7 +46,6 @@ static int	get_map_dimensions(t_game *game, char *file)
 		free(line);
 	}
 	close(fd);
-	printf("Final dimensions: width=%d, height=%d\n", game->width, game->height);
 	return (game->width > 0 && game->height > 0);
 }
 
@@ -57,33 +54,20 @@ int	parse_map(t_game *game, char *file)
 {
 	if (!game || !file)
 		return (0);
-
-	printf("Starting map parsing...\n");
 	if (!get_map_dimensions(game, file))
 	{
 		ft_putendl_fd("Error: Invalid map dimensions", 2);
 		return (0);
 	}
-	printf("Map dimensions: width=%d, height=%d\n", game->width, game->height);
-
 	if (!allocate_and_fill_map(game, file))
 	{
 		ft_putendl_fd("Error: Map allocation failed", 2);
 		return (0);
 	}
-	printf("Map allocation successful\n");
-
-	// Debug print the loaded map
-	for (int i = 0; i < game->height; i++)
-	{
-		printf("Row %d: [%s]\n", i, game->map[i]);
-	}
-
 	if (!validate_map(game))
 	{
 		free_allocated_map(game, game->height);
 		return (0);
 	}
-	printf("Map validation successful\n");
 	return (1);
 }

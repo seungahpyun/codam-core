@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:52 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/18 10:20:33 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/18 10:22:45 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ static void	init_collectibles_and_exit(t_game *game)
 		y++;
 	}
 }
-
-
 
 static void	init_enemies(t_game *game)
 {
