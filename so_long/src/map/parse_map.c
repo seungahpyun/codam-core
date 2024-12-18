@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:47 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/17 17:15:37 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/18 10:15:41 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,6 @@ static int	get_map_dimensions(t_game *game, char *file)
 	return (game->width > 0 && game->height > 0);
 }
 
-// int	parse_map(t_game *game, char *file)
-// {
-// 	if (!game || !file)
-// 		return (0);
-// 	if (!get_map_dimensions(game, file))
-// 	{
-// 		ft_putendl_fd("Error: Invalid map dimensions", 2);
-// 		return (0);
-// 	}
-// 	if (!allocate_and_fill_map(game, file))
-// 	{
-// 		ft_putendl_fd("Error: Map allocation failed", 2);
-// 		return (0);
-// 	}
-// 	if (!validate_map(game))
-// 	{
-// 		free_allocated_map(game, game->height);
-// 		return (0);
-// 	}
-// 	return (1);
-// }
 
 int	parse_map(t_game *game, char *file)
 {
