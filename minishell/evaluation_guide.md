@@ -326,3 +326,5 @@ cat nonexistent | grep test || echo "not found"
 - Verify error messages
 - Test edge cases
 - Ensure proper cleanup
+
+

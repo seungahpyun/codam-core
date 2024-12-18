@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:52 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/18 10:22:45 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/18 15:05:01 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,30 +188,35 @@ static void	update_collectibles(t_game *game)
 {
 	int		x;
 	int		y;
-	size_t	idx;
+	size_t	i;
+	size_t	instance_index;
 
 	if (!game || !game->collect_img || !game->collect_img->instances)
 		return ;
-	idx = 0;
+	i = 0;
+	while (i < game->collect_img->count)
+	{
+		game->collect_img->instances[i].enabled = false;
+		i++;
+	}
 	y = 0;
+	instance_index = 0;
 	while (y < game->height)
 	{
 		x = 0;
 		while (x < game->width)
 		{
-			if (game->map[y][x] == 'C' && idx < game->collect_img->count)
+			if (game->map[y][x] == 'C' &&
+				instance_index < game->collect_img->count)
 			{
-				game->collect_img->instances[idx].enabled = true;
-				idx++;
+				game->collect_img->instances[instance_index].x = x * TILE_SIZE;
+				game->collect_img->instances[instance_index].y = y * TILE_SIZE;
+				game->collect_img->instances[instance_index].enabled = true;
+				instance_index++;
 			}
 			x++;
 		}
 		y++;
-	}
-	while (idx < game->collect_img->count)
-	{
-		game->collect_img->instances[idx].enabled = false;
-		idx++;
 	}
 }
 
