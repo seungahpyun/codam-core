@@ -328,3 +328,144 @@ cat nonexistent | grep test || echo "not found"
 - Ensure proper cleanup
 
 
+[Previous sections remain the same...]
+
+## 19. Bonus Features
+### Logical Operators && and ||
+#### Basic AND Operator
+```bash
+# Success cases
+echo first && echo second
+ls && pwd && echo success
+
+# Failure cases
+./nonexistent && echo "won't print"
+ls nonexistent && echo "won't print" || echo "error happened"
+```
+
+#### Basic OR Operator
+```bash
+# Success on first command
+echo first || echo "won't print"
+ls || echo "won't print"
+
+# Success on second command
+ls nonexistent || echo "recovered from error"
+./nonexistent || echo "alternative executed"
+```
+
+#### Combined Operators
+```bash
+# Complex combinations
+echo first && echo second || echo "won't print"
+ls nonexistent && echo "won't print" || echo "error recovered"
+(ls && echo success) || echo "won't print"
+```
+
+#### Operator Precedence with Parentheses
+```bash
+# Test parentheses priority
+(echo a && echo b) || echo c
+(ls nonexistent || echo b) && echo c
+(echo a || echo b) && (echo c || echo d)
+
+# Complex nested parentheses
+(echo a && (echo b || echo c)) && echo d
+((ls && echo a) || (echo b && echo c)) && echo d
+```
+
+### Wildcards *
+#### Basic Wildcard Usage
+```bash
+# List all files
+ls *
+
+# Specific extensions
+ls *.c
+ls *.txt
+
+# Start/end patterns
+ls test*
+ls *test
+ls *test*
+```
+
+#### Multiple Wildcards
+```bash
+# Combined patterns
+ls *.c *.h
+ls test*.txt
+ls *test*.txt
+```
+
+#### Wildcard in Different Positions
+```bash
+# At different positions in command
+cp *.txt backup/
+mv test/* ./new_folder/
+cat */file.txt
+```
+
+#### Wildcard with Other Features
+```bash
+# With pipes
+ls * | grep test
+ls *.c | wc -l
+
+# With redirections
+cat *.txt > all_texts
+echo "hello" > test*.txt
+
+# With logical operators
+ls *.c && echo "found c files"
+ls *.txt || echo "no text files"
+```
+
+#### Edge Cases
+```bash
+# Empty directory
+mkdir empty && cd empty
+ls *
+
+# Hidden files
+ls .*
+
+# Special characters
+touch "file with spaces.txt"
+ls "file with"*
+
+# Multiple directory levels
+ls */*
+ls ../*/*
+```
+
+### Combined Bonus Features
+```bash
+# Wildcards with logical operators
+ls *.c && echo "found" || echo "not found"
+(ls *.txt && cat *.txt) || echo "no texts"
+
+# Complex combinations
+(ls *.c && gcc *.c) && ./a.out || echo "compilation failed"
+find . -name "*.txt" && (cat *.txt || echo "empty files")
+
+# Nested operations
+(ls *.c && (gcc *.c || echo "compile failed")) && ./a.out
+```
+
+## Bonus Evaluation Checklist
+### Logical Operators
+- [ ] Basic AND (&&) operator works
+- [ ] Basic OR (||) operator works
+- [ ] Proper error handling with operators
+- [ ] Correct operator precedence
+- [ ] Parentheses change precedence correctly
+- [ ] Nested parentheses work
+- [ ] Complex combinations execute correctly
+
+### Wildcards
+- [ ] Basic file matching works
+- [ ] Directory wildcards work
+- [ ] Multiple wildcards in one command
+- [ ] Hidden files handled correctly
+- [
