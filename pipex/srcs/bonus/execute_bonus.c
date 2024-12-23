@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:16:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/23 15:15:03 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/23 16:22:39 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ static void	handle_first_cmd(t_pipex *pipex, char **envp, int cmd_index)
 	if (cmd_index < pipex->pipe_count)
 	{
 		if (dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO) == -1)
+		{
+			close(pipex->pipes[cmd_index][1]);
 			perror_exit("Dup2 failed", pipex);
+		}
 	}
 	close_pipes(pipex);
 	execute_cmd(pipex->cmds[cmd_index], envp, pipex);
@@ -42,9 +45,15 @@ static void	handle_first_cmd(t_pipex *pipex, char **envp, int cmd_index)
 static void	handle_middle_cmd(t_pipex *pipex, char **envp, int cmd_index)
 {
 	if (dup2(pipex->pipes[cmd_index - 1][0], STDIN_FILENO) == -1)
+	{
+		close(pipex->pipes[cmd_index - 1][0]);
 		perror_exit("Dup2 failed", pipex);
+	}
 	if (dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO) == -1)
+	{
+		close(pipex->pipes[cmd_index][1]);
 		perror_exit("Dup2 failed", pipex);
+	}
 	close_pipes(pipex);
 	execute_cmd(pipex->cmds[cmd_index], envp, pipex);
 }
