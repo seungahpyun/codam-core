@@ -1,89 +1,89 @@
-NAME		= so_long
-BONUS_NAME	= so_long_bonus
-
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g
-RM			= rm -f
+NAME = so_long
+BONUS_NAME = so_long_bonus
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+LDFLAGS = -fsanitize=address
+RM = rm -f
 
 # Directories
-SRC_DIR		= src
-BONUS_DIR	= src_bonus
-OBJ_DIR		= obj
-BONUS_OBJ_DIR	= obj_bonus
-LIB_DIR		= lib
-INC_DIR		= include
-MLX_DIR		= $(LIB_DIR)/MLX42
+SRC_DIR = src/mandatory
+BONUS_DIR = src/bonus
+OBJ_DIR = obj
+BONUS_OBJ_DIR = obj_bonus
+LIB_DIR = lib
+INC_DIR = include
+MLX_DIR = $(LIB_DIR)/MLX42
 
 # MLX42 settings
-MLX			= $(MLX_DIR)/build/libmlx42.a
-MLX_FLAGS	= -ldl -lglfw -pthread -lm
+MLX = $(MLX_DIR)/build/libmlx42.a
+MLX_FLAGS = -ldl -lglfw -pthread -lm
 # Linux: -ldl -lglfw -pthread -lm
 # MacOS: -framework Cocoa -framework OpenGL -framework IOKit
-MLX_INC		= -I$(MLX_DIR)/include/MLX42
+MLX_INC = -I$(MLX_DIR)/include/MLX42
 
 # Library
-LIB			= $(LIB_DIR)/libft.a
+LIB = $(LIB_DIR)/libft.a
 
-# Source files for each directory
-CORE_FILES	= main.c game_lifecycle.c utils.c
-GAMEPLAY_FILES	= player.c enemy.c
-GRAPHICS_FILES	= animation.c display.c render.c texture.c
-MAP_FILES	= map_memory.c parse_map.c path_check.c validate_element.c validate_map.c
+# Source files for mandatory part
+CORE_SRC = core/main.c core/game_init.c core/utils.c
+GAMEPLAY_SRC = gameplay/player.c
+GRAPHICS_SRC = graphics/render.c graphics/texture.c
+MAP_SRC = map/map_parser.c map/map_validator.c map/map_memory.c map/path_check.c map/validate_element.c
 
-# Full source file paths
-CORE_SRCS	= $(addprefix $(SRC_DIR)/core/, $(CORE_FILES))
-GAMEPLAY_SRCS	= $(addprefix $(SRC_DIR)/gameplay/, $(GAMEPLAY_FILES))
-GRAPHICS_SRCS	= $(addprefix $(SRC_DIR)/graphics/, $(GRAPHICS_FILES))
-MAP_SRCS	= $(addprefix $(SRC_DIR)/map/, $(MAP_FILES))
+# Source files for bonus part
+BONUS_CORE_SRC = core/main_bonus.c core/game_init_bonus.c core/utils_bonus.c
+BONUS_GAMEPLAY_SRC = gameplay/player_bonus.c gameplay/enemy_bonus.c
+BONUS_GRAPHICS_SRC = graphics/render_bonus.c graphics/texture_bonus.c \
+					graphics/animation_bonus.c graphics/display_bonus.c
+BONUS_MAP_SRC = map/map_parser_bonus.c map/map_validator_bonus.c map/map_utils_bonus.c
 
 # Combine all sources
-SRCS		= $(CORE_SRCS) $(GAMEPLAY_SRCS) $(GRAPHICS_SRCS) $(MAP_SRCS)
+SRCS = $(addprefix $(SRC_DIR)/, $(CORE_SRC) $(GAMEPLAY_SRC) $(GRAPHICS_SRC) $(MAP_SRC))
+BONUS_SRCS = $(addprefix $(BONUS_DIR)/, $(BONUS_CORE_SRC) $(BONUS_GAMEPLAY_SRC) \
+			$(BONUS_GRAPHICS_SRC) $(BONUS_MAP_SRC))
 
 # Object files
-OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-
-# Bonus sources and objects (if needed)
-BONUS_SRCS	= $(SRCS:$(SRC_DIR)/%=$(BONUS_DIR)/%)
-BONUS_OBJS	= $(BONUS_SRCS:$(BONUS_DIR)/%.c=$(BONUS_OBJ_DIR)/%.o)
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+BONUS_OBJS = $(BONUS_SRCS:$(BONUS_DIR)/%.c=$(BONUS_OBJ_DIR)/%.o)
 
 # Include paths
-INC			= -I$(INC_DIR) -I$(LIB_DIR)/include -I$(MLX_DIR)/include/MLX42
+INC = -I$(INC_DIR) -I$(LIB_DIR)/include $(MLX_INC)
 
 # Colors for output
-GREEN		= \033[0;32m
-RESET		= \033[0m
+GREEN = \033[0;32m
+RESET = \033[0m
 
 all: $(MLX) $(NAME)
 
 bonus: $(MLX) $(BONUS_NAME)
 
-# MLX42 compilation
 $(MLX):
-	@cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4
+	@cmake $(MLX_DIR) -B $(MLX_DIR)/build
+	@make -C $(MLX_DIR)/build -j4
 
 $(NAME): $(LIB) $(OBJS)
 	@echo "$(GREEN)Linking $@...$(RESET)"
-	@$(CC) $(OBJS) $(LIB) $(MLX) $(MLX_FLAGS) -fsanitize=address -o $(NAME)
+	@$(CC) $(OBJS) $(LIB) $(MLX) $(MLX_FLAGS) $(LDFLAGS) -o $(NAME)
 	@echo "$(GREEN)Build complete: $(NAME)$(RESET)"
 
 $(BONUS_NAME): $(LIB) $(BONUS_OBJS)
 	@echo "$(GREEN)Linking $@...$(RESET)"
-	@$(CC) $(BONUS_OBJS) $(LIB) $(MLX) $(MLX_FLAGS) -fsanitize=address -o $(BONUS_NAME)
+	@$(CC) $(BONUS_OBJS) $(LIB) $(MLX) $(MLX_FLAGS) $(LDFLAGS) -o $(BONUS_NAME)
 	@echo "$(GREEN)Build complete: $(BONUS_NAME)$(RESET)"
 
 $(LIB):
 	@echo "$(GREEN)Building libft...$(RESET)"
 	@make -C $(LIB_DIR)
 
-# Create object files for main program
+# Create object files for mandatory
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 # Create object files for bonus
 $(BONUS_OBJ_DIR)/%.o: $(BONUS_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean:
 	@echo "$(GREEN)Cleaning object files...$(RESET)"

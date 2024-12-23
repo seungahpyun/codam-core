@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:49 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 16:38:27 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/23 08:41:11 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,35 @@ static void	update_player_direction(t_game *game, int new_x, int new_y)
 		game->player.direction = DIRECTION_UP;
 }
 
-void	move_player(t_game *game, int new_x, int new_y)
+static bool check_enemy_collision(t_game *game, int x, int y)
+{
+	int	i;
+
+	if (!game || !game->enemies)
+		return (false);
+	i = 0;
+	while (i < game->enemy_count)
+	{
+		if (game->enemies[i].x == x && game->enemies[i].y == y)
+		{
+			ft_putendl_fd("Game Over! You hit an enemy!", 1);
+			return (true);
+		}
+		i++;
+	}
+	return (false);
+}
+
+
+void    move_player(t_game *game, int new_x, int new_y)
 {
 	if (!game || !is_valid_move(game, new_x, new_y))
 		return ;
+	if (check_enemy_collision(game, new_x, new_y))
+	{
+		cleanup_game(game);
+		exit(EXIT_SUCCESS);
+	}
 	update_player_direction(game, new_x, new_y);
 	game->moves++;
 	display_moves(game);

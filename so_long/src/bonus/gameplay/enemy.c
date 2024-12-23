@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:01:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/18 14:47:34 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/23 08:40:31 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,18 @@ void	update_enemy(t_game *game)
 
 	if (!game || !game->enemies)
 		return ;
+	i = 0;
+	while (i < game->enemy_count)
+	{
+		if (game->player_x == game->enemies[i].x &&
+			game->player_y == game->enemies[i].y)
+		{
+			ft_putendl_fd("Game Over! You hit an enemy!", 1);
+			cleanup_game(game);
+			exit(EXIT_SUCCESS);
+		}
+		i++;
+	}
 	delay_count++;
 	if (delay_count < ENEMY_MOVE_DELAY)
 		return ;
@@ -76,8 +88,8 @@ void	update_enemy(t_game *game)
 	while (i < game->enemy_count)
 	{
 		move_single_enemy(game, &game->enemies[i]);
-		if (game->player_x == game->enemies[i].x
-			&& game->player_y == game->enemies[i].y)
+		if (game->player_x == game->enemies[i].x &&
+			game->player_y == game->enemies[i].y)
 		{
 			ft_putendl_fd("Game Over! You hit an enemy!", 1);
 			cleanup_game(game);

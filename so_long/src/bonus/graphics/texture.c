@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/18 10:36:05 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/23 08:53:30 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ mlx_image_t	*load_image(t_game *game, const char *path)
 	return (img);
 }
 
-void	load_textures(t_game *game)
+bool	load_textures(t_game *game)
 {
 	if (!game)
-		return ;
+		return (false);
 	game->wall_img = load_image(game, "textures/wall.png");
 	game->player_img = load_image(game, "textures/player/down/down1.png");
 	game->collect_img = load_image(game, "textures/collect.png");
@@ -50,5 +50,7 @@ void	load_textures(t_game *game)
 	game->enemy_img = load_image(game, "textures/enemy.png");
 	if (!game->wall_img || !game->player_img || !game->collect_img ||
 		!game->exit_img || !game->empty_img || !game->enemy_img)
-		error_exit("Failed to load one or more textures", game);
+		return (false);
+	return (true);
 }
+
