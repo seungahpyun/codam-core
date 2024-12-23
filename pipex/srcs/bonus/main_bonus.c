@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:12:45 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/12 13:51:27 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/23 12:25:56 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	main(int argc, char **argv, char **envp)
 	init_pipex(&pipex, argc, argv);
 	create_pipes(&pipex);
 	execute_commands(&pipex, envp);
-	cleanup_pipex(&pipex);
 	while (wait(&status) > 0)
 	{
 		if (WIFSIGNALED(status))
@@ -36,5 +35,6 @@ int	main(int argc, char **argv, char **envp)
 		else if (WIFEXITED(status))
 			exit_status = WEXITSTATUS(status);
 	}
+	cleanup_pipex(&pipex);
 	return (exit_status);
 }
