@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:47 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/23 10:14:46 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/23 10:58:50 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ bool	parse_map(t_game *game, char *file)
 		return (false);
 	if (!get_map_dimensions(game, file))
 	{
-		ft_putendl_fd("Error: Invalid map dimensions", 2);
+		ft_putendl_fd("Error: Invalid map dimensions", STDERR_FILENO);
 		return (false);
 	}
 	if (!allocate_and_fill_map(game, file))
 	{
-		ft_putendl_fd("Error: Map allocation failed", 2);
+		ft_putendl_fd("Error: Map allocation failed", STDERR_FILENO);
 		return (false);
 	}
 	if (!validate_map(game))
