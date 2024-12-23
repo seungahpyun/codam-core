@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:56:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/12 09:08:36 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/23 16:13:26 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*find_path(char *cmd, char **envp)
 	char	**paths;
 	char	*path;
 
-	if (!cmd || !envp)
+	if (!cmd ||!*cmd || !envp)
 		return (NULL);
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (ft_strdup(cmd));
@@ -79,7 +79,7 @@ void	execute_cmd(char *cmd, char **envp, t_pipex *pipex)
 	if (!cmd_path)
 	{
 		free_array(cmd_args);
-		perror_exit("Command not found", pipex);
+		error_exit("Command not found", pipex);
 	}
 	if (execve(cmd_path, cmd_args, envp) == -1)
 	{

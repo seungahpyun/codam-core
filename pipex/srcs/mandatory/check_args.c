@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:21:58 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/23 10:54:45 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/23 16:15:47 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	check_infile(char *infile, char *outfile)
 {
-	int outfile_fd;
+	int	outfile_fd;
+
 	if (access(infile, F_OK) == -1)
 	{
 		outfile_fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
