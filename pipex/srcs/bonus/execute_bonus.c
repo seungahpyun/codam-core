@@ -6,30 +6,35 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/09 07:16:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/23 16:22:39 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/23 16:28:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex_bonus.h"
 
-static void	handle_first_cmd(t_pipex *pipex, char **envp, int cmd_index)
+static void	setup_input(t_pipex *pipex, int *fd_in)
 {
-	int	fd_in;
-
 	if (pipex->here_doc)
 		handle_here_doc(pipex);
 	else
 	{
-		fd_in = open(pipex->infile, O_RDONLY);
-		if (fd_in == -1)
+		*fd_in = open(pipex->infile, O_RDONLY);
+		if (*fd_in == -1)
 			perror_exit("Input file error", pipex);
-		if (dup2(fd_in, STDIN_FILENO) == -1)
+		if (dup2(*fd_in, STDIN_FILENO) == -1)
 		{
-			close(fd_in);
+			close(*fd_in);
 			perror_exit("Dup2 failed", pipex);
 		}
-		close(fd_in);
+		close(*fd_in);
 	}
+}
+
+static void	handle_first_cmd(t_pipex *pipex, char **envp, int cmd_index)
+{
+	int	fd_in;
+
+	setup_input(pipex, &fd_in);
 	if (cmd_index < pipex->pipe_count)
 	{
 		if (dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO) == -1)
