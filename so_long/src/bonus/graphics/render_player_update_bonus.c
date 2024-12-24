@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   render_player_bonus.c                              :+:    :+:            */
+/*   render_player_update_bonus.c                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 09:12:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 11:13:07 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 13:37:03 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
-void	init_player_image(t_game *game)
+static void	disable_frame(t_game *game, t_direction dir, int frame)
+{
+	if (game->player.frames[dir][frame]
+		&& game->player.frames[dir][frame]->instances)
+		game->player.frames[dir][frame]->instances[0].enabled = false;
+}
+
+static void	disable_all_frames(t_game *game)
 {
 	t_direction	dir;
 	int			frame;
 
-	if (!game)
-		return ;
 	dir = DIRECTION_UP;
 	while (dir <= DIRECTION_RIGHT)
 	{
 		frame = 0;
 		while (frame < 4)
 		{
-			if (game->player.frames[dir][frame])
-			{
-				if (mlx_image_to_window(game->mlx,
-						game->player.frames[dir][frame],
-					game->player_x * TILE_SIZE,
-					game->player_y * TILE_SIZE) < 0)
-					error_exit("Failed to render player frame", game);
-				if (dir != game->player.direction || frame != 0)
-					game->player.frames[dir][frame]->instances[0].enabled = false;
-			}
+			disable_frame(game, dir, frame);
 			frame++;
 		}
 		dir++;
@@ -43,25 +39,11 @@ void	init_player_image(t_game *game)
 
 void	update_player(t_game *game)
 {
-	t_direction	dir;
-	int			frame;
 	mlx_image_t	*current_sprite;
 
 	if (!game)
 		return ;
-	dir = DIRECTION_UP;
-	while (dir <= DIRECTION_RIGHT)
-	{
-		frame = 0;
-		while (frame < 4)
-		{
-			if (game->player.frames[dir][frame] &&
-				game->player.frames[dir][frame]->instances)
-				game->player.frames[dir][frame]->instances[0].enabled = false;
-			frame++;
-		}
-		dir++;
-	}
+	disable_all_frames(game);
 	current_sprite = get_current_player_sprite(game);
 	if (current_sprite && current_sprite->instances)
 	{
