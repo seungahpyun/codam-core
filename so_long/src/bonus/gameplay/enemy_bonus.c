@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   enemy.c                                            :+:    :+:            */
+/*   enemy_bonus.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:01:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/23 08:40:31 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 09:37:53 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-
-# define ENEMY_MOVE_DELAY 30
+#include "so_long_bonus.h"
 
 static bool	is_valid_move(t_game *game, int x, int y)
 {
@@ -30,7 +28,7 @@ static void	reverse_enemy_direction(t_enemy *enemy)
 	enemy->dy *= -1;
 }
 
-static void	move_single_enemy(t_game *game, t_enemy *enemy)
+void	move_single_enemy(t_game *game, t_enemy *enemy)
 {
 	int	next_x;
 	int	next_y;
@@ -61,76 +59,17 @@ void	render_enemy(t_game *game)
 	}
 }
 
-void	update_enemy(t_game *game)
-{
-	static int	delay_count = 0;
-	int			i;
-
-	if (!game || !game->enemies)
-		return ;
-	i = 0;
-	while (i < game->enemy_count)
-	{
-		if (game->player_x == game->enemies[i].x &&
-			game->player_y == game->enemies[i].y)
-		{
-			ft_putendl_fd("Game Over! You hit an enemy!", 1);
-			cleanup_game(game);
-			exit(EXIT_SUCCESS);
-		}
-		i++;
-	}
-	delay_count++;
-	if (delay_count < ENEMY_MOVE_DELAY)
-		return ;
-	delay_count = 0;
-	i = 0;
-	while (i < game->enemy_count)
-	{
-		move_single_enemy(game, &game->enemies[i]);
-		if (game->player_x == game->enemies[i].x &&
-			game->player_y == game->enemies[i].y)
-		{
-			ft_putendl_fd("Game Over! You hit an enemy!", 1);
-			cleanup_game(game);
-			exit(EXIT_SUCCESS);
-		}
-		i++;
-	}
-}
-
-bool	init_enemy(t_game *game)
+bool	check_enemy_collision(t_game *game)
 {
 	int	i;
-	int	x;
-	int	y;
 
-	if (!game || game->enemy_count <= 0)
-		return (true);
-	game->enemies = malloc(sizeof(t_enemy) * game->enemy_count);
-	if (!game->enemies)
-		return (false);
 	i = 0;
-	y = 0;
-	while (y < game->height)
+	while (i < game->enemy_count)
 	{
-		x = 0;
-		while (x < game->width)
-		{
-			if (game->map[y][x] == 'X')
-			{
-				if (i >= game->enemy_count)
-					return (false);
-				game->enemies[i].x = x;
-				game->enemies[i].y = y;
-				game->enemies[i].dx = 1;
-				game->enemies[i].dy = 0;
-				game->map[y][x] = '0';
-				i++;
-			}
-			x++;
-		}
-		y++;
+		if (game->player_x == game->enemies[i].x &&
+			game->player_y == game->enemies[i].y)
+			return (true);
+		i++;
 	}
-	return (i == game->enemy_count);
+	return (false);
 }

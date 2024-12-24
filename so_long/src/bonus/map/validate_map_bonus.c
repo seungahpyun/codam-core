@@ -1,49 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   validate_map.c                                     :+:    :+:            */
+/*   validate_map_bonus.c                               :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:59 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/18 10:36:58 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 09:30:40 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
-static bool	check_wall(t_game *game)
+static bool	check_horizontal_walls(t_game *game)
 {
 	int	i;
 
-	if (!game || !game->map)
-		return (false);
 	i = 0;
 	while (i < game->width)
 	{
 		if (game->map[0][i] != '1')
 		{
-			ft_putendl_fd("Top wall broken at position", STDERR_FILENO);
+			ft_putendl_fd("Error: Top wall broken", STDERR_FILENO);
 			return (false);
 		}
 		if (game->map[game->height - 1][i] != '1')
 		{
-			ft_putendl_fd("Bottom wall broken at position",STDERR_FILENO);
+			ft_putendl_fd("Error: Bottom wall broken", STDERR_FILENO);
 			return (false);
 		}
 		i++;
 	}
+	return (true);
+}
+
+static bool	check_vertical_walls(t_game *game)
+{
+	int	i;
+
 	i = 0;
 	while (i < game->height)
 	{
 		if (game->map[i][0] != '1')
 		{
-			ft_putendl_fd("Left wall broken at position", STDERR_FILENO);
+			ft_putendl_fd("Error: Left wall broken", STDERR_FILENO);
 			return (false);
 		}
 		if (game->map[i][game->width - 1] != '1')
 		{
-			ft_putendl_fd("Right wall broken at position", STDERR_FILENO);
+			ft_putendl_fd("Error: Right wall broken", STDERR_FILENO);
 			return (false);
 		}
 		i++;
@@ -51,46 +56,46 @@ static bool	check_wall(t_game *game)
 	return (true);
 }
 
-static bool	check_characters(t_game *game)
+static bool	check_valid_characters(t_game *game)
 {
 	int		i;
 	int		j;
 	char	c;
 
-	if (!game || !game->map)
-		return (false);
-	i = -1;
-	while (++i < game->height)
+	i = 0;
+	while (i < game->height)
 	{
-		j = -1;
-		while (++j < game->width)
+		j = 0;
+		while (j < game->width)
 		{
 			c = game->map[i][j];
-			if (c != '0' && c != '1' && c != 'C' && c != 'E' && c != 'P'
-				&& c != 'X')
+			if (c != '0' && c != '1' && c != 'C' && c != 'E'
+				&& c != 'P' && c != 'X')
 				return (false);
+			j++;
 		}
+		i++;
 	}
 	return (true);
 }
 
-static void	count_enemy(t_game *game)
+static void	count_enemy_positions(t_game *game)
 {
 	int	i;
 	int	j;
 
-	if (!game || !game->map)
-		return ;
 	game->enemy_count = 0;
-	i = -1;
-	while (++i < game->height)
+	i = 0;
+	while (i < game->height)
 	{
-		j = -1;
-		while (++j < game->width)
+		j = 0;
+		while (j < game->width)
 		{
 			if (game->map[i][j] == 'X')
 				game->enemy_count++;
+			j++;
 		}
+		i++;
 	}
 }
 
@@ -98,12 +103,9 @@ bool	validate_map(t_game *game)
 {
 	if (!game || !game->map)
 		return (false);
-	if (!check_wall(game))
-	{
-		ft_putendl_fd("Error: Invalid wall configuration", 2);
+	if (!check_horizontal_walls(game) || !check_vertical_walls(game))
 		return (false);
-	}
-	if (!check_characters(game))
+	if (!check_valid_characters(game))
 	{
 		ft_putendl_fd("Error: Invalid characters in map", 2);
 		return (false);
@@ -112,6 +114,6 @@ bool	validate_map(t_game *game)
 		return (false);
 	if (!check_valid_path(game))
 		return (false);
-	count_enemy(game);
+	count_enemy_positions(game);
 	return (true);
 }

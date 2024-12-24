@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   main_bonus.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 11:56:04 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/23 09:05:17 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 09:29:52 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
+
+static void	init_game_struct(t_game *game)
+{
+	if (!game)
+		error_exit("Error: Game structure is NULL", NULL);
+	ft_memset(game, 0, sizeof(t_game));
+}
 
 int	main(int argc, char **argv)
 {
@@ -20,7 +27,7 @@ int	main(int argc, char **argv)
 		error_exit("Error: Invalid number of arguments", NULL);
 	validate_file_extension(argv[1]);
 	check_file_access(argv[1]);
-	ft_memset(&game, 0, sizeof(t_game));
+	init_game_struct(&game);
 	if (!init_game(&game, argv[1]))
 	{
 		cleanup_game(&game);

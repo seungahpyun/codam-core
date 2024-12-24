@@ -1,74 +1,75 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   validate_element.c                                 :+:    :+:            */
+/*   validate_element_bonus.c                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 10:44:27 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/16 16:34:11 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 09:53:18 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
-static int	check_single_element(t_game *game, int i, int j, char type)
+static void	init_element_count(t_game *game)
 {
-	if (!game || !game->map)
-		return (0);
-	if (game->map[i][j] == type)
-	{
-		if (type == 'P')
-		{
-			game->player_x = j;
-			game->player_y = i;
-			return (1);
-		}
-		if (type == 'C')
-		{
-			game->collectibles++;
-			return (0);
-		}
-		return (1);
-	}
-	return (0);
-}
-
-int	count_elements(t_game *game)
-{
-	int	i;
-	int	j;
-	int	player;
-	int	exit;
-
-	if (!game || !game->map)
-		return (0);
-	i = -1;
-	player = 0;
-	exit = 0;
 	game->collectibles = 0;
-	while (++i < game->height)
-	{
-		j = -1;
-		while (++j < game->width)
-		{
-			player += check_single_element(game, i, j, 'P');
-			exit += check_single_element(game, i, j, 'E');
-			check_single_element(game, i, j, 'C');
-		}
-	}
-	return (player == 1 && exit == 1 && game->collectibles > 0);
+	game->player_x = -1;
+	game->player_y = -1;
 }
 
-int	find_player(t_game *game)
+static bool	update_element_count(t_game *game, char element, int x, int y)
 {
-	int	i;
-	int	j;
-	int	player_found;
+	static int	player_count = 0;
+	static int	exit_count = 0;
 
-	if (!game || !game->map)
-		return (0);
-	player_found = 0;
+	if (element == 'P')
+	{
+		player_count++;
+		game->player_x = x;
+		game->player_y = y;
+	}
+	else if (element == 'E')
+		exit_count++;
+	else if (element == 'C')
+		game->collectibles++;
+	if (player_count > 1 || exit_count > 1)
+		return (false);
+	return (true);
+}
+
+static bool	check_element_requirements(int player_found, int exit_found,
+	t_game *game)
+{
+	if (!player_found)
+	{
+		ft_putendl_fd("Error: No player found", STDERR_FILENO);
+		return (false);
+	}
+	if (!exit_found)
+	{
+		ft_putendl_fd("Error: No exit found", STDERR_FILENO);
+		return (false);
+	}
+	if (game->collectibles == 0)
+	{
+		ft_putendl_fd("Error: No collectibles found", STDERR_FILENO);
+		return (false);
+	}
+	return (true);
+}
+
+static bool	scan_map_elements(t_game *game)
+{
+	int		i;
+	int		j;
+	bool	player_found;
+	bool	exit_found;
+
+	init_element_count(game);
+	player_found = false;
+	exit_found = false;
 	i = -1;
 	while (++i < game->height)
 	{
@@ -76,29 +77,27 @@ int	find_player(t_game *game)
 		while (++j < game->width)
 		{
 			if (game->map[i][j] == 'P')
+				player_found = true;
+			else if (game->map[i][j] == 'E')
+				exit_found = true;
+			if (!update_element_count(game, game->map[i][j], j, i))
 			{
-				game->player_x = j;
-				game->player_y = i;
-				player_found++;
+				ft_putendl_fd("Error: Duplicate player or exit", STDERR_FILENO);
+				return (false);
 			}
 		}
 	}
-	return (player_found == 1);
+	return (check_element_requirements(player_found, exit_found, game));
 }
 
-int	validate_elements(t_game *game)
+bool	validate_elements(t_game *game)
 {
-	if (!game)
-		return (0);
-	if (!count_elements(game))
+	if (!game || !game->map)
 	{
-		ft_putendl_fd("Error: Invalid number of elements", 2);
-		return (0);
+		ft_putendl_fd("Error: Invalid game state", STDERR_FILENO);
+		return (false);
 	}
-	if (!find_player(game))
-	{
-		ft_putendl_fd("Error: Invalid player position", 2);
-		return (0);
-	}
-	return (1);
+	if (!scan_map_elements(game))
+		return (false);
+	return (true);
 }
