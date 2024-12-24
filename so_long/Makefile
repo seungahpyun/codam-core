@@ -27,23 +27,24 @@ LIB = $(LIB_DIR)/libft.a
 # Source files for mandatory part
 CORE_SRC	 = core/main.c core/game_init.c core/utils.c
 GAMEPLAY_SRC = gameplay/player.c
-GRAPHICS_SRC = graphics/render.c graphics/render_helper.c \
+GRAPHICS_SRC = graphics/render.c graphics/render_background.c \
+			   graphics/render_player.c graphics/render_objects.c \
 			   graphics/texture.c
 MAP_SRC		 = map/map_parser.c map/map_validator.c \
 			   map/map_memory.c map/map_allocation.c \
 			   map/path_check.c map/validate_element.c
 # Source files for bonus part
 BONUS_CORE_SRC = core/main_bonus.c core/game_lifecycle_bonus.c \
-                 core/game_init_cleanup_bonus.c core/utils_bonus.c
+				 core/game_init_cleanup_bonus.c core/utils_bonus.c
 BONUS_GAME_SRC = gameplay/player_bonus.c gameplay/player_movement_bonus.c \
-                 gameplay/enemy_update_bonus.c gameplay/enemy_bonus.c
+				 gameplay/enemy_update_bonus.c gameplay/enemy_bonus.c
 BONUS_GFX_SRC =  graphics/render_bonus.c graphics/render_player_bonus.c \
-                 graphics/render_objects_bonus.c graphics/texture_bonus.c \
-                 graphics/animation_bonus.c graphics/animation_init_bonus.c \
-                 graphics/display_bonus.c
+				 graphics/render_objects_bonus.c graphics/texture_bonus.c \
+				 graphics/animation_bonus.c graphics/animation_init_bonus.c \
+ 				 graphics/display_bonus.c
 BONUS_MAP_SRC =  map/parse_map_bonus.c map/validate_map_bonus.c \
-                 map/map_memory_bonus.c map/path_check_bonus.c \
-                 map/validate_element_bonus.c
+				 map/map_memory_bonus.c map/path_check_bonus.c \
+				 map/validate_element_bonus.c
 
 # Combine all sources
 SRCS = $(addprefix $(SRC_DIR)/, $(CORE_SRC) $(GAMEPLAY_SRC) $(GRAPHICS_SRC) $(MAP_SRC))
