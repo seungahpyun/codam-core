@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:01:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 09:37:53 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 11:11:37 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ bool	check_enemy_collision(t_game *game)
 	i = 0;
 	while (i < game->enemy_count)
 	{
-		if (game->player_x == game->enemies[i].x &&
-			game->player_y == game->enemies[i].y)
+		if (game->player_x == game->enemies[i].x
+			&& game->player_y == game->enemies[i].y)
 			return (true);
 		i++;
 	}

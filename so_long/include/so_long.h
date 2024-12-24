@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/23 09:26:01 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/23 10:05:54 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 11:24:36 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,16 @@ bool		validate_map(t_game *game);
 bool		validate_elements(t_game *game);
 bool		check_valid_path(t_game *game);
 bool		allocate_and_fill_map(t_game *game, char *file);
+bool		allocate_map(t_game *game);
 bool		allocate_collect_instances(t_game *game);
 void		free_allocated_map(t_game *game, int last_row);
 
 /* Player related functions */
+void		init_background(t_game *game);
+void		init_walls(t_game *game);
+void		init_collectibles_and_exit(t_game *game);
+void		init_player_image(t_game *game);
+void		update_player_position(t_game *game)
 void		move_player(t_game *game, int new_x, int new_y);
 bool		init_player(t_game *game);
 
@@ -77,6 +83,6 @@ void		error_exit(char *message, t_game *game);
 void		validate_file_extension(const char *filename);
 void		check_file_access(const char *filename);
 void		handle_close(void *param);
+void		check_texture_files(void);
 
-void    check_texture_files(void);
 #endif

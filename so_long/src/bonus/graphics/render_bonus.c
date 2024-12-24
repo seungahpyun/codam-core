@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:52 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 09:40:15 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 11:13:31 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	init_background(t_game *game)
 			if (game->empty_img)
 			{
 				if (mlx_image_to_window(game->mlx, game->empty_img,
-					x * TILE_SIZE, y * TILE_SIZE) < 0)
+						x * TILE_SIZE, y * TILE_SIZE) < 0)
 					error_exit("Failed to render background", game);
 			}
 			x++;
@@ -49,7 +49,7 @@ static void	init_walls(t_game *game)
 			if (game->map[y][x] == '1' && game->wall_img)
 			{
 				if (mlx_image_to_window(game->mlx, game->wall_img,
-					x * TILE_SIZE, y * TILE_SIZE) < 0)
+						x * TILE_SIZE, y * TILE_SIZE) < 0)
 					error_exit("Failed to render wall", game);
 			}
 			x++;
@@ -65,7 +65,7 @@ void	init_images(t_game *game)
 	init_collectibles_and_exit(game);
 	init_player_image(game);
 	if (game->enemy_count > 0)
-        render_enemy(game);
+		render_enemy(game);
 }
 
 int	render_frame(t_game *game)
@@ -82,7 +82,7 @@ int	render_frame(t_game *game)
 	}
 	update_player(game);
 	if (game->enemy_count > 0)
-        update_enemy(game);
+		update_enemy(game);
 	update_collectibles(game);
 	display_moves(game);
 	return (0);

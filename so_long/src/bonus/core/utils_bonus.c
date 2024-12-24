@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 13:54:06 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 09:29:56 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 11:05:03 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handle_close(void *param)
 
 void	error_exit(char *message, t_game *game)
 {
-	if(message)
+	if (message)
 		ft_putendl_fd(message, STDERR_FILENO);
 	if (game)
 		cleanup_game(game);
@@ -56,4 +56,3 @@ void	check_file_access(const char *filename)
 		error_exit("Error: Cannot access map file", NULL);
 	close(fd);
 }
-

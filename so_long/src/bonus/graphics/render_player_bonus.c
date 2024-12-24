@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 09:12:05 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 09:30:23 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 11:13:07 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_player_image(t_game *game)
 			if (game->player.frames[dir][frame])
 			{
 				if (mlx_image_to_window(game->mlx,
-					game->player.frames[dir][frame],
+						game->player.frames[dir][frame],
 					game->player_x * TILE_SIZE,
 					game->player_y * TILE_SIZE) < 0)
 					error_exit("Failed to render player frame", game);

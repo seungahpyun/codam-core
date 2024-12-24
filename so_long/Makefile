@@ -27,10 +27,11 @@ LIB = $(LIB_DIR)/libft.a
 # Source files for mandatory part
 CORE_SRC	 = core/main.c core/game_init.c core/utils.c
 GAMEPLAY_SRC = gameplay/player.c
-GRAPHICS_SRC = graphics/render.c graphics/texture.c
+GRAPHICS_SRC = graphics/render.c graphics/render_helper.c \
+			   graphics/texture.c
 MAP_SRC		 = map/map_parser.c map/map_validator.c \
-			   map/map_memory.c map/path_check.c map/validate_element.c
-
+			   map/map_memory.c map/map_allocation.c \
+			   map/path_check.c map/validate_element.c
 # Source files for bonus part
 BONUS_CORE_SRC = core/main_bonus.c core/game_lifecycle_bonus.c \
                  core/game_init_cleanup_bonus.c core/utils_bonus.c

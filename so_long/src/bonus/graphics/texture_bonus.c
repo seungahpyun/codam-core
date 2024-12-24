@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 09:30:26 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 11:15:20 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ mlx_image_t	*load_image(t_game *game, const char *path)
 {
 	mlx_texture_t	*texture;
 	mlx_image_t		*img;
+	int				fd;
 
 	if (!game || !game->mlx || !path)
 		return (NULL);
@@ -23,9 +24,10 @@ mlx_image_t	*load_image(t_game *game, const char *path)
 	if (!texture)
 	{
 		ft_putendl_fd("Failed to load texture", STDERR_FILENO);
-		int fd = open(path, O_RDONLY);
+		fd = open(path, O_RDONLY);
 		if (fd == -1)
-			ft_putendl_fd("File does not exist or cannot be opened", STDERR_FILENO);
+			ft_putendl_fd("File does not exist or cannot be opened",
+				STDERR_FILENO);
 		return (NULL);
 	}
 	img = mlx_texture_to_image(game->mlx, texture);
@@ -48,9 +50,8 @@ bool	load_textures(t_game *game)
 	game->exit_img = load_image(game, "textures/exit.png");
 	game->empty_img = load_image(game, "textures/empty.png");
 	game->enemy_img = load_image(game, "textures/enemy.png");
-	if (!game->wall_img || !game->player_img || !game->collect_img ||
-		!game->exit_img || !game->empty_img || !game->enemy_img)
+	if (!game->wall_img || !game->player_img || !game->collect_img
+		|| !game->exit_img || !game->empty_img || !game->enemy_img)
 		return (false);
 	return (true);
 }
-

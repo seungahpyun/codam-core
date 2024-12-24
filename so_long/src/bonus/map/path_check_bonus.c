@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 15:18:09 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 09:51:57 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 11:03:38 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,25 +74,25 @@ static bool	validate_path_result(t_path *path, int total_collectibles)
 	return (path->collectibles == total_collectibles && path->exit_found);
 }
 
-bool    check_valid_path(t_game *game)
+bool	check_valid_path(t_game *game)
 {
-    char    **temp_map;
-    t_path    path;
-    bool    is_valid;
+	char	**temp_map;
+	t_path	path;
+	bool	is_valid;
 
-    if (!game || !game->map)
-        return (false);
-    temp_map = create_map_copy(game);
-    if (!temp_map)
-        return (false);
-    path.width = game->width;
-    path.height = game->height;
-    path.collectibles = 0;
-    path.exit_found = false;
-    explore_path(temp_map, game->player_x, game->player_y, &path);
-    is_valid = validate_path_result(&path, game->collectibles);
-    free_temp_map(temp_map, game->height);
-    if (!is_valid)
-        ft_putendl_fd("Error: Invalid path in map", 2);
-    return (is_valid);
+	if (!game || !game->map)
+		return (false);
+	temp_map = create_map_copy(game);
+	if (!temp_map)
+		return (false);
+	path.width = game->width;
+	path.height = game->height;
+	path.collectibles = 0;
+	path.exit_found = false;
+	explore_path(temp_map, game->player_x, game->player_y, &path);
+	is_valid = validate_path_result(&path, game->collectibles);
+	free_temp_map(temp_map, game->height);
+	if (!is_valid)
+		ft_putendl_fd("Error: Invalid path in map", 2);
+	return (is_valid);
 }

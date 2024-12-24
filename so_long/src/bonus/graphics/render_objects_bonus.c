@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 09:11:36 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 09:30:21 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/24 11:12:21 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	init_collectibles_and_exit(t_game *game)
 			if (game->map[y][x] == 'C' && game->collect_img)
 			{
 				if (mlx_image_to_window(game->mlx, game->collect_img,
-					x * TILE_SIZE, y * TILE_SIZE) < 0)
+						x * TILE_SIZE, y * TILE_SIZE) < 0)
 					error_exit("Failed to render collectible", game);
 			}
 			if (game->map[y][x] == 'E' && game->exit_img)
 			{
 				if (mlx_image_to_window(game->mlx, game->exit_img,
-					x * TILE_SIZE, y * TILE_SIZE) < 0)
+						x * TILE_SIZE, y * TILE_SIZE) < 0)
 					error_exit("Failed to render exit", game);
 			}
 			x++;
@@ -51,8 +51,8 @@ void	init_enemies(t_game *game)
 	while (i < game->enemy_count)
 	{
 		if (mlx_image_to_window(game->mlx, game->enemy_img,
-			game->enemies[i].x * TILE_SIZE,
-			game->enemies[i].y * TILE_SIZE) < 0)
+				game->enemies[i].x * TILE_SIZE,
+				game->enemies[i].y * TILE_SIZE) < 0)
 			error_exit("Failed to render enemy", game);
 		i++;
 	}
