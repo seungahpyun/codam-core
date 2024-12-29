@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/23 09:26:01 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 12:08:43 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/29 13:00:41 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 
 typedef struct s_path
 {
-	int	width;
-	int	height;
-	int	collectibles;
+	int		width;
+	int		height;
+	int		collectibles;
 	bool	exit_found;
 }	t_path;
 
@@ -50,11 +50,9 @@ typedef struct s_game
 	mlx_image_t	*empty_img;
 }	t_game;
 
-/* Main game functions */
 bool		init_game(t_game *game, char *file);
 void		cleanup_game(t_game *game);
 
-/* Map related functions */
 bool		parse_map(t_game *game, char *file);
 bool		validate_map(t_game *game);
 bool		validate_elements(t_game *game);
@@ -64,29 +62,23 @@ bool		allocate_and_fill_map(t_game *game, char *file);
 bool		allocate_collect_instances(t_game *game);
 void		free_allocated_map(t_game *game, int last_row);
 
-/* Player related functions */
 void		move_player(t_game *game, int new_x, int new_y);
 bool		init_player(t_game *game);
 void		init_player_image(t_game *game);
 void		update_player_position(t_game *game);
 
-/* Background render functions */
 void		init_background(t_game *game);
 void		init_walls(t_game *game);
 
-/* Object render functions */
 void		init_collectibles_and_exit(t_game *game);
 int			render_frame(t_game *game);
 
-/* General render functions */
 bool		load_textures(t_game *game);
 mlx_image_t	*load_image(t_game *game, const char *path);
 
-/* Utility functions */
 void		error_exit(char *message, t_game *game);
 void		validate_file_extension(const char *filename);
 void		check_file_access(const char *filename);
 void		handle_close(void *param);
-void		check_texture_files(void);
 
 #endif
