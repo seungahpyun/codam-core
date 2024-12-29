@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 11:01:02 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 09:30:16 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/29 14:02:07 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	display_moves(t_game *game)
 		error_exit("Failed to create moves string", game);
 	if (game->moves_text)
 		mlx_delete_image(game->mlx, game->moves_text);
-	game->moves_text = mlx_put_string(game->mlx, moves_str, 10, 10);
+	game->moves_text = mlx_put_string(game->mlx, moves_str, 20, 20);
 	if (!game->moves_text)
 		error_exit("Failed to display moves", game);
 	free(moves_str);

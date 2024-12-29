@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 10:44:27 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/29 13:17:10 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/29 14:03:41 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static bool	process_element(t_game *game, t_element_status *status)
 	else if (game->map[status->i][status->j] == 'E')
 		status->exit_found = true;
 	if (!update_element_count(game, game->map[status->i][status->j],
-			status->j, status->i))
+		status->j, status->i))
 	{
 		ft_putendl_fd("Error: Duplicate player or exit", STDERR_FILENO);
 		return (false);
