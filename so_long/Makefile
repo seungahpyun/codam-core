@@ -14,7 +14,9 @@ INC_DIR = include
 MLX_DIR = $(LIB_DIR)/MLX42
 
 MLX = $(MLX_DIR)/build/libmlx42.a
-MLX_FLAGS = -ldl -lglfw -pthread -lm
+MLX_FLAGS =  -ldl -lglfw -pthread -lm
+# -L/opt/homebrew/lib -lglfw -framework Cocoa -framework OpenGL -framework IOKit
+#  -ldl -lglfw -pthread -lm
 MLX_INC = -I$(MLX_DIR)/include/MLX42
 
 LIB = $(LIB_DIR)/libft.a
