@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 13:43:49 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/29 12:44:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,13 @@ typedef struct s_game
 	mlx_image_t	*moves_text;
 }	t_game;
 
+typedef struct s_element_status
+{
+	bool	player_found;
+	bool	exit_found;
+	int		i;
+	int		j;
+}	t_element_status;
 /* Function Prototypes */
 
 /* Main game functions */

@@ -6,13 +6,13 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 13:38:14 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 13:38:24 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/29 12:45:39 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
-static bool	check_element_requirements(int player_found, int exit_found,
+static bool	check_element_requirements(bool player_found, bool exit_found,
 		t_game *game)
 {
 	if (!player_found)
@@ -33,14 +33,14 @@ static bool	check_element_requirements(int player_found, int exit_found,
 	return (true);
 }
 
-static bool	process_element(t_game *game, int i, int j,
-		bool *player_found, bool *exit_found)
+static bool	process_element(t_game *game, t_element_status *status)
 {
-	if (game->map[i][j] == 'P')
-		*player_found = true;
-	else if (game->map[i][j] == 'E')
-		*exit_found = true;
-	if (!update_element_count(game, game->map[i][j], j, i))
+	if (game->map[status->i][status->j] == 'P')
+		status->player_found = true;
+	else if (game->map[status->i][status->j] == 'E')
+		status->exit_found = true;
+	if (!update_element_count(game, game->map[status->i][status->j],
+		status->j, status->i))
 	{
 		ft_putendl_fd("Error: Duplicate player or exit", STDERR_FILENO);
 		return (false);
@@ -50,25 +50,23 @@ static bool	process_element(t_game *game, int i, int j,
 
 static bool	scan_map_elements(t_game *game)
 {
-	int		i;
-	int		j;
-	bool	player_found;
-	bool	exit_found;
+	t_element_status	status;
 
 	init_element_count(game);
-	player_found = false;
-	exit_found = false;
-	i = -1;
-	while (++i < game->height)
+	status.player_found = false;
+	status.exit_found = false;
+	status.i = -1;
+	while (++status.i < game->height)
 	{
-		j = -1;
-		while (++j < game->width)
+		status.j = -1;
+		while (++status.j < game->width)
 		{
-			if (!process_element(game, i, j, &player_found, &exit_found))
+			if (!process_element(game, &status))
 				return (false);
 		}
 	}
-	return (check_element_requirements(player_found, exit_found, game));
+	return (check_element_requirements(status.player_found,
+			status.exit_found, game));
 }
 
 bool	validate_elements(t_game *game)

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 13:36:27 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 13:36:33 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/29 12:41:02 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	render_player_frame(t_game *game, t_direction dir, int frame)
 		return ;
 	if (mlx_image_to_window(game->mlx,
 			game->player.frames[dir][frame],
-			game->player_x * TILE_SIZE,
-			game->player_y * TILE_SIZE) < 0)
+		game->player_x * TILE_SIZE,
+		game->player_y * TILE_SIZE) < 0)
 		error_exit("Failed to render player frame", game);
 }
 
