@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/29 13:14:44 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/29 13:16:48 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,6 @@ void		update_enemy(t_game *game);
 void		render_enemy(t_game *game);
 bool		check_enemy_collision(t_game *game);
 void		move_single_enemy(t_game *game, t_enemy *enemy);
-
-bool		update_element_count(t_game *game, char element, int x, int y);
-void		init_element_count(t_game *game);
 
 bool		init_player_animation(t_game *game);
 bool		load_direction_frames(t_game *game, t_direction dir,
