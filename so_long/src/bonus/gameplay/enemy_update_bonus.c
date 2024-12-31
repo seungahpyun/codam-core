@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 09:05:45 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/31 11:30:45 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/31 11:52:02 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,42 +42,48 @@ static void	init_enemy_properties(t_enemy *enemy)
 	enemy->type = CHASE_PLAYER;
 	enemy->dx = 0;
 	enemy->dy = 0;
-	enemy->direction = DIRECTION_RIGHT;
+	enemy->current_frame = 0;
+	enemy->frame_delay = 0;
 }
 
-static void	init_enemy_position(t_game *game, int x, int y, int index)
+void	init_enemy_positions(t_game *game)
 {
-	game->enemies[index].x = x;
-	game->enemies[index].y = y;
-	init_enemy_properties(&game->enemies[index]);
-	game->map[y][x] = '0';
-}
-
-bool	init_enemy(t_game *game)
-{
-	int	i;
 	int	x;
 	int	y;
+	int	count;
 
-	if (!game || game->enemy_count <= 0)
-		return (true);
-	game->enemies = malloc(sizeof(t_enemy) * game->enemy_count);
-	if (!game->enemies)
-		return (false);
-	i = 0;
 	y = -1;
+	count = 0;
 	while (++y < game->height)
 	{
 		x = -1;
 		while (++x < game->width)
 		{
-			if (game->map[y][x] == 'X')
+			if (game->map[y][x] == 'X' && count < game->enemy_count)
 			{
-				if (i >= game->enemy_count)
-					return (false);
-				init_enemy_position(game, x, y, i++);
+				game->enemies[count].x = x;
+				game->enemies[count].y = y;
+				init_enemy_properties(&game->enemies[count]);
+				game->map[y][x] = '0';
+				count++;
 			}
 		}
 	}
-	return (i == game->enemy_count);
+}
+
+bool	init_enemy(t_game *game)
+{
+	if (!game || game->enemy_count <= 0)
+		return (true);
+	game->enemies = malloc(sizeof(t_enemy) * game->enemy_count);
+	if (!game->enemies)
+		return (false);
+	if (!load_enemy_frames(game))
+	{
+		free(game->enemies);
+		game->enemies = NULL;
+		return (false);
+	}
+	init_enemy_positions(game);
+	return (true);
 }

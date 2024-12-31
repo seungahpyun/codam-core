@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/31 11:22:42 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/31 12:13:40 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define MAX_MAP_HEIGHT 50
 # define ANIMATION_SPEED 10
 # define ENEMY_MOVE_DELAY 20
-# define CHASE_MOVE_DELAY 500        // 추적하는 적의 이동 딜레이
+# define ENEMY_FRAME_COUNT 4
 
 typedef void	(*t_mlx_closefun)(void*);
 
@@ -50,6 +50,8 @@ typedef struct s_enemy
 	int				dx;
 	int				dy;
 	int				move_delay;
+	int				current_frame;
+	int				frame_delay;
 	t_enemy_type	type;
 	t_direction		direction;
 	int				sight_range;
@@ -92,6 +94,7 @@ typedef struct s_game
 	mlx_image_t	*exit_img;
 	mlx_image_t	*empty_img;
 	mlx_image_t	*enemy_img;
+	mlx_image_t	*enemy_frames[4];
 	mlx_image_t	*moves_text;
 }	t_game;
 
@@ -160,4 +163,12 @@ void    update_enemy_positions(t_game *game);
 
 void    move_chase_player(t_game *game, t_enemy *enemy);
 void    move_random(t_game *game, t_enemy *enemy);
+
+bool			load_enemy_direction_frames(t_game *game, t_direction dir,
+					const char *base_dir);
+void			update_enemy_animation(t_game *game);
+bool			init_enemy_animation(t_game *game);
+void			cleanup_enemy_animation(t_game *game);
+mlx_image_t		*get_current_enemy_sprite(t_game *game, int enemy_index);
+bool	load_enemy_frames(t_game *game);
 #endif

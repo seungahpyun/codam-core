@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 11:15:20 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/31 12:12:28 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	load_textures(t_game *game)
 	game->collect_img = load_image(game, "textures/collect.png");
 	game->exit_img = load_image(game, "textures/exit.png");
 	game->empty_img = load_image(game, "textures/empty.png");
-	game->enemy_img = load_image(game, "textures/enemy.png");
+	game->enemy_img = load_image(game, "textures/enemy/right1.png");
 	if (!game->wall_img || !game->player_img || !game->collect_img
 		|| !game->exit_img || !game->empty_img || !game->enemy_img)
 		return (false);

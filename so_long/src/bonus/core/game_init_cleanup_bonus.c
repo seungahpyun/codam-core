@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 09:03:10 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 09:29:44 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/31 12:10:17 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	free_textures(t_game *game)
 	if (!game || !game->mlx)
 		return ;
 	cleanup_player_animation(game);
+	cleanup_enemy_animation(game);
 	if (game->wall_img)
 		mlx_delete_image(game->mlx, game->wall_img);
 	if (game->collect_img)
@@ -25,8 +26,6 @@ void	free_textures(t_game *game)
 		mlx_delete_image(game->mlx, game->exit_img);
 	if (game->empty_img)
 		mlx_delete_image(game->mlx, game->empty_img);
-	if (game->enemy_img)
-		mlx_delete_image(game->mlx, game->enemy_img);
 	if (game->moves_text)
 		mlx_delete_image(game->mlx, game->moves_text);
 }

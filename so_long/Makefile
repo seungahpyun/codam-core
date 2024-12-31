@@ -38,6 +38,7 @@ BONUS_GFX_SRC =  graphics/render_bonus.c graphics/render_player_init_bonus.c \
 				 graphics/render_objects_bonus.c graphics/texture_bonus.c \
 				 graphics/animation_bonus.c graphics/animation_init_bonus.c \
  				 graphics/display_bonus.c graphics/render_enemies_bonus.c \
+				 graphics/enemy_animation_init_bonus.c graphics/enemy_animation_bonus.c \
 				 graphics/render_player_update_bonus.c graphics/render_enemies_utils_bonus.c
 BONUS_MAP_SRC =  map/map_parser_bonus.c map/validate_map_bonus.c \
 				 map/map_memory_bonus.c map/map_path_check_bonus.c \
