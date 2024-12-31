@@ -6,48 +6,50 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 09:05:45 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 10:53:41 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/31 11:30:45 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
-static void	handle_enemy_collision(t_game *game)
-{
-	ft_putendl_fd("Game Over! You hit an enemy!", 1);
-	cleanup_game(game);
-	exit(EXIT_SUCCESS);
-}
-
 void	update_enemy(t_game *game)
 {
-	static int	delay_count = 0;
-	int			i;
+	static double	last_move = -1.0;
+	double			current_time;
+	int				i;
 
-	if (!game || !game->enemies)
+	if (!game || !game->enemies || game->enemy_count <= 0)
 		return ;
-	if (check_enemy_collision(game))
-		handle_enemy_collision(game);
-	delay_count++;
-	if (delay_count < ENEMY_MOVE_DELAY)
-		return ;
-	delay_count = 0;
-	i = 0;
-	while (i < game->enemy_count)
+	current_time = mlx_get_time();
+	if (last_move < 0.0)
 	{
-		move_single_enemy(game, &game->enemies[i]);
-		i++;
+		last_move = current_time;
+		return ;
 	}
-	if (check_enemy_collision(game))
-		handle_enemy_collision(game);
+	if (current_time - last_move < 1.0)
+		return ;
+	i = -1;
+	while (++i < game->enemy_count)
+		move_chase_player(game, &game->enemies[i]);
+	update_enemy_positions(game);
+	last_move = current_time;
+}
+
+static void	init_enemy_properties(t_enemy *enemy)
+{
+	enemy->move_delay = 0;
+	enemy->sight_range = 5;
+	enemy->type = CHASE_PLAYER;
+	enemy->dx = 0;
+	enemy->dy = 0;
+	enemy->direction = DIRECTION_RIGHT;
 }
 
 static void	init_enemy_position(t_game *game, int x, int y, int index)
 {
 	game->enemies[index].x = x;
 	game->enemies[index].y = y;
-	game->enemies[index].dx = 1;
-	game->enemies[index].dy = 0;
+	init_enemy_properties(&game->enemies[index]);
 	game->map[y][x] = '0';
 }
 

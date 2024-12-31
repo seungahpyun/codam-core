@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:52 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 11:13:31 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/31 11:24:43 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	init_images(t_game *game)
 	init_collectibles_and_exit(game);
 	init_player_image(game);
 	if (game->enemy_count > 0)
-		render_enemy(game);
+		init_enemy_rendering(game);
+	display_moves(game);
 }
 
 int	render_frame(t_game *game)

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 13:34:51 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 13:35:03 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/31 11:34:39 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,43 +29,32 @@ void	init_enemies(t_game *game)
 	}
 }
 
-static void	reset_collectible_instances(t_game *game)
+void	init_enemy_rendering(t_game *game)
 {
-	size_t	i;
+	int	i;
 
-	i = 0;
-	while (i < game->collect_img->count)
-		game->collect_img->instances[i++].enabled = false;
-}
-
-static void	update_instance(t_game *game, int x, int y, size_t *idx)
-{
-	game->collect_img->instances[*idx].x = x * TILE_SIZE;
-	game->collect_img->instances[*idx].y = y * TILE_SIZE;
-	game->collect_img->instances[*idx].enabled = true;
-	(*idx)++;
-}
-
-void	update_collectibles(t_game *game)
-{
-	int		x;
-	int		y;
-	size_t	instance_index;
-
-	if (!game || !game->collect_img || !game->collect_img->instances)
+	if (!game || !game->enemy_img || game->enemy_count <= 0)
 		return ;
-	reset_collectible_instances(game);
-	y = 0;
-	instance_index = 0;
-	while (y < game->height && instance_index < game->collect_img->count)
+	i = -1;
+	while (++i < game->enemy_count)
 	{
-		x = 0;
-		while (x < game->width)
-		{
-			if (game->map[y][x] == 'C')
-				update_instance(game, x, y, &instance_index);
-			x++;
-		}
-		y++;
+		if (mlx_image_to_window(game->mlx, game->enemy_img,
+				game->enemies[i].x * TILE_SIZE,
+				game->enemies[i].y * TILE_SIZE) < 0)
+			error_exit("Failed to initialize enemy rendering", game);
+	}
+}
+
+void	update_enemy_positions(t_game *game)
+{
+	int	i;
+
+	if (!game || !game->enemy_img || !game->enemy_img->instances)
+		return ;
+	i = -1;
+	while (++i < game->enemy_count)
+	{
+		game->enemy_img->instances[i].x = game->enemies[i].x * TILE_SIZE;
+		game->enemy_img->instances[i].y = game->enemies[i].y * TILE_SIZE;
 	}
 }

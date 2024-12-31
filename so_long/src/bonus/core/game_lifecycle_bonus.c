@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:00:14 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 09:29:50 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/31 11:30:19 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ void	game_loop(void *param)
 		return ;
 	update_animation(game);
 	if (game->enemy_count > 0)
+	{
 		update_enemy(game);
+		render_enemy(game);
+	}
 	render_frame(game);
 }
 

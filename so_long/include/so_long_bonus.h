@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/29 13:16:48 by spyun         ########   odam.nl         */
+/*   Updated: 2024/12/31 11:22:42 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # define MAX_MAP_WIDTH 50
 # define MAX_MAP_HEIGHT 50
 # define ANIMATION_SPEED 10
-# define ENEMY_MOVE_DELAY 30
+# define ENEMY_MOVE_DELAY 20
+# define CHASE_MOVE_DELAY 500        // 추적하는 적의 이동 딜레이
 
 typedef void	(*t_mlx_closefun)(void*);
 
@@ -37,13 +38,23 @@ typedef enum e_direction
 	DIRECTION_RIGHT
 }	t_direction;
 
+typedef enum e_enemy_type
+{
+    CHASE_PLAYER,
+}   t_enemy_type;
+
 typedef struct s_enemy
 {
-	int	x;
-	int	y;
-	int	dx;
-	int	dy;
+	int				x;
+	int				y;
+	int				dx;
+	int				dy;
+	int				move_delay;
+	t_enemy_type	type;
+	t_direction		direction;
+	int				sight_range;
 }	t_enemy;
+
 
 typedef struct s_player
 {
@@ -143,4 +154,10 @@ void		validate_file_extension(const char *filename);
 void		free_temp_map(char **temp_map, int height);
 void		check_file_access(const char *filename);
 
+/* Enemy rendering functions */
+void    init_enemy_rendering(t_game *game);
+void    update_enemy_positions(t_game *game);
+
+void    move_chase_player(t_game *game, t_enemy *enemy);
+void    move_random(t_game *game, t_enemy *enemy);
 #endif
