@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 13:34:51 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/31 11:56:32 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/02 09:44:58 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ void	update_enemy_positions(t_game *game)
 			{
 				frame->instances[i].x = game->enemies[i].x * TILE_SIZE;
 				frame->instances[i].y = game->enemies[i].y * TILE_SIZE;
-				frame->instances[i].enabled =
-					(j == game->enemies[i].current_frame);
+				frame->instances[i].enabled
+					= (j == game->enemies[i].current_frame);
 			}
 			j++;
 		}

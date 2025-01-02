@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/31 12:13:40 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/02 09:16:07 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ typedef enum e_enemy_type
     CHASE_PLAYER,
 }   t_enemy_type;
 
+typedef struct s_enemy_animation
+{
+    int         current_frame;
+    int         frame_delay;
+    int         total_frames;
+    mlx_image_t *frames[4];  // 4개의 프레임을 저장
+    bool        is_moving;
+} t_enemy_animation;
+
+
 typedef struct s_enemy
 {
 	int				x;
@@ -55,8 +65,8 @@ typedef struct s_enemy
 	t_enemy_type	type;
 	t_direction		direction;
 	int				sight_range;
+	t_enemy_animation	anim;
 }	t_enemy;
-
 
 typedef struct s_player
 {
@@ -171,4 +181,5 @@ bool			init_enemy_animation(t_game *game);
 void			cleanup_enemy_animation(t_game *game);
 mlx_image_t		*get_current_enemy_sprite(t_game *game, int enemy_index);
 bool	load_enemy_frames(t_game *game);
+bool    init_enemy_frames(t_game *game);
 #endif

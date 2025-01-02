@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/31 11:48:19 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/31 12:15:12 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/02 09:45:06 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,3 @@ void	cleanup_enemy_animation(t_game *game)
 		dir++;
 	}
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/31 10:50:38 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/31 12:04:46 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/02 09:44:29 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,18 @@ static void	try_diagonal_move(t_game *game, t_enemy *enemy, int dx, int dy)
 	}
 }
 
+static void	add_random_movement(int *dx, int *dy)
+{
+	int	random;
+
+	random = rand() % 10;
+	if (random < 2)
+	{
+		*dx += (rand() % 3) - 1;
+		*dy += (rand() % 3) - 1;
+	}
+}
+
 static void	get_direction(t_game *game, t_enemy *enemy, int *dx, int *dy)
 {
 	*dx = 0;
@@ -62,5 +74,6 @@ void	move_chase_player(t_game *game, t_enemy *enemy)
 	int	dy;
 
 	get_direction(game, enemy, &dx, &dy);
+	add_random_movement(&dx, &dy);
 	try_diagonal_move(game, enemy, dx, dy);
 }
