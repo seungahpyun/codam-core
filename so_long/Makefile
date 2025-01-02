@@ -19,7 +19,7 @@ MLX_INC = -I$(MLX_DIR)/include/MLX42
 
 LIB = $(LIB_DIR)/libft.a
 
-CORE_SRC	 = core/main.c core/utils.c core/game_init.c
+CORE_SRC	 = core/main.c core/utils.c init/game_init.c
 GAMEPLAY_SRC = player/player.c
 GRAPHICS_SRC = render/render.c render/render_background.c \
 			   render/render_player.c render/render_objects.c \
