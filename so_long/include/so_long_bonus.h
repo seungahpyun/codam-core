@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/02 10:04:12 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/02 10:45:46 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <stdbool.h>
+# include <math.h>
 
 # include "libft.h"
 # include "MLX42.h"
@@ -27,6 +28,7 @@
 # define ANIMATION_SPEED 10
 # define ENEMY_MOVE_DELAY 20
 # define ENEMY_FRAME_COUNT 4
+# define ENEMY_MOVE_SPEED 1.0
 
 typedef void	(*t_mlx_closefun)(void*);
 
@@ -48,9 +50,19 @@ typedef struct s_enemy_animation
     int         current_frame;
     int         frame_delay;
     int         total_frames;
-    mlx_image_t *frames[4];  // 4개의 프레임을 저장
+    mlx_image_t *frames[4];
     bool        is_moving;
 } t_enemy_animation;
+
+typedef struct s_sight_line
+{
+	float	x1;
+	float	y1;
+	float	x2;
+	float	y2;
+	float	x;
+	float	y;
+}	t_sight_line;
 
 
 typedef struct s_enemy
@@ -185,4 +197,6 @@ bool    init_enemy_frames(t_game *game);
 
 void	get_random_direction(int *dx, int *dy);
 void	get_chase_direction(t_game *game, t_enemy *enemy, int *dx, int *dy);
+bool	check_line_of_sight(t_game *game, t_sight_line *line);
+bool	is_player_in_sight(t_game *game, t_enemy *enemy);
 #endif

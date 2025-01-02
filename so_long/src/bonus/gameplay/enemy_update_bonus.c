@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 09:05:45 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/02 10:02:01 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/02 10:32:06 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,15 @@ void	update_enemy(t_game *game)
 	if (!game || !game->enemies || game->enemy_count <= 0)
 		return ;
 	current_time = mlx_get_time();
-	if (current_time - last_move < 0.5)
-	{
-		check_game_over(game);
+	if (current_time - last_move < ENEMY_MOVE_SPEED)
 		return ;
-	}
 	i = -1;
 	while (++i < game->enemy_count)
+	{
 		move_chase_player(game, &game->enemies[i]);
+		check_game_over(game);
+	}
 	update_enemy_positions(game);
-	check_game_over(game);
 	last_move = current_time;
 }
 
