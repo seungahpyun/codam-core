@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 09:05:45 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/02 09:50:03 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/02 10:02:01 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static void	check_game_over(t_game *game)
 void	update_enemy(t_game *game)
 {
 	static double	last_move = 0.0;
-	double		current_time;
-	int		i;
+	double			current_time;
+	int				i;
 
 	if (!game || !game->enemies || game->enemy_count <= 0)
 		return ;

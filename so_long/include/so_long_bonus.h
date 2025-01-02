@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/02 09:16:07 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/02 10:04:12 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,4 +182,7 @@ void			cleanup_enemy_animation(t_game *game);
 mlx_image_t		*get_current_enemy_sprite(t_game *game, int enemy_index);
 bool	load_enemy_frames(t_game *game);
 bool    init_enemy_frames(t_game *game);
+
+void	get_random_direction(int *dx, int *dy);
+void	get_chase_direction(t_game *game, t_enemy *enemy, int *dx, int *dy);
 #endif

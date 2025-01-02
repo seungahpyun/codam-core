@@ -33,7 +33,7 @@ BONUS_CORE_SRC = core/main_bonus.c core/game_lifecycle_bonus.c \
 				 core/game_init_cleanup_bonus.c core/utils_bonus.c
 BONUS_GAME_SRC = gameplay/player_bonus.c gameplay/player_movement_bonus.c \
 				 gameplay/enemy_update_bonus.c gameplay/enemy_bonus.c \
-				 gameplay/enemy_movement_bonus.c
+				 gameplay/enemy_movement_bonus.c gameplay/enemy_movement_utils_bonus.c 
 BONUS_GFX_SRC =  graphics/render_bonus.c graphics/render_player_init_bonus.c \
 				 graphics/render_objects_bonus.c graphics/texture_bonus.c \
 				 graphics/animation_bonus.c graphics/animation_init_bonus.c \

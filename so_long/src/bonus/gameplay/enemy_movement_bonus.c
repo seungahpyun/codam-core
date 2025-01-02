@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/31 10:50:38 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/02 09:50:32 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/02 10:06:44 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,50 +22,28 @@ static bool	is_valid_enemy_move(t_game *game, int x, int y)
 	return (true);
 }
 
-static void	try_diagonal_move(t_game *game, t_enemy *enemy, int dx, int dy)
+static void	try_move(t_game *game, t_enemy *enemy, int dx, int dy)
 {
-	if (is_valid_enemy_move(game, enemy->x + dx, enemy->y + dy))
+	int	new_x;
+	int	new_y;
+
+	new_x = enemy->x + dx;
+	new_y = enemy->y + dy;
+	if (is_valid_enemy_move(game, new_x, new_y))
 	{
-		enemy->x += dx;
-		enemy->y += dy;
-		return ;
+		enemy->x = new_x;
+		enemy->y = new_y;
 	}
-	if (is_valid_enemy_move(game, enemy->x + dx, enemy->y))
-	{
-		enemy->x += dx;
-		return ;
-	}
-	if (is_valid_enemy_move(game, enemy->x, enemy->y + dy))
-	{
-		enemy->y += dy;
-		return ;
-	}
+	else if (dx != 0 && is_valid_enemy_move(game, new_x, enemy->y))
+		enemy->x = new_x;
+	else if (dy != 0 && is_valid_enemy_move(game, enemy->x, new_y))
+		enemy->y = new_y;
 }
 
-static void	add_random_movement(int *dx, int *dy)
+static bool	is_player_in_sight(t_game *game, t_enemy *enemy)
 {
-	int	random;
-
-	random = rand() % 10;
-	if (random < 2)
-	{
-		*dx += (rand() % 3) - 1;
-		*dy += (rand() % 3) - 1;
-	}
-}
-
-static void	get_direction(t_game *game, t_enemy *enemy, int *dx, int *dy)
-{
-	*dx = 0;
-	*dy = 0;
-	if (game->player_x > enemy->x)
-		*dx = 1;
-	else if (game->player_x < enemy->x)
-		*dx = -1;
-	if (game->player_y > enemy->y)
-		*dy = 1;
-	else if (game->player_y < enemy->y)
-		*dy = -1;
+	return (abs(game->player_x - enemy->x) <= enemy->sight_range
+		&& abs(game->player_y - enemy->y) <= enemy->sight_range);
 }
 
 void	move_chase_player(t_game *game, t_enemy *enemy)
@@ -73,7 +51,9 @@ void	move_chase_player(t_game *game, t_enemy *enemy)
 	int	dx;
 	int	dy;
 
-	get_direction(game, enemy, &dx, &dy);
-	add_random_movement(&dx, &dy);
-	try_diagonal_move(game, enemy, dx, dy);
+	if (is_player_in_sight(game, enemy))
+		get_chase_direction(game, enemy, &dx, &dy);
+	else
+		get_random_direction(&dx, &dy);
+	try_move(game, enemy, dx, dy);
 }

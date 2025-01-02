@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/31 11:45:37 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/02 09:34:13 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/02 10:01:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	update_enemy_animation(t_game *game)
 		if (game->enemies[i].frame_delay >= ANIMATION_SPEED)
 		{
 			game->enemies[i].frame_delay = 0;
-			game->enemies[i].current_frame++;
-			if (game->enemies[i].current_frame >= ENEMY_FRAME_COUNT)
-				game->enemies[i].current_frame = 0;
+			game->enemies[i].current_frame
+				= (game->enemies[i].current_frame + 1) % ENEMY_FRAME_COUNT;
+			update_enemy_positions(game);
 		}
 		i++;
 	}
