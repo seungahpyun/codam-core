@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/02 11:49:43 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/02 14:50:40 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <fcntl.h>
 # include <stdbool.h>
 # include <math.h>
-
 # include "libft.h"
 # include "MLX42.h"
 
@@ -30,7 +29,7 @@
 # define ENEMY_FRAME_COUNT 4
 # define ENEMY_MOVE_SPEED 0.5
 
-// typedef void	(*t_mlx_closefun)(void*);
+typedef void	(*t_mlx_closefun)(void*);
 
 typedef enum e_direction
 {
@@ -42,17 +41,17 @@ typedef enum e_direction
 
 typedef enum e_enemy_type
 {
-    CHASE_PLAYER,
-}   t_enemy_type;
+	CHASE_PLAYER,
+}	t_enemy_type;
 
 typedef struct s_enemy_animation
 {
-    int         current_frame;
-    int         frame_delay;
-    int         total_frames;
-    mlx_image_t *frames[4];
-    bool        is_moving;
-} t_enemy_animation;
+	int			current_frame;
+	int			frame_delay;
+	int			total_frames;
+	mlx_image_t	*frames[4];
+	bool		is_moving;
+}	t_enemy_animation;
 
 typedef struct s_sight_line
 {
@@ -64,19 +63,18 @@ typedef struct s_sight_line
 	float	y;
 }	t_sight_line;
 
-
 typedef struct s_enemy
 {
-	int				x;
-	int				y;
-	int				dx;
-	int				dy;
-	int				move_delay;
-	int				current_frame;
-	int				frame_delay;
-	t_enemy_type	type;
-	t_direction		direction;
-	int				sight_range;
+	int					x;
+	int					y;
+	int					dx;
+	int					dy;
+	int					move_delay;
+	int					current_frame;
+	int					frame_delay;
+	t_enemy_type		type;
+	t_direction			direction;
+	int					sight_range;
 	t_enemy_animation	anim;
 }	t_enemy;
 
@@ -179,24 +177,22 @@ void		validate_file_extension(const char *filename);
 void		free_temp_map(char **temp_map, int height);
 void		check_file_access(const char *filename);
 
-/* Enemy rendering functions */
-void    init_enemy_rendering(t_game *game);
-void    update_enemy_positions(t_game *game);
+void		init_enemy_rendering(t_game *game);
+void		update_enemy_positions(t_game *game);
+void		move_chase_player(t_game *game, t_enemy *enemy);
+void		move_random(t_game *game, t_enemy *enemy);
+bool		load_enemy_direction_frames(t_game *game, t_direction dir,
+				const char *base_dir);
+void		update_enemy_animation(t_game *game);
+bool		init_enemy_animation(t_game *game);
+void		cleanup_enemy_animation(t_game *game);
+mlx_image_t	*get_current_enemy_sprite(t_game *game, int enemy_index);
+bool		load_enemy_frames(t_game *game);
+bool		init_enemy_frames(t_game *game);
 
-void    move_chase_player(t_game *game, t_enemy *enemy);
-void    move_random(t_game *game, t_enemy *enemy);
+void		get_random_direction(int *dx, int *dy);
+void		get_chase_direction(t_game *game, t_enemy *enemy, int *dx, int *dy);
+bool		check_line_of_sight(t_game *game, t_sight_line *line);
+bool		is_player_in_sight(t_game *game, t_enemy *enemy);
 
-bool			load_enemy_direction_frames(t_game *game, t_direction dir,
-					const char *base_dir);
-void			update_enemy_animation(t_game *game);
-bool			init_enemy_animation(t_game *game);
-void			cleanup_enemy_animation(t_game *game);
-mlx_image_t		*get_current_enemy_sprite(t_game *game, int enemy_index);
-bool	load_enemy_frames(t_game *game);
-bool    init_enemy_frames(t_game *game);
-
-void	get_random_direction(int *dx, int *dy);
-void	get_chase_direction(t_game *game, t_enemy *enemy, int *dx, int *dy);
-bool	check_line_of_sight(t_game *game, t_sight_line *line);
-bool	is_player_in_sight(t_game *game, t_enemy *enemy);
 #endif

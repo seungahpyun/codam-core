@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/23 09:26:01 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/29 13:00:41 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/02 13:49:41 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ bool		parse_map(t_game *game, char *file);
 bool		validate_map(t_game *game);
 bool		validate_elements(t_game *game);
 bool		check_valid_path(t_game *game);
+
 bool		allocate_map(t_game *game);
 bool		allocate_and_fill_map(t_game *game, char *file);
 bool		allocate_collect_instances(t_game *game);
@@ -69,7 +70,6 @@ void		update_player_position(t_game *game);
 
 void		init_background(t_game *game);
 void		init_walls(t_game *game);
-
 void		init_collectibles_and_exit(t_game *game);
 int			render_frame(t_game *game);
 
