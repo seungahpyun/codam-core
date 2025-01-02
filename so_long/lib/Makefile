@@ -31,13 +31,13 @@ $(NAME): $(OBJS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean:
-	$(RM) -r $(OBJ_DIR)
+	@$(RM) -r $(OBJ_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 

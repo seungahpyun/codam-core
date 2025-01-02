@@ -14,34 +14,33 @@ INC_DIR = include
 MLX_DIR = $(LIB_DIR)/MLX42
 
 MLX = $(MLX_DIR)/build/libmlx42.a
-MLX_FLAGS =  -L/opt/homebrew/lib -ldl -lglfw -pthread -lm
-# -L/opt/homebrew/lib -lglfw -framework Cocoa -framework OpenGL -framework IOKit
-#  -ldl -lglfw -pthread -lm
+MLX_FLAGS = -L/opt/homebrew/lib -ldl -lglfw -pthread -lm
 MLX_INC = -I$(MLX_DIR)/include/MLX42
 
 LIB = $(LIB_DIR)/libft.a
 
-CORE_SRC	 = core/main.c core/game_init.c core/utils.c
-GAMEPLAY_SRC = gameplay/player.c
-GRAPHICS_SRC = graphics/render.c graphics/render_background.c \
-			   graphics/render_player.c graphics/render_objects.c \
-			   graphics/texture.c
-MAP_SRC		 = map/map_parser.c map/map_validator.c \
+CORE_SRC	 = core/main.c core/utils.c core/game_init.c
+GAMEPLAY_SRC = player/player.c
+GRAPHICS_SRC = render/render.c render/render_background.c \
+			   render/render_player.c render/render_objects.c \
+			   render/texture.c
+MAP_SRC 	 = map/map_parser.c map/validate_map.c \
 			   map/map_memory.c map/map_allocation.c \
 			   map/map_path_check.c map/validate_element.c
-BONUS_CORE_SRC = core/main_bonus.c core/game_lifecycle_bonus.c \
-				 core/game_init_cleanup_bonus.c core/utils_bonus.c
-BONUS_GAME_SRC = gameplay/player_bonus.c gameplay/player_movement_bonus.c \
-				 gameplay/enemy_update_bonus.c gameplay/enemy_bonus.c \
-				 gameplay/enemy_movement_bonus.c gameplay/enemy_movement_utils_bonus.c \
-				 gameplay/enemy_sight_bonus.c
-BONUS_GFX_SRC =  graphics/render_bonus.c graphics/render_player_init_bonus.c \
-				 graphics/render_objects_bonus.c graphics/texture_bonus.c \
-				 graphics/animation_bonus.c graphics/animation_init_bonus.c \
- 				 graphics/display_bonus.c graphics/render_enemies_bonus.c \
-				 graphics/enemy_animation_init_bonus.c graphics/enemy_animation_bonus.c \
-				 graphics/render_player_update_bonus.c graphics/render_enemies_utils_bonus.c
-BONUS_MAP_SRC =  map/map_parser_bonus.c map/validate_map_bonus.c \
+
+BONUS_CORE_SRC = core/main_bonus.c core/utils_bonus.c \
+				 init/game_init_cleanup_bonus.c init/game_lifecycle_bonus.c
+BONUS_GAME_SRC = player/player_bonus.c player/player_movement_bonus.c \
+				 enemy/enemy_update_bonus.c enemy/enemy_bonus.c \
+				 enemy/enemy_movement_bonus.c enemy/enemy_movement_utils_bonus.c \
+				 enemy/enemy_sight_bonus.c
+BONUS_GFX_SRC  = render/render_bonus.c render/render_player_init_bonus.c \
+				 render/render_objects_bonus.c render/texture_bonus.c \
+				 animation/player_animation_bonus.c animation/player_animation_init_bonus.c \
+				 render/display_bonus.c render/render_enemies_bonus.c \
+				 animation/enemy_animation_init_bonus.c animation/enemy_animation_bonus.c \
+				 render/render_player_update_bonus.c render/render_enemies_utils_bonus.c
+BONUS_MAP_SRC = map/map_parser_bonus.c map/validate_map_bonus.c \
 				 map/map_memory_bonus.c map/map_path_check_bonus.c \
 				 map/validate_element_bonus.c
 
@@ -56,14 +55,13 @@ INC = -I$(INC_DIR) -I$(LIB_DIR)/include $(MLX_INC)
 GREEN = \033[0;32m
 RESET = \033[0m
 
-
 all: $(MLX) $(NAME)
 
 bonus: $(MLX) $(BONUS_NAME)
 
 $(MLX):
 	@if [ ! -d "$(MLX_DIR)/build" ]; then \
-		cmake $(MLX_DIR) -B $(MLX_DIR)/build && \
+		cmake $(MLX_DIR) -B $(MLX_DIR)/build -DCMAKE_BUILD_TYPE=Release && \
 		cmake --build $(MLX_DIR)/build -j4; \
 	fi
 
@@ -101,7 +99,6 @@ fclean: clean
 	@rm -rf $(MLX_DIR)/build
 
 re: fclean all
-
 bonus_re: fclean bonus
 
 .PHONY: all bonus clean fclean re bonus_re
