@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 09:07:07 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 11:01:07 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/03 16:12:45 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,11 @@ static bool	check_exit(t_game *game, int x, int y)
 
 void	move_player(t_game *game, int new_x, int new_y)
 {
-	if (!game || !is_valid_move(game, new_x, new_y))
+	if (!game)
 		return ;
 	update_player_direction(game, new_x, new_y);
+	if (!is_valid_move(game, new_x, new_y))
+		return ;
 	game->moves++;
 	display_moves(game);
 	collect_item(game, new_x, new_y);

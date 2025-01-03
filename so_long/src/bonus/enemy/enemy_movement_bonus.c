@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/31 10:50:38 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/02 14:02:43 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/03 10:55:45 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static bool	is_valid_enemy_move(t_game *game, int x, int y)
 {
 	int	i;
 
-	if (x < 0 || y < 0 || x >= game->width || y >= game->height)
+	if (x < 0 || y < 0 || x >= game->width || y >= game->height)    
 		return (false);
 	if (game->map[y][x] == '1' || game->map[y][x] == 'E'
 		|| game->map[y][x] == 'C')
