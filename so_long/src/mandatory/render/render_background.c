@@ -50,7 +50,7 @@ void	init_walls(t_game *game)
 			{
 				if (mlx_image_to_window(game->mlx, game->wall_img,
 						x * TILE_SIZE, y * TILE_SIZE) < 0)
-					error_exit("Error\nFailed to render wall", game);
+					error_exit("Error: Failed to render wall", game);
 			}
 			x++;
 		}
