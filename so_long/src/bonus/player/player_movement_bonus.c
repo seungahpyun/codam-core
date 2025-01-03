@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 09:07:07 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/03 16:12:45 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/03 16:23:19 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	collect_item(t_game *game, int x, int y)
 	{
 		game->collectibles--;
 		game->map[y][x] = '0';
-		ft_putstr_fd("Collected item! Remaining: ", 1);
+		ft_putstr_fd("Collected item! Remaining: ", STDOUT_FILENO);
 		ft_putnbr_fd(game->collectibles, 1);
 		ft_putchar_fd('\n', 1);
 	}
@@ -57,10 +57,10 @@ static bool	check_exit(t_game *game, int x, int y)
 	{
 		if (game->collectibles == 0)
 		{
-			ft_putendl_fd("Congratulations! Game Complete!", 1);
+			ft_putendl_fd("Congratulations! Game Complete!", STDOUT_FILENO);
 			return (true);
 		}
-		ft_putstr_fd("Collect all items first! Remaining: ", 1);
+		ft_putstr_fd("Collect all items first! Remaining: ", STDOUT_FILENO);
 		ft_putnbr_fd(game->collectibles, 1);
 		ft_putchar_fd('\n', 1);
 	}
@@ -84,7 +84,7 @@ void	move_player(t_game *game, int new_x, int new_y)
 	}
 	if (check_enemy_collision(game))
 	{
-		ft_putendl_fd("Game Over! You hit an enemy!", 1);
+		ft_putendl_fd("Game Over! You hit an enemy!", STDOUT_FILENO);
 		cleanup_game(game);
 		exit(EXIT_SUCCESS);
 	}

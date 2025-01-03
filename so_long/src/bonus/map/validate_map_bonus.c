@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:59 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 09:30:40 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/03 16:22:53 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ bool	validate_map(t_game *game)
 		return (false);
 	if (!check_valid_characters(game))
 	{
-		ft_putendl_fd("Error: Invalid characters in map", 2);
+		ft_putendl_fd("Error: Invalid characters in map", STDERR_FILENO);
 		return (false);
 	}
 	if (!validate_elements(game))

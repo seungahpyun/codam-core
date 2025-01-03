@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 15:18:09 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/29 12:55:28 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/03 16:22:38 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ bool	check_valid_path(t_game *game)
 	is_valid = validate_path_result(&path, game->collectibles);
 	free_temp_map(temp_map, game->height);
 	if (!is_valid)
-		ft_putendl_fd("Error: Invalid path in map", 2);
+		ft_putendl_fd("Error: Invalid path in map", STDERR_FILENO);
 	return (is_valid);
 }

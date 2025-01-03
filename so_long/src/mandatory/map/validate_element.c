@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 10:44:27 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/23 10:57:45 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/03 16:20:40 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,12 @@ bool	validate_elements(t_game *game)
 		return (false);
 	if (!count_elements(game))
 	{
-		ft_putendl_fd("Error\nInvalid number of map elements", STDERR_FILENO);
+		ft_putendl_fd("Error: Invalid number of map elements", STDERR_FILENO);
 		return (false);
 	}
 	if (!find_player(game))
 	{
-		ft_putendl_fd("Error\nInvalid player position", STDERR_FILENO);
+		ft_putendl_fd("Error: Invalid player position", STDERR_FILENO);
 		return (false);
 	}
 	return (true);

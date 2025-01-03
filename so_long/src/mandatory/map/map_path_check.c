@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   path_check.c                                       :+:    :+:            */
+/*   map_path_check.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 15:18:09 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 11:09:52 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/03 16:20:27 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ bool	check_valid_path(t_game *game)
 			&& path.exit_found);
 	clean_temp_map(temp_map, game->height);
 	if (!is_valid)
-		ft_putendl_fd("Error\nNo valid path to collect all items",
+		ft_putendl_fd("Error: No valid path to collect all items",
 			STDERR_FILENO);
 	return (is_valid);
 }
