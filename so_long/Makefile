@@ -60,8 +60,13 @@ all: $(MLX) $(NAME)
 bonus: $(MLX) $(BONUS_NAME)
 
 $(MLX):
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		echo "$(GREEN)Downloading MLX42...$(RESET)"; \
+		git clone https://github.com/codam-coding-college/MLX42.git $(MLX_DIR); \
+	fi
 	@if [ ! -d "$(MLX_DIR)/build" ]; then \
-		cmake $(MLX_DIR) -B $(MLX_DIR)/build -DCMAKE_BUILD_TYPE=Release && \
+		echo "$(GREEN)Building MLX42...$(RESET)"; \
+		cmake $(MLX_DIR) -B $(MLX_DIR)/build && \
 		cmake --build $(MLX_DIR)/build -j4; \
 	fi
 
@@ -96,7 +101,7 @@ fclean: clean
 	@echo "$(GREEN)Cleaning executables...$(RESET)"
 	@$(RM) $(NAME) $(BONUS_NAME)
 	@make -C $(LIB_DIR) fclean
-	@rm -rf $(MLX_DIR)/build
+	@rm -rf $(MLX_DIR)
 
 re: fclean all
 bonus_re: fclean bonus
