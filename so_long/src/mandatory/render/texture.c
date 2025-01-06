@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:54 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/23 10:15:17 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 09:45:53 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static bool	check_image_loading(t_game *game)
 
 bool	load_textures(t_game *game)
 {
-	if (!game)
+	if (!game || !game->mlx)
 		return (false);
 	game->wall_img = load_image(game, "textures/wall.png");
 	game->player_img = load_image(game, "textures/player.png");

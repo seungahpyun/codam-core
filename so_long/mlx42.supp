@@ -1,0 +1,225 @@
+# MLX42 Library suppressions
+{
+   MLX42_Init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libmlx42.so
+}
+
+{
+   MLX42_General
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*/libmlx42.so
+}
+
+# OpenGL related suppressions
+{
+   OpenGL_Init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libGL.so*
+}
+
+{
+   OpenGL_Driver
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*/libGLX.so*
+}
+
+{
+   GLFW_Init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libglfw.so*
+}
+
+# X11 related suppressions
+{
+   X11_Init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libX11.so*
+}
+
+{
+   X11_XCB
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libX11-xcb.so*
+}
+
+# Dynamic Loader specific suppressions
+{
+	dl_init_malloc
+	Memcheck:Leak
+	match-leak-kinds: definite
+	fun:malloc
+	...
+	fun:_dl_find_object_update
+	fun:dl_open_worker_begin
+	}
+{
+	dl_cache_malloc
+	Memcheck:Leak
+	match-leak-kinds: reachable
+	fun:malloc
+	...
+	fun:_dl_load_cache_lookup
+}
+{
+	dl_strncmp_read
+	Memcheck:Addr8
+	fun:strncmp
+	fun:is_dst
+	fun:_dl_dst_count
+	fun:expand_dynamic_string_token
+}
+{
+	dl_decompose_rpath
+	Memcheck:Addr8
+	fun:strncmp
+	fun:is_dst
+	...
+	fun:decompose_rpath
+}
+{
+	dl_reachable_blocks
+	Memcheck:Leak
+	match-leak-kinds: reachable
+	...
+	fun:_dl_init
+}
+{
+	dlopen_leak
+	Memcheck:Leak
+	match-leak-kinds: reachable
+	...
+	fun:dlopen@@GLIBC_2.34
+}
+
+#Previous suppressions...
+{
+	MLX42_Init
+	Memcheck:Leak
+	match-leak-kinds: reachable
+	...
+	obj:*/libmlx42.so
+}
+
+# Additional graphics related suppressions
+{
+   DRI_Driver
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/dri/*
+}
+
+{
+   EGL_Init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libEGL.so*
+}
+
+# Shader compilation related suppressions
+{
+   Shader_Compilation
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:glShaderSource
+}
+
+{
+   Shader_Program
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:glCreateProgram
+}
+
+# Window management related suppressions
+{
+   Window_Creation
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:mlx_init
+}
+
+{
+   Window_Events
+   Memcheck:Leak
+   match-leak-kinds: possible
+   ...
+   fun:mlx_loop
+}
+
+# Memory allocation related suppressions
+{
+   MLX_Memory_Alloc
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:malloc
+   ...
+   obj:*/libmlx42.so
+}
+
+# Image handling related suppressions
+{
+   Image_Loading
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:mlx_load_png
+}
+
+{
+   Texture_Creation
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:mlx_texture_to_image
+}
+
+# MLX specific suppressions
+{
+	mlx_general_leaks
+	Memcheck:Leak
+	match-leak-kinds: all
+	...
+	obj:/libmlx42.so
+}
+{
+	glfw_init_leaks
+	Memcheck:Leak
+	match-leak-kinds: all
+	...
+	obj:/libglfw.so
+}
+{
+	x11_leaks
+	Memcheck:Leak
+	match-leak-kinds: all
+	...
+	obj:/libX11.so
+}
+{
+	gl_driver_leaks
+	Memcheck:Leak
+	match-leak-kinds: all
+	...
+	obj:/libGL.so
+}

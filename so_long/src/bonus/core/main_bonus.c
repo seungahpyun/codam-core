@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 11:56:04 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/02 11:23:44 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 10:05:14 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ static void	init_game_struct(t_game *game)
 	if (!game)
 		error_exit("Error: Game structure is NULL", NULL);
 	ft_memset(game, 0, sizeof(t_game));
+	game->moves = 0;
+	game->collectibles = 0;
+	game->enemy_count = 0;
+	game->player_x = -1;
+	game->player_y = -1;
 }
 
 int	main(int argc, char **argv)

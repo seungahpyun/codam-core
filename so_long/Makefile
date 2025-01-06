@@ -2,9 +2,7 @@ NAME = so_long
 BONUS_NAME = so_long_bonus
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
-LDFLAGS = -fsanitize=address
-
+CFLAGS = -Wall -Wextra -Werror -g
 SRC_DIR = src/mandatory
 BONUS_DIR = src/bonus
 OBJ_DIR = obj
@@ -67,12 +65,12 @@ $(MLX):
 
 $(NAME): $(LIB) $(OBJS)
 	@echo "$(GREEN)Linking $@...$(RESET)"
-	@$(CC) $(OBJS) $(LIB) $(MLX) $(MLX_FLAGS) $(LDFLAGS) -o $@
+	@$(CC) $(OBJS) $(LIB) $(MLX) $(MLX_FLAGS) -o $@
 	@echo "$(GREEN)Build complete: $@$(RESET)"
 
 $(BONUS_NAME): $(LIB) $(BONUS_OBJS)
 	@echo "$(GREEN)Linking $@...$(RESET)"
-	@$(CC) $(BONUS_OBJS) $(LIB) $(MLX) $(MLX_FLAGS) $(LDFLAGS) -o $@
+	@$(CC) $(BONUS_OBJS) $(LIB) $(MLX) $(MLX_FLAGS)  -o $@
 	@echo "$(GREEN)Build complete: $@$(RESET)"
 
 $(LIB):

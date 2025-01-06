@@ -6,13 +6,13 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:00:14 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/23 10:09:59 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 10:17:05 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	free_textures(t_game *game)
+void	free_textures(t_game *game)
 {
 	if (!game || !game->mlx)
 		return ;

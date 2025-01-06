@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:47 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/29 12:55:23 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 09:02:35 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ static int	get_map_dimensions(t_game *game, char *file)
 
 static void	handle_map_error(char *error_msg, t_game *game)
 {
-	ft_putstr_fd("Error: ", 2);
-	ft_putendl_fd(error_msg, 2);
+	ft_putstr_fd("Error: ", STDERR_FILENO);
+	ft_putendl_fd(error_msg, STDERR_FILENO);
 	if (game && game->map)
 		free_allocated_map(game, game->height);
 }
