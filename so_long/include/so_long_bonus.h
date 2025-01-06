@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/06 09:16:25 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 13:39:30 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_game
 	int			player_x;
 	int			player_y;
 	int			collectibles;
+	int			**collect_instances;
 	int			moves;
 	int			enemy_count;
 	t_enemy		*enemies;
@@ -135,11 +136,13 @@ void		update_enemy(t_game *game);
 bool		parse_map(t_game *game, char *file);
 bool		validate_map(t_game *game);
 bool		validate_elements(t_game *game);
+void		count_enemy_positions(t_game *game);
 bool		check_valid_path(t_game *game);
+
 bool		allocate_map(t_game *game);
-bool		fill_map(t_game *game, char *file);
+bool		allocate_and_fill_map(t_game *game, char *file);
+bool		allocate_collect_instances(t_game *game);
 void		free_allocated_map(t_game *game, int last_row);
-void		free_temp_map(char **temp_map, int height);
 
 bool		init_player(t_game *game);
 void		move_player(t_game *game, int new_x, int new_y);

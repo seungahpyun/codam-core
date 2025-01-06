@@ -6,22 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 10:46:15 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/24 11:05:40 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 11:42:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
-
-static bool	validate_map_size(t_game *game)
-{
-	if (!game)
-		return (false);
-	if (game->height <= 0 || game->width <= 0)
-		return (false);
-	if (game->height > MAX_MAP_HEIGHT || game->width > MAX_MAP_WIDTH)
-		return (false);
-	return (true);
-}
 
 void	free_allocated_map(t_game *game, int last_row)
 {
@@ -33,60 +22,23 @@ void	free_allocated_map(t_game *game, int last_row)
 	while (i < last_row)
 	{
 		if (game->map[i])
-		{
 			free(game->map[i]);
-			game->map[i] = NULL;
-		}
 		i++;
 	}
 	free(game->map);
 	game->map = NULL;
 }
 
-bool	allocate_map(t_game *game)
+static bool	fill_single_row(t_game *game, char *line, int row)
 {
-	int	i;
-
-	if (!validate_map_size(game))
-		return (false);
-	game->map = (char **)malloc(sizeof(char *) * game->height);
-	if (!game->map)
-		return (false);
-	i = 0;
-	while (i < game->height)
-	{
-		game->map[i] = (char *)malloc(sizeof(char) * (game->width + 1));
-		if (!game->map[i])
-		{
-			free_allocated_map(game, i);
-			return (false);
-		}
-		game->map[i][game->width] = '\0';
-		i++;
-	}
-	return (true);
-}
-
-static bool	process_line(t_game *game, char *line, int row)
-{
-	size_t	line_len;
-
-	if (!line)
-		return (false);
-	line_len = ft_strlen(line);
-	if (line[line_len - 1] == '\n')
-	{
-		line[line_len - 1] = '\0';
-		line_len--;
-	}
-	if (line_len != (size_t)game->width)
-		return (false);
+	if (line[ft_strlen(line) - 1] == '\n')
+		line[ft_strlen(line) - 1] = '\0';
 	if (!ft_strlcpy(game->map[row], line, game->width + 1))
 		return (false);
 	return (true);
 }
 
-bool	fill_map(t_game *game, char *file)
+static bool	fill_map(t_game *game, char *file)
 {
 	int		fd;
 	char	*line;
@@ -99,9 +51,10 @@ bool	fill_map(t_game *game, char *file)
 	while (i < game->height)
 	{
 		line = get_next_line(fd);
-		if (!process_line(game, line, i))
+		if (!line || !fill_single_row(game, line, i))
 		{
-			free(line);
+			if (line)
+				free(line);
 			close(fd);
 			return (false);
 		}
@@ -109,5 +62,19 @@ bool	fill_map(t_game *game, char *file)
 		i++;
 	}
 	close(fd);
+	return (true);
+}
+
+bool	allocate_and_fill_map(t_game *game, char *file)
+{
+	if (!game || !file)
+		return (false);
+	if (!allocate_map(game))
+		return (false);
+	if (!fill_map(game, file))
+	{
+		free_allocated_map(game, game->height);
+		return (false);
+	}
 	return (true);
 }

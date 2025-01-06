@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 13:36:27 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/29 12:41:02 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 13:58:42 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	render_player_frame(t_game *game, t_direction dir, int frame)
 			game->player.frames[dir][frame],
 		game->player_x * TILE_SIZE,
 		game->player_y * TILE_SIZE) < 0)
-		error_exit("Failed to render player frame", game);
+		error_exit("Error: Failed to render player frame", game);
 }
 
 static void	set_frame_visibility(t_game *game, t_direction dir, int frame)

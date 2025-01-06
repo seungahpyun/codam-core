@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:54 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/02 09:15:29 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 13:59:25 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ mlx_image_t	*load_image(t_game *game, const char *path)
 	texture = mlx_load_png(path);
 	if (!texture)
 	{
-		ft_putendl_fd("Failed to load texture", STDERR_FILENO);
+		ft_putendl_fd("Error: Failed to load texture", STDERR_FILENO);
 		fd = open(path, O_RDONLY);
 		if (fd == -1)
-			ft_putendl_fd("File does not exist or cannot be opened",
+			ft_putendl_fd("Error: File does not exist or cannot be opened",
 				STDERR_FILENO);
 		return (NULL);
 	}
@@ -34,7 +34,8 @@ mlx_image_t	*load_image(t_game *game, const char *path)
 	mlx_delete_texture(texture);
 	if (!img)
 	{
-		ft_putendl_fd("Failed to convert texture to image", STDERR_FILENO);
+		ft_putendl_fd("Error: Failed to convert texture to image",
+			STDERR_FILENO);
 		return (NULL);
 	}
 	return (img);

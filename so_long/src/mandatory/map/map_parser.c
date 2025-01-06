@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:47 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/23 10:58:50 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 11:42:33 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ bool	parse_map(t_game *game, char *file)
 	if (!get_map_dimensions(game, file))
 	{
 		ft_putendl_fd("Error: Invalid map dimensions", STDERR_FILENO);
+		return (false);
+	}
+	if (game->width == game->height)
+	{
+		ft_putendl_fd("Error: Map cannot be square", STDERR_FILENO);
 		return (false);
 	}
 	if (!allocate_and_fill_map(game, file))

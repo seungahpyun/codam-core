@@ -6,76 +6,72 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:47 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/06 09:02:35 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 11:42:28 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
-static int	process_map_line(char *line, t_game *game)
+static bool	check_line_width(char *line, int width)
 {
-	size_t	line_len;
+	int	len;
 
-	if (!line || !line[0])
-		return (0);
-	line_len = ft_strlen(line);
-	if (line[line_len - 1] == '\n')
-	{
-		line[line_len - 1] = '\0';
-		line_len--;
-	}
-	if (game->height == 0)
-		game->width = line_len;
-	else if (game->width != (int)line_len)
-		return (0);
-	game->height++;
-	return (1);
+	if (!line)
+		return (false);
+	len = ft_strlen(line);
+	if (line[len - 1] == '\n')
+		len--;
+	return (len == width);
 }
 
-static int	validate_dimensions(t_game *game)
+static bool	process_first_line(char *line, t_game *game)
 {
-	if (game->width <= 0 || game->height <= 0)
-		return (0);
-	if (game->width > MAX_MAP_WIDTH || game->height > MAX_MAP_HEIGHT)
-		return (0);
-	return (1);
+	if (!line)
+		return (false);
+	if (line[ft_strlen(line) - 1] == '\n')
+		line[ft_strlen(line) - 1] = '\0';
+	game->width = ft_strlen(line);
+	game->height = 1;
+	free(line);
+	return (true);
 }
 
-static int	get_map_dimensions(t_game *game, char *file)
+static bool	process_next_lines(int fd, t_game *game)
 {
-	int		fd;
 	char	*line;
 
-	if (!game || !file)
-		return (0);
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (0);
-	game->height = 0;
-	game->width = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (!process_map_line(line, game))
+		if (!check_line_width(line, game->width))
 		{
 			free(line);
-			close(fd);
-			return (0);
+			return (false);
 		}
+		game->height++;
 		free(line);
 	}
-	close(fd);
-	return (validate_dimensions(game));
+	return (true);
 }
 
-static void	handle_map_error(char *error_msg, t_game *game)
+static bool	get_map_dimensions(t_game *game, char *file)
 {
-	ft_putstr_fd("Error: ", STDERR_FILENO);
-	ft_putendl_fd(error_msg, STDERR_FILENO);
-	if (game && game->map)
-		free_allocated_map(game, game->height);
+	int		fd;
+	bool	result;
+
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return (false);
+	if (!process_first_line(get_next_line(fd), game))
+	{
+		close(fd);
+		return (false);
+	}
+	result = process_next_lines(fd, game);
+	close(fd);
+	return (result && game->width > 0 && game->height > 0);
 }
 
 bool	parse_map(t_game *game, char *file)
@@ -84,17 +80,17 @@ bool	parse_map(t_game *game, char *file)
 		return (false);
 	if (!get_map_dimensions(game, file))
 	{
-		handle_map_error("Invalid map dimensions", NULL);
+		ft_putendl_fd("Error: Invalid map dimensions", STDERR_FILENO);
 		return (false);
 	}
-	if (!allocate_map(game))
+	if (game->width == game->height)
 	{
-		handle_map_error("Map allocation failed", NULL);
+		ft_putendl_fd("Error: Map cannot be square", STDERR_FILENO);
 		return (false);
 	}
-	if (!fill_map(game, file))
+	if (!allocate_and_fill_map(game, file))
 	{
-		handle_map_error("Failed to fill map", game);
+		ft_putendl_fd("Error: Map allocation failed", STDERR_FILENO);
 		return (false);
 	}
 	if (!validate_map(game))

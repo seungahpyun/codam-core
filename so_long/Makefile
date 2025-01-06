@@ -42,7 +42,7 @@ BONUS_GFX_SRC  = render/render_bonus.c render/render_player_init_bonus.c \
 				 render/render_player_update_bonus.c render/render_enemies_utils_bonus.c
 BONUS_MAP_SRC = map/map_parser_bonus.c map/validate_map_bonus.c \
 				 map/map_memory_bonus.c map/map_path_check_bonus.c \
-				 map/validate_element_bonus.c
+				 map/validate_element_bonus.c map/map_allocation_bonus.c
 
 SRCS = $(addprefix $(SRC_DIR)/, $(CORE_SRC) $(GAMEPLAY_SRC) $(GRAPHICS_SRC) $(MAP_SRC))
 BONUS_SRCS = $(addprefix $(BONUS_DIR)/, $(BONUS_CORE_SRC) $(BONUS_GAME_SRC) $(BONUS_GFX_SRC) $(BONUS_MAP_SRC))

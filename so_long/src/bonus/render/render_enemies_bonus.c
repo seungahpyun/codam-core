@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/24 13:34:51 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/02 10:00:42 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 13:58:24 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_enemies(t_game *game)
 		if (!frame || mlx_image_to_window(game->mlx, frame,
 				game->enemies[i].x * TILE_SIZE,
 				game->enemies[i].y * TILE_SIZE) < 0)
-			error_exit("Failed to render enemy", game);
+			error_exit("Error: Failed to render enemy", game);
 		i++;
 	}
 }
@@ -44,14 +44,14 @@ void	init_enemy_rendering(t_game *game)
 	{
 		frame = game->enemy_frames[j];
 		if (!frame)
-			error_exit("Enemy frame not loaded", game);
+			error_exit("Error: Enemy frame not loaded", game);
 		i = 0;
 		while (i < game->enemy_count)
 		{
 			if (mlx_image_to_window(game->mlx, frame,
 					game->enemies[i].x * TILE_SIZE,
 					game->enemies[i].y * TILE_SIZE) < 0)
-				error_exit("Failed to initialize enemy rendering", game);
+				error_exit("Error: Failed to initialize enemy rendering", game);
 			if (j != 0)
 				frame->instances[i].enabled = false;
 			i++;

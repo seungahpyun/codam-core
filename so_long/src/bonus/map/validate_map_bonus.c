@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:59 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/03 16:22:53 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 12:18:18 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@ static bool	check_horizontal_walls(t_game *game)
 	i = 0;
 	while (i < game->width)
 	{
-		if (game->map[0][i] != '1')
+		if (game->map[0][i] != '1'
+			|| game->map[game->height - 1][i] != '1')
 		{
-			ft_putendl_fd("Error: Top wall broken", STDERR_FILENO);
-			return (false);
-		}
-		if (game->map[game->height - 1][i] != '1')
-		{
-			ft_putendl_fd("Error: Bottom wall broken", STDERR_FILENO);
+			ft_putendl_fd("Error: Horizontal walls are incomplete",
+				STDERR_FILENO);
 			return (false);
 		}
 		i++;
@@ -41,14 +38,11 @@ static bool	check_vertical_walls(t_game *game)
 	i = 0;
 	while (i < game->height)
 	{
-		if (game->map[i][0] != '1')
+		if (game->map[i][0] != '1'
+			|| game->map[i][game->width - 1] != '1')
 		{
-			ft_putendl_fd("Error: Left wall broken", STDERR_FILENO);
-			return (false);
-		}
-		if (game->map[i][game->width - 1] != '1')
-		{
-			ft_putendl_fd("Error: Right wall broken", STDERR_FILENO);
+			ft_putendl_fd("Error: Vertical walls are incomplete",
+				STDERR_FILENO);
 			return (false);
 		}
 		i++;
@@ -56,7 +50,7 @@ static bool	check_vertical_walls(t_game *game)
 	return (true);
 }
 
-static bool	check_valid_characters(t_game *game)
+static bool	check_characters(t_game *game)
 {
 	int		i;
 	int		j;
@@ -69,8 +63,8 @@ static bool	check_valid_characters(t_game *game)
 		while (j < game->width)
 		{
 			c = game->map[i][j];
-			if (c != '0' && c != '1' && c != 'C' && c != 'E'
-				&& c != 'P' && c != 'X')
+			if (c != '0' && c != '1' && c != 'C'
+				&& c != 'E' && c != 'P' && c != 'X')
 				return (false);
 			j++;
 		}
@@ -79,24 +73,16 @@ static bool	check_valid_characters(t_game *game)
 	return (true);
 }
 
-static void	count_enemy_positions(t_game *game)
+static bool	check_map_elements(t_game *game)
 {
-	int	i;
-	int	j;
-
-	game->enemy_count = 0;
-	i = 0;
-	while (i < game->height)
+	if (!validate_elements(game))
+		return (false);
+	if (!check_valid_path(game))
 	{
-		j = 0;
-		while (j < game->width)
-		{
-			if (game->map[i][j] == 'X')
-				game->enemy_count++;
-			j++;
-		}
-		i++;
+		ft_putendl_fd("Error: No valid path found", STDERR_FILENO);
+		return (false);
 	}
+	return (true);
 }
 
 bool	validate_map(t_game *game)
@@ -105,14 +91,12 @@ bool	validate_map(t_game *game)
 		return (false);
 	if (!check_horizontal_walls(game) || !check_vertical_walls(game))
 		return (false);
-	if (!check_valid_characters(game))
+	if (!check_characters(game))
 	{
 		ft_putendl_fd("Error: Invalid characters in map", STDERR_FILENO);
 		return (false);
 	}
-	if (!validate_elements(game))
-		return (false);
-	if (!check_valid_path(game))
+	if (!check_map_elements(game))
 		return (false);
 	count_enemy_positions(game);
 	return (true);

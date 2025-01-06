@@ -6,97 +6,119 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/13 10:44:27 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/29 14:03:41 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 11:57:50 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
-static void	init_element_count(t_game *game)
+static bool	check_single_element(t_game *game, int i, int j, char type)
 {
+	if (!game || !game->map)
+		return (false);
+	if (game->map[i][j] == type)
+	{
+		if (type == 'P')
+		{
+			game->player_x = j;
+			game->player_y = i;
+			return (true);
+		}
+		if (type == 'C')
+		{
+			game->collectibles++;
+			return (false);
+		}
+		return (true);
+	}
+	return (false);
+}
+
+static bool	count_elements(t_game *game)
+{
+	int	i;
+	int	j;
+	int	player;
+	int	exit;
+
+	if (!game || !game->map)
+		return (false);
+	i = -1;
+	player = 0;
+	exit = 0;
 	game->collectibles = 0;
-	game->player_x = -1;
-	game->player_y = -1;
+	while (++i < game->height)
+	{
+		j = -1;
+		while (++j < game->width)
+		{
+			player += check_single_element(game, i, j, 'P');
+			exit += check_single_element(game, i, j, 'E');
+			check_single_element(game, i, j, 'C');
+		}
+	}
+	return (player == 1 && exit == 1 && game->collectibles > 0);
 }
 
-static bool	update_element_count(t_game *game, char element, int x, int y)
+static bool	find_player(t_game *game)
 {
-	static int	player_count = 0;
-	static int	exit_count = 0;
+	int	i;
+	int	j;
+	int	player_found;
 
-	if (element == 'P')
-	{
-		player_count++;
-		game->player_x = x;
-		game->player_y = y;
-	}
-	else if (element == 'E')
-		exit_count++;
-	else if (element == 'C')
-		game->collectibles++;
-	if (player_count > 1 || exit_count > 1)
+	if (!game || !game->map)
 		return (false);
-	return (true);
+	player_found = 0;
+	i = -1;
+	while (++i < game->height)
+	{
+		j = -1;
+		while (++j < game->width)
+		{
+			if (game->map[i][j] == 'P')
+			{
+				game->player_x = j;
+				game->player_y = i;
+				player_found++;
+			}
+		}
+	}
+	return (player_found == 1);
 }
 
-static bool	check_element_requirements(bool player_found, bool exit_found,
-		t_game *game)
+void	count_enemy_positions(t_game *game)
 {
-	if (!player_found)
-	{
-		ft_putendl_fd("Error: No player found", STDERR_FILENO);
-		return (false);
-	}
-	if (!exit_found)
-	{
-		ft_putendl_fd("Error: No exit found", STDERR_FILENO);
-		return (false);
-	}
-	if (game->collectibles == 0)
-	{
-		ft_putendl_fd("Error: No collectibles found", STDERR_FILENO);
-		return (false);
-	}
-	return (true);
-}
+	int	i;
+	int	j;
 
-static bool	process_element(t_game *game, t_element_status *status)
-{
-	if (game->map[status->i][status->j] == 'P')
-		status->player_found = true;
-	else if (game->map[status->i][status->j] == 'E')
-		status->exit_found = true;
-	if (!update_element_count(game, game->map[status->i][status->j],
-		status->j, status->i))
+	game->enemy_count = 0;
+	i = 0;
+	while (i < game->height)
 	{
-		ft_putendl_fd("Error: Duplicate player or exit", STDERR_FILENO);
-		return (false);
+		j = 0;
+		while (j < game->width)
+		{
+			if (game->map[i][j] == 'X')
+				game->enemy_count++;
+			j++;
+		}
+		i++;
 	}
-	return (true);
 }
 
 bool	validate_elements(t_game *game)
 {
-	t_element_status	status;
-
-	if (!game || !game->map)
+	if (!game)
+		return (false);
+	if (!count_elements(game))
 	{
-		ft_putendl_fd("Error: Invalid game state", STDERR_FILENO);
+		ft_putendl_fd("Error: Invalid number of map elements", STDERR_FILENO);
 		return (false);
 	}
-	init_element_count(game);
-	status.player_found = false;
-	status.exit_found = false;
-	status.i = -1;
-	while (++status.i < game->height)
+	if (!find_player(game))
 	{
-		status.j = -1;
-		while (++status.j < game->width)
-		{
-			if (!process_element(game, &status))
-				return (false);
-		}
+		ft_putendl_fd("Error: Invalid player position", STDERR_FILENO);
+		return (false);
 	}
-	return (check_element_requirements(status.player_found,
-			status.exit_found, game));
+	return (true);
 }

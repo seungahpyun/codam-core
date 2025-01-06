@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 14:18:52 by spyun         #+#    #+#                 */
-/*   Updated: 2024/12/31 11:24:43 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 13:58:00 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	init_background(t_game *game)
 			{
 				if (mlx_image_to_window(game->mlx, game->empty_img,
 						x * TILE_SIZE, y * TILE_SIZE) < 0)
-					error_exit("Failed to render background", game);
+					error_exit("Error: Failed to render background", game);
 			}
 			x++;
 		}
@@ -50,7 +50,7 @@ static void	init_walls(t_game *game)
 			{
 				if (mlx_image_to_window(game->mlx, game->wall_img,
 						x * TILE_SIZE, y * TILE_SIZE) < 0)
-					error_exit("Failed to render wall", game);
+					error_exit("Error: Failed to render wall", game);
 			}
 			x++;
 		}
