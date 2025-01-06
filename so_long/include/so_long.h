@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/23 09:26:01 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/02 13:49:41 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 09:44:26 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_game
 
 bool		init_game(t_game *game, char *file);
 void		cleanup_game(t_game *game);
+void		free_textures(t_game *game);
 
 bool		parse_map(t_game *game, char *file);
 bool		validate_map(t_game *game);
@@ -71,7 +72,7 @@ void		update_player_position(t_game *game);
 void		init_background(t_game *game);
 void		init_walls(t_game *game);
 void		init_collectibles_and_exit(t_game *game);
-int			render_frame(t_game *game);
+bool		render_frame(t_game *game);
 
 bool		load_textures(t_game *game);
 mlx_image_t	*load_image(t_game *game, const char *path);

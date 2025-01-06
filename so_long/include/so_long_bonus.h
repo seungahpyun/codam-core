@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/16 18:35:57 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/03 16:00:32 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/06 09:16:25 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
 # define ENEMY_MOVE_DELAY 20
 # define ENEMY_FRAME_COUNT 4
 # define ENEMY_MOVE_SPEED 0.5
-
-typedef void	(*t_mlx_closefun)(void*);
 
 typedef enum e_direction
 {
