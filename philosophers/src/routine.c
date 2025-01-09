@@ -6,11 +6,9 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:07:28 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 11:39:08 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/09 11:42:39 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "philosophers.h"
 
 #include "philosophers.h"
 
