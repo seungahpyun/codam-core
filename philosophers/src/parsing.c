@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/07 11:56:41 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 09:03:53 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/09 10:37:17 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,19 @@ bool	check_valid_input(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	if (!str)
+		return (false);
+	if (str[0] == '\0')
+		return (false);
+	while (str[i] != '\0')
 	{
 		if (str[i] < '0' || str[i] > '9')
 			return (false);
+		i++;
 	}
+	if (i > 10)
+		return (false);
+	printf("Debug: Valid input: %s\n", str);
 	return (true);
 }
 

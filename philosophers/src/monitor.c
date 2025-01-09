@@ -6,13 +6,13 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:19:46 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 09:43:45 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/09 10:35:10 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-bool	check_death(t_data *data, int i)
+bool check_death(t_data *data, int i)
 {
 	if (get_time() - data->philos[i].last_meal > data->time_to_die)
 	{
@@ -46,9 +46,9 @@ bool	check_meal(t_data *data)
 	return (finished == data->num_philos);
 }
 
-void	monitoring(t_data *data)
+void	monitoring (t_data *data)
 {
-	int	i;
+	int i;
 
 	while (!data->someone_died)
 	{

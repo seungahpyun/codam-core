@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/07 11:53:19 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 09:42:40 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/09 10:35:04 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	start_simulation(t_data *data)
 		data->philos[i].last_meal = get_time();
 		if (pthread_create(&data->philos[i].thread,
 				NULL, philo_routine, &data->philos[i]))
-			return (EXIT_SUCCESS);
+			return (EXIT_FAILURE);
 		i++;
 	}
 	monitoring(data);
@@ -34,7 +34,7 @@ int	start_simulation(t_data *data)
 		pthread_join(data->philos[i].thread, NULL);
 		i++;
 	}
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int	main(int argc, char **argv)
