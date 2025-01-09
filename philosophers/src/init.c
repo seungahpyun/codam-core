@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:07:23 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 09:20:15 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/09 11:22:43 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	init_philos(t_data *data)
 		data->philos[i].id = i + 1;
 		data->philos[i].left_fork = i;
 		data->philos[i].right_fork = (i + 1) % data->num_philos;
-		data->philos[i].last_meal = 0;
+		data->philos[i].last_meal = get_time();
 		data->philos[i].meals_eaten = 0;
 		data->philos[i].data = data;
 		i++;

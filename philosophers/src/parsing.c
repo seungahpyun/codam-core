@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/07 11:56:41 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 10:37:17 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/09 11:30:48 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ bool	check_valid_input(char *str)
 	}
 	if (i > 10)
 		return (false);
-	printf("Debug: Valid input: %s\n", str);
 	return (true);
 }
 
