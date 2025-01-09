@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:19:46 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 11:30:25 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/09 11:37:05 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,22 @@
 
 bool	check_death(t_data *data, int i)
 {
-	if (get_time() - data->philos[i].last_meal > data->time_to_die)
+	long long	current_time;
+	long long	last_meal_time;
+	bool		is_dead;
+
+	pthread_mutex_lock(&data->print_mutex);
+	current_time = get_time();
+	last_meal_time = data->philos[i].last_meal;
+	is_dead = (current_time - last_meal_time > data->time_to_die);
+	if (is_dead && !data->someone_died)
 	{
-		pthread_mutex_lock(&data->print_mutex);
-		if (!data->someone_died)
-		{
-			printf("%lld %d died\n", get_time() - data->start_time, i + 1);
-			data->someone_died = true;
-		}
+		printf("%lld %d died\n", current_time - data->start_time, i + 1);
+		data->someone_died = true;
 		pthread_mutex_unlock(&data->print_mutex);
 		return (true);
 	}
+	pthread_mutex_unlock(&data->print_mutex);
 	return (false);
 }
 
@@ -59,7 +64,9 @@ void	monitoring(t_data *data)
 				break ;
 			if (check_meal(data))
 			{
+				pthread_mutex_lock(&data->print_mutex);
 				data->someone_died = true;
+				pthread_mutex_unlock(&data->print_mutex);
 				break ;
 			}
 			i++;

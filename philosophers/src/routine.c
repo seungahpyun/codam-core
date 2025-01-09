@@ -6,34 +6,66 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:07:28 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 11:27:57 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/09 11:39:08 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+#include "philosophers.h"
+
+static void	take_forks(t_philo *philo)
+{
+	if (philo->left_fork < philo->right_fork)
+	{
+		pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
+		print_status(philo, "has taken a fork");
+		pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
+		print_status(philo, "has taken a fork");
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
+		print_status(philo, "has taken a fork");
+		pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
+		print_status(philo, "has taken a fork");
+	}
+}
+
+static void	release_forks(t_philo *philo)
+{
+	if (philo->left_fork < philo->right_fork)
+	{
+		pthread_mutex_unlock(&philo->data->forks[philo->right_fork]);
+		pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
+	}
+	else
+	{
+		pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
+		pthread_mutex_unlock(&philo->data->forks[philo->right_fork]);
+	}
+}
+
 void	eat(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 		custom_sleep(5);
-	pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
-	print_status(philo, "has taken a fork");
 	if (philo->data->num_philos == 1)
 	{
+		pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
+		print_status(philo, "has taken a fork");
 		custom_sleep(philo->data->time_to_die);
 		pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
 		return ;
 	}
-	pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
-	print_status(philo, "has taken a fork");
+	take_forks(philo);
 	print_status(philo, "is eating");
 	pthread_mutex_lock(&philo->data->print_mutex);
 	philo->last_meal = get_time();
+	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->data->print_mutex);
 	custom_sleep(philo->data->time_to_eat);
-	philo->meals_eaten++;
-	pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
-	pthread_mutex_unlock(&philo->data->forks[philo->right_fork]);
+	release_forks(philo);
 }
 
 void	think(t_philo *philo)

@@ -1,8 +1,8 @@
 NAME = philo
-
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-RM = rm -f
+CFLAGS = -Wall -Wextra -Werror -g
+LDFLAGS = -pthread
+SANITIZE = -fsanitize=thread
 
 # Directories
 SRC_DIR = src
@@ -11,12 +11,12 @@ OBJ_DIR = obj
 
 # Source files
 SRCS = main.c \
-       init.c \
-       parsing.c \
-       routine.c \
-       monitor.c \
-       utils.c \
-       cleanup.c
+	   init.c \
+	   parsing.c \
+	   routine.c \
+	   monitor.c \
+	   utils.c \
+	   cleanup.c
 
 # Add source directory prefix
 SRCS := $(addprefix $(SRC_DIR)/, $(SRCS))
@@ -35,10 +35,10 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJ_DIR) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) $(LDFLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	$(CC) $(CFLAGS) $(SANITIZE) $(INC) -c $< -o $@
 
 clean:
 	$(RM) -r $(OBJ_DIR)
@@ -48,4 +48,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
