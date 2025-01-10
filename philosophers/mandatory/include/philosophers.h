@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/07 11:53:12 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 11:01:33 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/10 11:49:01 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <string.h>
+# include <stdint.h>
 
 typedef struct s_philo
 {
 	int				id;
 	int				left_fork;
 	int				right_fork;
-	long long		last_meal;
+	time_t			last_meal;
 	int				meals_eaten;
 	struct s_data	*data;
 	pthread_t		thread;
@@ -39,7 +40,7 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat;
-	long long		start_time;
+	time_t			start_time;
 	int				someone_died;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
@@ -48,9 +49,9 @@ typedef struct s_data
 	t_philo			*philos;
 }	t_data;
 
-long long	get_time(void);
+time_t		get_time(void);
 void		print_status(t_philo *philo, char *status);
-void		custom_sleep(long long time);
+void		custom_sleep(time_t time);
 int			error_msg(char *msg);
 int			error_cleanup(char *msg, t_data *data);
 
@@ -62,6 +63,7 @@ int			ft_atoi(const char *str);
 bool		check_valid_input(char *str);
 
 void		eat(t_philo *philo);
+void		think(t_philo *philo);
 void		*philo_routine(void *arg);
 
 void		monitoring(t_data *data);

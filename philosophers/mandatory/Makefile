@@ -15,6 +15,7 @@ SRCS = main.c \
 	   parsing.c \
 	   routine.c \
 	   monitor.c \
+	   actions.c \
 	   utils.c \
 	   cleanup.c
 

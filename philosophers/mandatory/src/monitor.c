@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:19:46 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 11:04:50 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/10 11:18:58 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool	check_death(t_data *data, int i)
 {
-	long long	current_time;
-	long long	last_meal_time;
+	time_t	current_time;
+	time_t	last_meal_time;
 
 	pthread_mutex_lock(&data->meal_mutex);
 	current_time = get_time();
@@ -26,7 +26,7 @@ bool	check_death(t_data *data, int i)
 		pthread_mutex_lock(&data->death_mutex);
 		if (!data->someone_died)
 		{
-			printf("%lld %d died\n", current_time - data->start_time, i + 1);
+			printf("%ld %d died\n", current_time - data->start_time, i + 1);
 			data->someone_died = true;
 		}
 		pthread_mutex_unlock(&data->death_mutex);

@@ -6,13 +6,13 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:07:30 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 15:41:15 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/10 11:43:46 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-long long	get_time(void)
+time_t	get_time(void)
 {
 	struct timeval	tv;
 
@@ -25,19 +25,19 @@ void	print_status(t_philo *philo, char *status)
 	pthread_mutex_lock(&philo->data->print_mutex);
 	if (!philo->data->someone_died)
 	{
-		printf("%lld %d %s\n", get_time()
+		printf("%ld %d %s\n", get_time()
 			- philo->data->start_time, philo->id, status);
 	}
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
-void	custom_sleep(long long time)
+void	custom_sleep(time_t time)
 {
-	long long	start;
-	long long	current;
+	time_t	start;
+	time_t	current;
 
 	start = get_time();
-	while (1)
+	while (get_time() - start < time)
 	{
 		current = get_time();
 		if (current - start >= time)
