@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:28:15 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 15:41:02 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/10 11:04:18 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	cleanup(t_data *data)
 		data->forks = NULL;
 	}
 	pthread_mutex_destroy(&data->print_mutex);
+	pthread_mutex_destroy(&data->meal_mutex);
+	pthread_mutex_destroy(&data->death_mutex);
 }
 
 int	error_msg(char *msg)

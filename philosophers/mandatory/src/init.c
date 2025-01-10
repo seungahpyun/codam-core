@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:07:23 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 15:41:04 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/10 11:02:04 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ bool	init_mutex(t_data *data)
 		i++;
 	}
 	if (pthread_mutex_init(&data->print_mutex, NULL))
+		return (false);
+	if (pthread_mutex_init(&data->meal_mutex, NULL))
+		return (false);
+	if (pthread_mutex_init(&data->death_mutex, NULL))
 		return (false);
 	return (true);
 }

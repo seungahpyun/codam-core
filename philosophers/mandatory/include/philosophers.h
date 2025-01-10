@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/07 11:53:12 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 15:41:25 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/10 11:01:33 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ typedef struct s_data
 	int				someone_died;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	meal_mutex;
+	pthread_mutex_t	death_mutex;
 	t_philo			*philos;
 }	t_data;
 

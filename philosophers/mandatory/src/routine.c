@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:07:28 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 15:41:13 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/10 11:07:13 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void	eat(t_philo *philo)
 	}
 	take_forks(philo);
 	print_status(philo, "is eating");
-	pthread_mutex_lock(&philo->data->print_mutex);
+	pthread_mutex_lock(&philo->data->meal_mutex);
 	philo->last_meal = get_time();
 	philo->meals_eaten++;
-	pthread_mutex_unlock(&philo->data->print_mutex);
+	pthread_mutex_unlock(&philo->data->meal_mutex);
 	custom_sleep(philo->data->time_to_eat);
 	release_forks(philo);
 }
@@ -92,15 +92,26 @@ void	think(t_philo *philo)
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
+	bool	should_continue;
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		custom_sleep(philo->data->time_to_eat / 2);
 	while (!philo->data->someone_died)
 	{
+		pthread_mutex_lock(&philo->data->death_mutex);
+		should_continue = !philo->data->someone_died;
+		pthread_mutex_unlock(&philo->data->death_mutex);
+		if (!should_continue)
+			break ;
+		pthread_mutex_lock(&philo->data->meal_mutex);
 		if (philo->data->must_eat != -1
 			&& philo->meals_eaten >= philo->data->must_eat)
+		{
+			pthread_mutex_unlock(&philo->data->meal_mutex);
 			break ;
+		}
+		pthread_mutex_unlock(&philo->data->meal_mutex);
 		eat(philo);
 		print_status(philo, "is sleeping");
 		custom_sleep(philo->data->time_to_sleep);
