@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 14:38:55 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 14:49:33 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/10 11:53:47 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <signal.h>
+# include <fcntl.h>
 
 typedef struct s_philo
 {
