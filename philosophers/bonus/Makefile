@@ -1,8 +1,8 @@
-NAME = philo
+NAME = philo_bonus
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 LDFLAGS = -pthread
-SANITIZE = -fsanitize=thread
+SANITIZE = -fsanitize=address
 
 # Directories
 SRC_DIR = src
@@ -10,14 +10,12 @@ INC_DIR = include
 OBJ_DIR = obj
 
 # Source files
-SRCS = main.c \
-	   init.c \
-	   init_utils.c \
-	   routine.c \
-	   monitor.c \
-	   actions.c \
-	   utils.c \
-	   cleanup.c
+SRCS = main_bonus.c \
+	   init_bonus.c \
+	   init_utils_bonus.c \
+	   routine_bonus.c \
+	   utils_bonus.c \
+	   cleanup_bonus.c
 
 # Add source directory prefix
 SRCS := $(addprefix $(SRC_DIR)/, $(SRCS))

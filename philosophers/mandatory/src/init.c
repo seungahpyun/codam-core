@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:07:23 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 11:02:04 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/10 14:55:03 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,29 @@ bool	init_philos(t_data *data)
 		data->philos[i].data = data;
 		i++;
 	}
+	return (true);
+}
+
+bool	init_data(t_data *data, int argc, char **argv)
+{
+	if (!check_valid_input(argv[1]) || !check_valid_input(argv[2])
+		|| !check_valid_input(argv[3]) || !check_valid_input(argv[4]))
+		return (false);
+	data->num_philos = ft_atoi(argv[1]);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+	{
+		if (!check_valid_input(argv[5]))
+			return (false);
+		data->must_eat = ft_atoi(argv[5]);
+	}
+	else
+		data->must_eat = -1;
+	if (data->num_philos <= 0 || data->time_to_die <= 0
+		|| data->time_to_eat <= 0 || data->time_to_sleep <= 0
+		|| (argc == 6 && data->must_eat <= 0))
+		return (false);
 	return (true);
 }

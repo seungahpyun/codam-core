@@ -6,13 +6,13 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:19:46 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 11:18:58 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/10 14:52:40 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-bool	check_death(t_data *data, int i)
+static bool	check_death(t_data *data, int i)
 {
 	time_t	current_time;
 	time_t	last_meal_time;
@@ -35,7 +35,7 @@ bool	check_death(t_data *data, int i)
 	return (false);
 }
 
-bool	check_meal(t_data *data)
+static bool	check_meal(t_data *data)
 {
 	int	i;
 	int	finished;

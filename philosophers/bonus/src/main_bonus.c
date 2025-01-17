@@ -6,10 +6,9 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 14:40:18 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 14:49:46 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/10 15:24:51 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "philosophers_bonus.h"
 
@@ -43,6 +42,7 @@ static int	start_simulation(t_data *data)
 	pid_t	pid;
 
 	data->start_time = get_time();
+	data->someone_died = false;
 	i = 0;
 	while (i < data->num_philos)
 	{
@@ -51,6 +51,7 @@ static int	start_simulation(t_data *data)
 			return (error_msg("Fork failed"));
 		if (pid == 0)
 		{
+			data->philos[i].last_meal = data->start_time;
 			philo_routine(&data->philos[i]);
 			exit(EXIT_SUCCESS);
 		}
@@ -72,9 +73,11 @@ int	main(int argc, char **argv)
 	if (!init_data(&data, argc, argv))
 		return (error_msg("Error: invalid arguments"));
 	if (!init_semaphores(&data))
-		return (error_cleanup("Error: semaphore initialization failed", &data));
+		return (error_cleanup("Error: semaphore initialization failed",
+				&data));
 	if (!init_philos(&data))
-		return (error_cleanup("Error: philosopher initialization failed", &data));
+		return (error_cleanup("Error: philosopher initialization failed",
+				&data));
 	if (start_simulation(&data) != EXIT_SUCCESS)
 		return (error_cleanup("Error: simulation failed", &data));
 	cleanup(&data);

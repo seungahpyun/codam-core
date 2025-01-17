@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/07 11:53:12 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 11:49:01 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/10 15:00:22 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <string.h>
-# include <stdint.h>
 
 typedef struct s_philo
 {
@@ -52,24 +51,22 @@ typedef struct s_data
 time_t		get_time(void);
 void		print_status(t_philo *philo, char *status);
 void		custom_sleep(time_t time);
+
+void		cleanup(t_data *data);
 int			error_msg(char *msg);
 int			error_cleanup(char *msg, t_data *data);
+
+int			ft_atoi(const char *str);
+bool		check_valid_input(char *str);
 
 bool		init_data(t_data *data, int argc, char **argv);
 bool		init_mutex(t_data *data);
 bool		init_philos(t_data *data);
-
-int			ft_atoi(const char *str);
-bool		check_valid_input(char *str);
 
 void		eat(t_philo *philo);
 void		think(t_philo *philo);
 void		*philo_routine(void *arg);
 
 void		monitoring(t_data *data);
-bool		check_death(t_data *data, int i);
-bool		check_meals(t_data *data);
-
-void		cleanup(t_data *data);
 
 #endif
