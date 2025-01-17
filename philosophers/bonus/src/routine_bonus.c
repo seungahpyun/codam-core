@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 14:42:26 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 15:25:36 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/17 11:13:28 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,24 @@ static void	check_death(t_philo *philo)
 			philo->id);
 		exit(EXIT_FAILURE);
 	}
+}
+
+static void *death_checker(void *arg)
+{
+	t_philo	*philo = (t_philo *)arg;
+
+	while (!philo->data->someone_died)
+	{
+		if (get_time() - philo->last_meal >= philo->data->time_to_die)
+		{
+			sem_wait(philo->data->print_sem);
+			printf("%ld %d died\n", get_time() - philo->data->start_time,
+				philo->id);
+			exit(EXIT_FAILURE);
+		}
+		usleep(1000);
+	}
+	return (NULL);
 }
 
 static void	eat(t_philo *philo)
@@ -50,6 +68,9 @@ void	philo_routine(t_philo *philo)
 		custom_sleep(philo->data->time_to_eat / 2);
 	while (!philo->data->someone_died)
 	{
+
+		pthread_create(&death_checker_thread, NULL, death_checker, philo);
+		pthread_detach(death_checker_thread);
 		check_death(philo);
 		if (philo->data->must_eat != -1
 			&& philo->meals_eaten >= philo->data->must_eat)

@@ -95,3 +95,6 @@ echo "=== All tests completed ==="
 # echo "test line 1" > infile.txt
 # echo "test line 2" >> infile.txt
 # valgrind --leak-check=full ./pipex_bonus infile.txt "ls" "grep test" "wc -l" outfile.txt
+
+
+# make bonus && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./pipex_bonus test1.txt 'grep test' 'wc -l' test9.txt
