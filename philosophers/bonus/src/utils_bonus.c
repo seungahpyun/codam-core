@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 14:42:23 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 15:25:09 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/17 16:19:19 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	custom_sleep(time_t time)
 	start = get_time();
 	while (get_time() - start < time)
 	{
-		current = get_time();
-		if (current - start >= time)
+		current = get_time() - start;
+		if (current >= time)
 			break ;
 		usleep(100);
 	}

@@ -14,8 +14,10 @@ SRCS = main_bonus.c \
 	   init_bonus.c \
 	   init_utils_bonus.c \
 	   routine_bonus.c \
+	   routine_utils_bonus.c \
 	   utils_bonus.c \
-	   cleanup_bonus.c
+	   cleanup_bonus.c \
+	   error_bonus.c
 
 # Add source directory prefix
 SRCS := $(addprefix $(SRC_DIR)/, $(SRCS))

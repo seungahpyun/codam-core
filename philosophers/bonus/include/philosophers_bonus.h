@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 14:38:55 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 15:24:19 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/17 14:42:36 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ bool	init_philos(t_data *data);
 
 /* routine_bonus.c */
 void	philo_routine(t_philo *philo);
+/* routine_utils_bonus.c */
+void	handle_single_philo(t_philo *philo);
 
 /* utils_bonus.c */
 time_t	get_time(void);
@@ -70,6 +72,10 @@ int		error_cleanup(char *msg, t_data *data);
 
 /* cleanup_bonus.c */
 void	cleanup(t_data *data);
+
+/* error_bonus.c */
 void	emergency_cleanup(t_data *data);
+int		error_msg(char *msg);
+int		error_cleanup(char *msg, t_data *data);
 
 #endif
