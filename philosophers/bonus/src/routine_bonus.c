@@ -6,33 +6,38 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 14:42:26 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/17 16:32:32 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/17 14:40:03 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
+static void	check_death(t_philo *philo)
+{
+	if (get_time() - philo->last_meal > philo->data->time_to_die)
+	{
+		sem_wait(philo->data->print_sem);
+		printf("%ld %d died\n", get_time() - philo->data->start_time,
+			philo->id);
+		exit(EXIT_FAILURE);
+	}
+}
+
 static void	*death_checker(void *arg)
 {
 	t_philo	*philo;
-	time_t	current_time;
-	time_t	time_since_last_meal;
 
 	philo = (t_philo *)arg;
-	while (1)
+	while (!philo->data->someone_died)
 	{
-		sem_wait(philo->data->meal_sem);
-		current_time = get_time();
-		time_since_last_meal = current_time - philo->last_meal;
-		sem_post(philo->data->meal_sem);
-		if (time_since_last_meal >= philo->data->time_to_die)
+		if (get_time() - philo->last_meal >= philo->data->time_to_die)
 		{
 			sem_wait(philo->data->print_sem);
-			printf("%ld %d died\n",
-				get_time() - philo->data->start_time, philo->id);
-		exit(EXIT_FAILURE);
+			printf("%ld %d died\n", get_time() - philo->data->start_time,
+				philo->id);
+			exit(EXIT_FAILURE);
 		}
-		usleep(100);
+		usleep(1000);
 	}
 	return (NULL);
 }
@@ -65,6 +70,7 @@ void	philo_routine(t_philo *philo)
 		custom_sleep(philo->data->time_to_eat / 2);
 	while (!philo->data->someone_died)
 	{
+		check_death(philo);
 		if (philo->data->must_eat != -1
 			&& philo->meals_eaten >= philo->data->must_eat)
 			exit(EXIT_SUCCESS);

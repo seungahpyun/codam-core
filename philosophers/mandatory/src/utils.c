@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:07:30 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 11:43:46 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/17 17:44:24 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,18 @@ time_t	get_time(void)
 
 void	print_status(t_philo *philo, char *status)
 {
-	pthread_mutex_lock(&philo->data->print_mutex);
-	if (!philo->data->someone_died)
+	bool	can_print;
+
+	pthread_mutex_lock(&philo->data->death_mutex);
+	can_print = !philo->data->someone_died;
+	pthread_mutex_unlock(&philo->data->death_mutex);
+	if (can_print)
 	{
-		printf("%ld %d %s\n", get_time()
-			- philo->data->start_time, philo->id, status);
+		pthread_mutex_lock(&philo->data->print_mutex);
+		printf("%ld %d %s\n", get_time() - philo->data->start_time,
+			philo->id, status);
+		pthread_mutex_unlock(&philo->data->print_mutex);
 	}
-	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
 void	custom_sleep(time_t time)

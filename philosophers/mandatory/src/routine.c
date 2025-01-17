@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:07:28 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 11:22:37 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/17 17:47:52 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,15 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		custom_sleep(philo->data->time_to_eat / 2);
-	while (!philo->data->someone_died)
+	while (1)
 	{
+		pthread_mutex_lock(&philo->data->death_mutex);
+		if (philo->data->someone_died)
+		{
+			pthread_mutex_unlock(&philo->data->death_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->data->death_mutex);
 		if (!should_continue_routine(philo))
 			break ;
 		perform_routine(philo);

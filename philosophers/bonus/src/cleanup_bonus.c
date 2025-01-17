@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 14:40:13 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/17 16:18:34 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/17 17:24:10 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	unlink_semaphores(void)
 	sem_unlink("/philo_dead");
 	sem_unlink("/philo_meal");
 }
-
+zz
 static void	kill_processes(t_data *data)
 {
 	int	i;
@@ -48,9 +48,7 @@ static void	kill_processes(t_data *data)
 }
 
 void	cleanup(t_data *data)
-{
-	if (!data)
-		return ;
+{zz
 	kill_processes(data);
 	if (data->philos)
 	{

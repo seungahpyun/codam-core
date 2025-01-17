@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:19:46 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 14:52:40 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/17 17:46:33 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ static bool	check_death(t_data *data, int i)
 {
 	time_t	current_time;
 	time_t	last_meal_time;
+	bool	is_dead;
 
+	is_dead = false;
 	pthread_mutex_lock(&data->meal_mutex);
 	current_time = get_time();
 	last_meal_time = data->philos[i].last_meal;
@@ -26,16 +28,18 @@ static bool	check_death(t_data *data, int i)
 		pthread_mutex_lock(&data->death_mutex);
 		if (!data->someone_died)
 		{
-			printf("%ld %d died\n", current_time - data->start_time, i + 1);
 			data->someone_died = true;
+			is_dead = true;
+			pthread_mutex_lock(&data->print_mutex);
+			printf("%ld %d died\n", current_time - data->start_time, i + 1);
+			pthread_mutex_unlock(&data->print_mutex);
 		}
 		pthread_mutex_unlock(&data->death_mutex);
-		return (true);
 	}
-	return (false);
+	return (is_dead);
 }
 
-static bool	check_meal(t_data *data)
+bool	check_meal(t_data *data)
 {
 	int	i;
 	int	finished;
@@ -57,26 +61,33 @@ static bool	check_meal(t_data *data)
 
 void	monitoring(t_data *data)
 {
-	int	i;
+	int		i;
+	bool	someone_died;
 
-	while (!data->someone_died)
+	someone_died = false;
+	while (!someone_died)
 	{
 		i = 0;
-		while (i < data->num_philos && !data->someone_died)
+		while (i < data->num_philos)
 		{
-			if (check_death(data, i))
+			pthread_mutex_lock(&data->death_mutex);
+			someone_died = data->someone_died;
+			pthread_mutex_unlock(&data->death_mutex);
+			if (someone_died || check_death(data, i))
+			{
+				someone_died = true;
 				break ;
+			}
 			if (check_meal(data))
 			{
-				pthread_mutex_lock(&data->print_mutex);
+				pthread_mutex_lock(&data->death_mutex);
 				data->someone_died = true;
-				pthread_mutex_unlock(&data->print_mutex);
+				pthread_mutex_unlock(&data->death_mutex);
+				someone_died = true;
 				break ;
 			}
 			i++;
 		}
-		if (data->someone_died)
-			break ;
-		usleep(1000);
+		usleep(100);
 	}
 }
