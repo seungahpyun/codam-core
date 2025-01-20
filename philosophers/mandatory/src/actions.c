@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/10 11:22:07 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 11:48:38 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/20 09:12:44 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	release_forks(t_philo *philo)
 void	eat(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-		custom_sleep(5);
+		custom_sleep(philo->data->time_to_eat * 0.1);
 	if (philo->data->num_philos == 1)
 	{
 		pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
@@ -57,13 +57,14 @@ void	eat(t_philo *philo)
 		return ;
 	}
 	take_forks(philo);
-	print_status(philo, "is eating");
-	pthread_mutex_lock(&philo->data->meal_mutex);
-	philo->last_meal = get_time();
-	philo->meals_eaten++;
-	pthread_mutex_unlock(&philo->data->meal_mutex);
-	custom_sleep(philo->data->time_to_eat);
-	release_forks(philo);
+    pthread_mutex_lock(&philo->data->meal_mutex);
+    philo->last_meal = get_time();
+    philo->meals_eaten++;
+    pthread_mutex_unlock(&philo->data->meal_mutex);
+
+    custom_sleep(philo->data->time_to_eat);
+    print_status(philo, "is eating");
+    release_forks(philo);
 }
 
 void	think(t_philo *philo)
@@ -73,6 +74,8 @@ void	think(t_philo *philo)
 	time_t	next_meal_gap;
 
 	print_status(philo, "is thinking");
+	if (philo->id % 2 == 0)
+        custom_sleep(philo->data->time_to_eat / 2);
 	time_since_meal = get_time() - philo->last_meal;
 	next_meal_gap = philo->data->time_to_die - time_since_meal;
 	if (next_meal_gap >= philo->data->time_to_eat * 2)

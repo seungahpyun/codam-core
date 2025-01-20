@@ -6,37 +6,25 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:19:46 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/17 17:46:33 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/20 09:12:18 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static bool	check_death(t_data *data, int i)
+static bool    check_death(t_data *data, int i)
 {
-	time_t	current_time;
-	time_t	last_meal_time;
-	bool	is_dead;
+    time_t  current_time;
+    time_t  time_since_meal;
 
-	is_dead = false;
-	pthread_mutex_lock(&data->meal_mutex);
-	current_time = get_time();
-	last_meal_time = data->philos[i].last_meal;
-	pthread_mutex_unlock(&data->meal_mutex);
-	if (current_time - last_meal_time > data->time_to_die)
-	{
-		pthread_mutex_lock(&data->death_mutex);
-		if (!data->someone_died)
-		{
-			data->someone_died = true;
-			is_dead = true;
-			pthread_mutex_lock(&data->print_mutex);
-			printf("%ld %d died\n", current_time - data->start_time, i + 1);
-			pthread_mutex_unlock(&data->print_mutex);
-		}
-		pthread_mutex_unlock(&data->death_mutex);
-	}
-	return (is_dead);
+    pthread_mutex_lock(&data->meal_mutex);
+    current_time = get_time();
+    time_since_meal = current_time - data->philos[i].last_meal;
+    pthread_mutex_unlock(&data->meal_mutex);
+
+    if (time_since_meal > data->time_to_die)
+        return (true);
+    return (false);
 }
 
 bool	check_meal(t_data *data)
@@ -88,6 +76,6 @@ void	monitoring(t_data *data)
 			}
 			i++;
 		}
-		usleep(100);
+		usleep(50);
 	}
 }
