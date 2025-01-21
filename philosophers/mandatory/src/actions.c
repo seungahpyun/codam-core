@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/10 11:22:07 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/20 09:52:00 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/21 11:38:36 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	eat(t_philo *philo)
 	philo->last_meal = get_time();
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->data->meal_mutex);
-	custom_sleep(philo->data->time_to_eat);
 	print_status(philo, "is eating");
+	custom_sleep(philo->data->time_to_eat);
 	release_forks(philo);
 }
 
