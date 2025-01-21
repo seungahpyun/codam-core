@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/07 11:53:19 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/09 11:27:03 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/21 13:43:00 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv)
 	if (!init_philos(&data))
 		return (error_cleanup("Error: philosopher initialization failed",
 				&data));
-	if (!start_simulation(&data))
+	if (start_simulation(&data) != EXIT_SUCCESS)
 		return (error_cleanup("Error: simulation failed", &data));
 	cleanup(&data);
 	return (EXIT_SUCCESS);
