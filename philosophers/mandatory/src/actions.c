@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/10 11:22:07 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/21 12:06:31 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/21 13:38:33 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ static void	release_forks(t_philo *philo)
 
 void	eat(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-		custom_sleep(philo->data->time_to_eat * 0.1);
 	if (philo->data->num_philos == 1)
 	{
 		pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
@@ -56,37 +54,39 @@ void	eat(t_philo *philo)
 		pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
 		return ;
 	}
+	pthread_mutex_lock(&philo->data->death_mutex);
+	if (philo->data->someone_died)
+	{
+		pthread_mutex_unlock(&philo->data->death_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&philo->data->death_mutex);
 	take_forks(philo);
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	philo->last_meal = get_time();
+	print_status(philo, "is eating");
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->data->meal_mutex);
-	print_status(philo, "is eating");
 	custom_sleep(philo->data->time_to_eat);
 	release_forks(philo);
 }
 
 void	think(t_philo *philo)
 {
-	time_t	time_since_meal;
+	time_t	time_to_next_meal;
 	time_t	think_time;
-	time_t	next_meal_gap;
 
 	print_status(philo, "is thinking");
-	if (philo->id % 2 == 0)
-		custom_sleep(philo->data->time_to_eat / 2);
-	time_since_meal = get_time() - philo->last_meal;
-	next_meal_gap = philo->data->time_to_die - time_since_meal;
-	if (next_meal_gap >= philo->data->time_to_eat * 2)
+	pthread_mutex_lock(&philo->data->meal_mutex);
+	time_to_next_meal = (philo->last_meal + philo->data->time_to_die)
+		- get_time();
+	pthread_mutex_unlock(&philo->data->meal_mutex);
+	if (time_to_next_meal > philo->data->time_to_eat + 20)
 	{
-		think_time = philo->data->time_to_eat / 2;
-		if (philo->id % 2)
-			think_time = think_time * 0.8;
-		custom_sleep(think_time);
-	}
-	else if (next_meal_gap > 50)
-	{
-		think_time = 30;
+		if (philo->id % 2 == 0)
+			think_time = 15;
+		else
+			think_time = philo->data->time_to_eat / 2;
 		custom_sleep(think_time);
 	}
 }
