@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:19:46 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/21 13:37:46 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/28 17:36:37 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,6 @@ static bool	check_meal(t_data *data)
 	return (finished == data->num_philos);
 }
 
-static bool	check_simulation_end(t_data *data, int i)
-{
-	if (check_death(data, i))
-		return (true);
-	if (check_meal(data))
-	{
-		pthread_mutex_lock(&data->death_mutex);
-		data->someone_died = true;
-		pthread_mutex_unlock(&data->death_mutex);
-		return (true);
-	}
-	return (false);
-}
-
 static bool	check_philosopher_status(t_data *data)
 {
 	int		i;
@@ -84,8 +70,17 @@ static bool	check_philosopher_status(t_data *data)
 		pthread_mutex_lock(&data->death_mutex);
 		someone_died = data->someone_died;
 		pthread_mutex_unlock(&data->death_mutex);
-		if (someone_died || check_simulation_end(data, i))
+		if (someone_died)
 			return (true);
+		if (check_death(data, i))
+			return (true);
+		if (data->must_eat != -1 && check_meal(data))
+		{
+			pthread_mutex_lock(&data->death_mutex);
+			data->someone_died = true;
+			pthread_mutex_unlock(&data->death_mutex);
+			return (true);
+		}
 		i++;
 	}
 	return (false);

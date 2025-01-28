@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:07:28 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/21 12:06:45 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/28 17:36:06 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 
 static bool	should_continue_routine(t_philo *philo)
 {
-	bool	continue_flag;
-
-	pthread_mutex_lock(&philo->data->death_mutex);
-	continue_flag = !philo->data->someone_died;
-	pthread_mutex_unlock(&philo->data->death_mutex);
-	if (!continue_flag)
-		return (false);
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	if (philo->data->must_eat != -1
 		&& philo->meals_eaten >= philo->data->must_eat)
