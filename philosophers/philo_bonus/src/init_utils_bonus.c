@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/10 15:04:00 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/28 17:33:10 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/28 17:33:39 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_atoi(const char *str)
 {
-	long	resul
+	long	result;
 	int		sign;
 	int		i;
 
