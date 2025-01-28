@@ -6,19 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 14:40:15 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/20 09:36:29 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/28 17:28:27 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
-
-static void	sem_unlink_all(void)
-{
-	sem_unlink("/philo_forks");
-	sem_unlink("/philo_print");
-	sem_unlink("/philo_dead");
-	sem_unlink("/philo_meal");
-}
 
 bool	init_semaphores(t_data *data)
 {

@@ -6,22 +6,11 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 14:42:26 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/17 14:40:03 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/28 17:31:15 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
-
-static void	check_death(t_philo *philo)
-{
-	if (get_time() - philo->last_meal > philo->data->time_to_die)
-	{
-		sem_wait(philo->data->print_sem);
-		printf("%ld %d died\n", get_time() - philo->data->start_time,
-			philo->id);
-		exit(EXIT_FAILURE);
-	}
-}
 
 static void	*death_checker(void *arg)
 {
@@ -70,7 +59,6 @@ void	philo_routine(t_philo *philo)
 		custom_sleep(philo->data->time_to_eat / 2);
 	while (!philo->data->someone_died)
 	{
-		check_death(philo);
 		if (philo->data->must_eat != -1
 			&& philo->meals_eaten >= philo->data->must_eat)
 			exit(EXIT_SUCCESS);

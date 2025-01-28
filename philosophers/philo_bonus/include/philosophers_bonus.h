@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 14:38:55 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/20 09:49:03 by spyun         ########   odam.nl         */
+/*   Updated: 2025/01/28 17:29:36 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,5 @@ int		error_cleanup(char *msg, t_data *data);
 
 /* cleanup_bonus.c */
 void	cleanup(t_data *data);
-
-/* error_bonus.c */
-void	emergency_cleanup(t_data *data);
-int		error_msg(char *msg);
-int		error_cleanup(char *msg, t_data *data);
-
+void	sem_unlink_all(void);
 #endif
