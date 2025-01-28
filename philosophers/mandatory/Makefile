@@ -1,15 +1,13 @@
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g3
 LDFLAGS = -pthread
 SANITIZE = -fsanitize=thread
 
-# Directories
 SRC_DIR = src
 INC_DIR = include
 OBJ_DIR = obj
 
-# Source files
 SRCS = main.c \
 	   init.c \
 	   init_utils.c \
@@ -19,19 +17,14 @@ SRCS = main.c \
 	   utils.c \
 	   cleanup.c
 
-# Add source directory prefix
 SRCS := $(addprefix $(SRC_DIR)/, $(SRCS))
 
-# Object files
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-# Include flags
 INC = -I$(INC_DIR)
 
-# Mandatory part
 all: $(NAME)
 
-# Create object directory
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
@@ -49,4 +42,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
