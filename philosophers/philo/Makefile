@@ -30,15 +30,18 @@ $(OBJ_DIR):
 
 $(NAME): $(OBJ_DIR) $(OBJS)
 	@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) $(LDFLAGS) -o $(NAME)
+	@echo "Philo compiled successfully!"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) $(SANITIZE) $(INC) -c $< -o $@
 
 clean:
 	@$(RM) -r $(OBJ_DIR)
+	@echo "Object files cleaned!"
 
 fclean: clean
 	@$(RM) $(NAME)
+	@echo "Everything cleaned!"
 
 re: fclean all
 

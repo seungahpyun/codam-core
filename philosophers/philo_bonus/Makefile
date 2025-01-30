@@ -1,7 +1,6 @@
 NAME = philo_bonus
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
-LDFLAGS = -pthread
 SANITIZE = -fsanitize=address
 
 SRC_DIR = src
@@ -29,16 +28,19 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJ_DIR) $(OBJS)
-	@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) $(LDFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) -o $(NAME)
+	@echo "Philo_bonus compiled successfully!"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) $(SANITIZE) $(INC) -c $< -o $@
 
 clean:
 	@$(RM) -r $(OBJ_DIR)
+	@echo "Object files cleaned!"
 
 fclean: clean
 	@$(RM) $(NAME)
+	@echo "Everything cleaned!"
 
 re: fclean all
 
