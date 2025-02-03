@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 14:42:26 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/28 17:31:15 by spyun         ########   odam.nl         */
+/*   Updated: 2025/02/03 09:14:38 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ void	philo_routine(t_philo *philo)
 		print_status(philo, "is sleeping");
 		custom_sleep(philo->data->time_to_sleep);
 		print_status(philo, "is thinking");
-		usleep(100);
+		usleep(1000);
 	}
 }

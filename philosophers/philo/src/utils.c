@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:07:30 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/20 09:05:48 by spyun         ########   odam.nl         */
+/*   Updated: 2025/02/03 09:17:21 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ void	custom_sleep(time_t time)
 		current = get_time();
 		if (current - start >= time)
 			break ;
-		usleep(50);
+		usleep(100);
 	}
 }
