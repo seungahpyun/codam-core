@@ -1,8 +1,8 @@
 NAME = megaphone
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -g3
-SRC = megaphone.cpp
+CFLAGS = -Wall -Wextra -Werror
+SRC = src/megaphone.cpp
 
 all: $(NAME)
 
