@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/25 10:06:00 by spyun         #+#    #+#                 */
-/*   Updated: 2025/03/25 12:06:31 by spyun         ########   odam.nl         */
+/*   Updated: 2025/03/25 16:06:27 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,20 @@ int main ()
 {
 	PhoneBook phoneBook;
 	std::string command;
-	std::cout << "Welcome to the phone book!" << std::endl;
-	std::cout << "Commands: ADD, SEARCH, EXIT" << std::endl;
+	std::cout << BLUE <<
+	"╔══════════════════════════════════════════════════════╗" << std::endl <<
+	"║.---. .-..-. .--. .-..-. .--. .---.  .--.  .--. .-..-.║" << std::endl <<
+	"║: .; :: :; :: ,. :: `: :: .--': .; :: ,. :: ,. :: :' ;║" << std::endl <<
+	"║:  _.':    :: :: :: .` :: `;  :   .': :: :: :: ::   ' ║" << std::endl <<
+	"║: :   : :: :: :; :: :. :: :__ : .; :: :; :: :; :: :.`.║" << std::endl <<
+	"║:_;   :_;:_;`.__.':_;:_;`.__.':___.'`.__.'`.__.':_;:_;║" << std::endl <<
+	"╚══════════════════════════════════════════════════════╝" << std::endl <<
+	"              Commands : ADD, SEARCH, EXIT              " << RESET << std::endl;
 	while (1 && !std::cin.eof())
 	{
 		std::cout << "Enter a command: ";
 		std::getline(std::cin, command);
+		transform(command.begin(), command.end(), command.begin(), ::toupper);
 		if (command == "ADD")
 		{
 			addContact(phoneBook);
@@ -76,7 +84,7 @@ int main ()
 		}
 		else
 		{
-			std::cout << RED << "Invalid command, Commands: ADD, SEARCH, EXIT"
+			std::cout << RED << "Invalid command, try again"
 				<< RESET << std::endl;
 		}
 	}

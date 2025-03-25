@@ -4,8 +4,10 @@ CFLAGS = -Wall -Wextra -Werror
 SRC_DIR = src
 OBJ_DIR = obj
 INC = -I./include
-
-SRC = $(wildcard $(SRC_DIR)/*.cpp)
+SRC = $(SRC_DIR)/main.cpp \
+      $(SRC_DIR)/PhoneBook.cpp \
+      $(SRC_DIR)/Contact.cpp \
+	  $(SRC_DIR)/utils.cpp
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
