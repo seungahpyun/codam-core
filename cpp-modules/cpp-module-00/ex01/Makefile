@@ -9,9 +9,11 @@ all: $(NAME)
 
 $(NAME):
 	$(CC) $(CFLAGS) $(INC) $(SRC) -o $(NAME)
+	echo "Phonebook compiled successfully!"
 
 clean:
 	rm -f $(NAME)
+	echo "Phonebook cleaned successfully!"
 
 fclean: clean
 

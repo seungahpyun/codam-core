@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/25 10:06:02 by spyun         #+#    #+#                 */
-/*   Updated: 2025/03/25 10:55:52 by spyun         ########   odam.nl         */
+/*   Updated: 2025/03/25 11:44:18 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,21 @@ void PhoneBook::addContact(Contact contact)
 		_contacts[_numContacts] = contact;
 		_numContacts++;
 	}
+	else
+	{
+		for (int i = 0; i < 7; i++)
+		{
+			_contacts[i] = _contacts[i + 1];
+		}
+		_contacts[7] = contact;
+	}
 }
 
 void PhoneBook::displayContacts()
 {
-	std::cout << "     index|first name| last name|  nickname" << std::endl;
+	std::cout << "---------------------------------------------" << std::endl;
+	std::cout << "   index  |first name| last name|  nickname  " << std::endl;
+	std::cout << "---------------------------------------------" << std::endl;
 	for (int i = 0; i < _numContacts; i++)
 	{
 		std::cout << std::setw(10) << i + 1 << "|";
@@ -51,6 +61,6 @@ void PhoneBook::displayContact(int index)
 	}
 	else
 	{
-		std::cout << "Invalid index" << std::endl;
+		std::cout << RED << "Invalid index" << RESET << std::endl;
 	}
 }
