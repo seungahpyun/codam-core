@@ -6,9 +6,12 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/25 10:05:52 by spyun         #+#    #+#                 */
-/*   Updated: 2025/03/25 10:12:23 by spyun         ########   odam.nl         */
+/*   Updated: 2025/03/25 11:58:36 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef CONTACT_HPP
+# define CONTACT_HPP
 
 #include <iostream>
 
@@ -33,3 +36,4 @@ class Contact
 		std::string getDarkestSecret() const;
 };
 
+#endif

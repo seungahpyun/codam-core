@@ -6,39 +6,33 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/25 10:06:00 by spyun         #+#    #+#                 */
-/*   Updated: 2025/03/25 11:37:09 by spyun         ########   odam.nl         */
+/*   Updated: 2025/03/25 12:06:31 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
-#include <limits>
 
 void addContact(PhoneBook &phoneBook)
 {
 	Contact contact;
-	std::string firstName, lastName, nickname, mobileNumber, darkest;
 
-	std::cout << "Enter first name: ";
-	std::getline(std::cin, firstName);
+	std::string firstName = getValidInput("Enter first name: ", isValidName);
 	contact.setFirstName(firstName);
 
-	std::cout << "Enter last name: ";
-	std::getline(std::cin, lastName);
+	std::string lastName = getValidInput("Enter last name: ", isValidName);
 	contact.setLastName(lastName);
 
-	std::cout << "Enter nickname: ";
-	std::getline(std::cin, nickname);
+	std::string nickname = getValidInput("Enter nickname: ", [](const std::string &str) { return !str.empty(); });
 	contact.setNickname(nickname);
 
-	std::cout << "Enter mobile number: ";
-	std::getline(std::cin, mobileNumber);
+	std::string mobileNumber = getValidInput("Enter mobile number: ", isValidNumber);
 	contact.setMobileNumber(mobileNumber);
 
-	std::cout << "Enter darkest secret: ";
-	std::getline(std::cin, darkest);
+	std::string darkest = getValidInput("Enter darkest secret: ", [](const std::string &str) { return !str.empty(); });
 	contact.setDarkestSecret(darkest);
 
 	phoneBook.addContact(contact);
+	std::cout << GREEN << "Contact added successfully!" << RESET << std::endl;
 }
 
 void searchContact(PhoneBook &phoneBook)
