@@ -3,11 +3,12 @@ NAME = phonebook
 CC = c++
 CFLAGS = -Wall -Wextra -Werror
 SRC = src/*.cpp
+INC = -I./include
 
 all: $(NAME)
 
-$(NAME): $(SRC)
-	$(CC) $(CFLAGS) -o $(NAME) $(SRC)
+$(NAME):
+	$(CC) $(CFLAGS) $(INC) $(SRC) -o $(NAME)
 
 clean:
 	rm -f $(NAME)
