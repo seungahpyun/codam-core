@@ -1,8 +1,8 @@
 NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
-LDFLAGS = -pthread
-SANITIZE = -fsanitize=thread
+# LDFLAGS = -pthread
+# SANITIZE = -fsanitize=thread
 
 SRC_DIR = src
 INC_DIR = include
@@ -29,11 +29,11 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJ_DIR) $(OBJS)
-	@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) $(LDFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "Philo compiled successfully!"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) $(CFLAGS) $(SANITIZE) $(INC) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean:
 	@$(RM) -r $(OBJ_DIR)

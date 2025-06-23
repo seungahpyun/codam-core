@@ -6,11 +6,18 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:19:46 by spyun         #+#    #+#                 */
-/*   Updated: 2025/02/03 09:14:57 by spyun         ########   odam.nl         */
+/*   Updated: 2025/06/23 12:19:06 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static void	print_death(t_data *data, int id, time_t death_time)
+{
+	pthread_mutex_lock(&data->print_mutex);
+	printf("%ld %d died\n", death_time - data->start_time, id);
+	pthread_mutex_unlock(&data->print_mutex);
+}
 
 static bool	check_death(t_data *data, int i)
 {
@@ -29,9 +36,7 @@ static bool	check_death(t_data *data, int i)
 		if (!data->someone_died)
 		{
 			data->someone_died = true;
-			printf("%ld %d died\n",
-				current_time - data->start_time,
-				data->philos[i].id);
+			print_death(data, data->philos[i].id, current_time);
 		}
 		pthread_mutex_unlock(&data->death_mutex);
 		return (true);
