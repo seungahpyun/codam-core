@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 14:40:18 by spyun         #+#    #+#                 */
-/*   Updated: 2025/01/10 15:24:51 by spyun         ########   odam.nl         */
+/*   Updated: 2025/06/23 11:28:04 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ static int	start_simulation(t_data *data)
 			return (error_msg("Fork failed"));
 		if (pid == 0)
 		{
+			sem_wait(data->meal_sem);
 			data->philos[i].last_meal = data->start_time;
+			sem_post(data->meal_sem);
 			philo_routine(&data->philos[i]);
 			exit(EXIT_SUCCESS);
 		}

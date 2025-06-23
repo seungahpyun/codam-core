@@ -1,7 +1,7 @@
 NAME = philo_bonus
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
-SANITIZE = -fsanitize=address
+# SANITIZE = -fsanitize=address
 
 SRC_DIR = src
 INC_DIR = include
