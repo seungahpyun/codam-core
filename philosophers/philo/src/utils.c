@@ -6,7 +6,7 @@
 /*   By: spyun <spyun@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/09 09:07:30 by spyun         #+#    #+#                 */
-/*   Updated: 2025/06/23 12:19:24 by spyun         ########   odam.nl         */
+/*   Updated: 2025/06/23 12:20:17 by spyun         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	print_status(t_philo *philo, char *status)
 	pthread_mutex_lock(&philo->data->death_mutex);
 	can_print = !philo->data->someone_died;
 	pthread_mutex_unlock(&philo->data->death_mutex);
-
 	if (can_print)
 	{
 		current_time = get_time();
